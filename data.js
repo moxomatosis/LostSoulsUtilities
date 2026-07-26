@@ -533,19 +533,17 @@ const LOST_SOULS_DATA = {
         "Warrior"
       ],
       "incompat_groups": [
-        "Mhezlekai"
       ],
+      // These are likely all undocumented tag compatibilities, but hard to debug.
       "incompat_tags": [
         "Protector",
-        "Warrior"
+        "Soldier" 
       ],
       "raw_incompat_lines": [
         "You cannot join the Reapers because you are a protector. ( Mhezlekai )",
-        "unusual way, in that it cannot be normally used as a part of the warrior's",
-        "taxing on the mind and spirit, and cannot be done very often.  The rewards of",
-        "Forces the removal of a random set of the target's armour and weapons. They cannot be re-equipped for some time.",
-        "cause, the Reaper must not use weapons of the blunt variety, as they kill",
-        "anatomy ,  unarmed , follow, and  pole arms .  Note, though, that only those who uphold the highest of the Lord Reaper's virtues receive these bonuses, and even then, cannot use their master's power when in the presence of holiness."
+        "Xar states, \"As a Reaper, you could not become a soldier by joining the Weapons of Vengeance, reaper.\" in Siglaryn.",
+        " Janid intones, [- As a Reaper, you could not become a scholar by joining the Crafty Linguists. -] to you.",
+        "The priest of Jinx says, $As a Reaper, you could not become a seeker of gold by joining the Jinxian Plutocracy.$ to you."
       ]
     },
     "Riddlemasters": {

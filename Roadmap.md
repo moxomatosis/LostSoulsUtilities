@@ -12,3 +12,6 @@ Mark confirmed vs. unconfirmed compatibilities
 Multiple guild support
 
 Store wiki links in data.js
+
+
+Change incompat to object array and add incompatibility lines to that.
