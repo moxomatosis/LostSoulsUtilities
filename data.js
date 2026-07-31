@@ -175,6 +175,15 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [
         "Soldier"
       ],
+      "allowed_races": [
+        "dana",
+        "kielleth",
+        "phaethon",
+        "tuatha",
+        "quess",
+        "lunaeala",
+      ],
+
       "raw_incompat_lines": [
         "Celeborn states, &lt;= You cannot join the Aliavelyrae because you are a soldier. =&gt;",
         "Gray-skinned male dana states, &lt;= I'm sorry, Drisanna, but a drow cannot become an Aliavelyr. =&gt; to you in Sperethiel."
@@ -217,6 +226,9 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [
         "Warrior"
       ],
+      "allowed_races": [
+        "thond", "domandan", "lothar", "eolon", "duergar"
+      ],
       "raw_incompat_lines": [
         "will increase.  Be aware, however, that even the best warrior cannot sustain",
         "You cannot see anything."
@@ -255,6 +267,24 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_tags": [
         "Good"
+      ],
+      "allowed_races": [
+        "advenus",
+        "amberite",
+        "ardhalokh",
+        "aviar",
+        "chaosborn",
+        "dana",
+        "drow",
+        "gezuuni",
+        "human",
+        "iaman",
+        "kitsune",
+        "kielleth",
+        "quess",
+        "sekh",
+        "tuatha",
+        "zenun"
       ],
       "raw_incompat_lines": [
         "6   Incompatible Affiliations and Other Restrictions",
@@ -331,6 +361,8 @@ const LOST_SOULS_DATA = {
         "shadow_brethren"
       ],
       "incompat_tags": [],
+      // TODO - All races with valathyr
+      // "allowed_races": [],
       "raw_incompat_lines": [
         "You cannot join Faradrim il'Avathar because you are a practitioner of deception. - Shadow Brethren may not join"
       ],
@@ -424,6 +456,21 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
+      "allowed_races": [
+        "amberite",
+        "chaosborn",
+        "advenus",
+        "drow",
+        "thond",
+        "dana",
+        "kedeth",
+        "kielleth",
+        "human",
+        "lothar",
+        "domandan",
+        "quessae",
+        "tuatha",
+      ],
       "raw_incompat_lines": [
         "true Knight.  I... cannot gainsay that any longer.'"
       ],
@@ -611,6 +658,9 @@ const LOST_SOULS_DATA = {
         "Conspecific",
         "Initiate"
       ],
+      "allowed_races": [
+        "kentaur"
+      ],
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
@@ -745,6 +795,9 @@ const LOST_SOULS_DATA = {
         "Agent",
         "Servant",
         "Malevolent"
+      ],
+      "allowed_races": [
+        "human", "ardhalokh", "domandan", "kielleth", "narja", "urlnlek"
       ],
       "raw_incompat_lines": [
         "Aviar and advenus cannot join.",
@@ -990,6 +1043,7 @@ const LOST_SOULS_DATA = {
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
+      "allowed_races": ["urln"],
       "id": "deep_ones"
     },
     "fianna": {
@@ -1094,6 +1148,7 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [
         "Hedonist"
       ],
+      "allowed_races":["drow"],
       "raw_incompat_lines": [
         "You cannot specialize in ownership:",
         "Ralgor asserts, [| You cannot join the Ghaunadauri because you are a hedonist. |] to you in Zadjalin. -- Cannot join as a member of the Coven"
@@ -1154,6 +1209,7 @@ const LOST_SOULS_DATA = {
         "Pariah",
         "Wanderer"
       ],
+      "allowed_races": ["urga"],
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
@@ -1257,6 +1313,7 @@ const LOST_SOULS_DATA = {
         "Hedonist",
         "Soldier"
       ],
+      "allowed_genders": ["Female"],
       "raw_incompat_lines": [
         "being that you cannot marry or be married while a Maiden.  If you ever do get",
         "Discipline \t\t\t1..+5\t\tWillpower (might be removed, cannot verify on an Aligned)",
@@ -1278,6 +1335,7 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Servant"
       ],
+      "allowed_races": ["shoggoth"],
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
@@ -1429,6 +1487,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
+      "allowed_races": ["garou", "human", "kitsune"],
       "raw_incompat_lines": [
         "5   Incompatibilities",
         "Incompatibilities",
@@ -1450,6 +1509,15 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
+      "excluded_races": [
+        "duergar",
+        "nyloc",
+        "srazhar",
+        "ardhalokh",
+        "rachnei",
+        "svirfneblin",
+        "llelimin"
+      ],
       "raw_incompat_lines": [
         "Apparently, there is a list of forbidden races. I am unsure about the other races, but  Svirfneblin  &amp;  Llelimin  cannot join. If you try, you will get the above message."
       ],
@@ -1494,6 +1562,29 @@ const LOST_SOULS_DATA = {
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
+      "allowed_races": [
+        "advenus",
+        "amberite",
+        "aviar",
+        "chaosborn",
+        "dana",
+        "domandan",
+        "drow",
+        "duergar",
+        "gnome",
+        "human",
+        "kedeth",
+        "kielleth",
+        "llelimin",
+        "lothar",
+        "lunaeala",
+        "phaethon",
+        "quessae",
+        "svirfneblin",
+        "thond",
+        "tuatha",
+        "iaman"
+      ],
       "id": "the_pantarchic_church_of_yehovah"
     },
     "the_stalkers_of_the_gate": {
@@ -1591,6 +1682,7 @@ const LOST_SOULS_DATA = {
         "Libertine",
         "Racist"
       ],
+      "allowed_races": ["drochnei", "drow", "rachnei"],
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
@@ -1689,6 +1781,7 @@ const LOST_SOULS_DATA = {
         "Initiate",
         "Warrior"
       ],
+      "allowed_races": ["zuth"],
       "incompat_groups": [],
       "incompat_tags": [],
       "raw_incompat_lines": [],
