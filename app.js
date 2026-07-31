@@ -8,15 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. STATE MANAGEMENT
     // -------------------------------------------------------------
     const state = {
-        selectedGuild: null,             // String: Guild name or null
-        selectedAssociations: new Set(), // Set of Strings: Selected association names
+        selectedGuild: null,             // String: Guild ID or null
+        selectedAssociations: new Set(),   // Set of Strings: Selected association IDs
         selectedRace: 'Unspecified',     // String: Selected character race
         selectedGender: 'Unspecified',   // String: Selected character gender
         guilds: [],                      // List of group objects representing guilds
         associations: [],                // List of group objects representing associations
         allTags: [],                     // List of all tag names
         tagsMeta: {},                    // Tag compatibility metadata
-        groupsMap: {}                    // Map of groupName -> groupObject
+        groupsMap: {}                    // Map of groupID -> groupObject
     };
 
     // Initialize data from global database (loaded in data.js)
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const guildObj = state.groupsMap[state.selectedGuild];
             if (guildObj) activeGroups.push(guildObj);
         }
-        state.selectedAssociations.forEach(assocName => {
-            const assocObj = state.groupsMap[assocName];
+        state.selectedAssociations.forEach(assocId => {
+            const assocObj = state.groupsMap[assocId];
             if (assocObj) activeGroups.push(assocObj);
         });
 
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const item = document.createElement('div');
-            item.className = `guild-item ${state.selectedGuild === g.name ? 'selected' : ''}`;
+            item.className = `guild-item ${state.selectedGuild === g.id ? 'selected' : ''}`;
             item.setAttribute('role', 'option');
             
             // Build item description with tags and wiki link
@@ -276,20 +276,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Helper to simulate compatibility for a single candidate association
-    function testCompatibilityWithCandidate(candidateName) {
+    function testCompatibilityWithCandidate(candidateId) {
         const activeGroups = [];
         if (state.selectedGuild) {
             const guildObj = state.groupsMap[state.selectedGuild];
             if (guildObj) activeGroups.push(guildObj);
         }
-        state.selectedAssociations.forEach(assocName => {
-            const assocObj = state.groupsMap[assocName];
+        state.selectedAssociations.forEach(assocId => {
+            const assocObj = state.groupsMap[assocId];
             if (assocObj) activeGroups.push(assocObj);
         });
         
         // Add candidate if it's not already in the active list
-        if (!state.selectedAssociations.has(candidateName)) {
-            const candObj = state.groupsMap[candidateName];
+        if (!state.selectedAssociations.has(candidateId)) {
+            const candObj = state.groupsMap[candidateId];
             if (candObj) activeGroups.push(candObj);
         }
         
@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tagACompat.includes(tagB)) {
                     const sourcesA = tagSources[tagA];
                     const sourcesB = tagSources[tagB];
-                    if (sourcesA.includes(candidateName) || sourcesB.includes(candidateName)) {
-                        const conflictingWith = [...new Set([...sourcesA, ...sourcesB])].filter(n => n !== candidateName);
+                    if (sourcesA.includes(candidateId) || sourcesB.includes(candidateId)) {
+                        const conflictingWith = [...new Set([...sourcesA, ...sourcesB])].filter(n => n !== candidateId);
                         conflicts.push({
                             type: 'tag_tag',
                             reason: `Tag Conflict (${tagA} & ${tagB}) with ${conflictingWith.join(', ')}`
@@ -335,12 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (tagSources[precludedTag]) {
                         const foreignSources = tagSources[precludedTag].filter(name => name !== g.name);
                         if (foreignSources.length > 0) {
-                            if (g.name === candidateName || foreignSources.includes(candidateName)) {
-                                const subject = g.name === candidateName ? 'precluded tag' : 'precluding group';
-                                const other = g.name === candidateName ? foreignSources.join(', ') : g.name;
+                            if (g.id === candidateId || foreignSources.includes(candidateId)) {
+                                const subject = g.id === candidateId ? 'precluded tag' : 'precluding group';
+                                const other = g.id === candidateId ? foreignSources.join(', ') : g.name;
                                 conflicts.push({
                                     type: 'group_tag',
-                                    reason: g.name === candidateName 
+                                    reason: g.id === candidateId 
                                         ? `Precluded tag "${precludedTag}" (from ${other})`
                                         : `Excluded by ${other} (precludes tag "${precludedTag}")`
                                 });
@@ -357,13 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 g.incompat_groups.forEach(precludedGroupName => {
                     const isSelectedOrCand = (state.selectedGuild === precludedGroupName) || 
                                              state.selectedAssociations.has(precludedGroupName) || 
-                                             (precludedGroupName === candidateName);
+                                             (precludedGroupName === candidateId);
                     if (isSelectedOrCand) {
-                        if (g.name === candidateName || precludedGroupName === candidateName) {
-                            const other = g.name === candidateName ? precludedGroupName : g.name;
+                        if (g.id === candidateId || precludedGroupName === candidateId) {
+                            const other = g.id === candidateId ? precludedGroupName : g.name;
                             conflicts.push({
                                 type: 'group_group',
-                                reason: g.name === candidateName
+                                reason: g.id === candidateId
                                     ? `Direct conflict with ${other}`
                                     : `Excluded by ${other}`
                             });
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Racist Group Restrictions
         activeGroups.forEach(g => {
             if (g.tags.includes('Racist')) {
-                if (g.name === candidateName) {
+                if (g.id === candidateId) {
                     if (state.selectedRace === 'Unspecified') {
                         conflicts.push({
                             type: 'race_warning',
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 5. Sexist Group Restrictions
         activeGroups.forEach(g => {
             if (g.tags.includes('Sexist')) {
-                if (g.name === candidateName) {
+                if (g.id === candidateId) {
                     if (state.selectedGender === 'Unspecified') {
                         conflicts.push({
                             type: 'gender_warning',
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toggle checkbox click handler
             const checkbox = item.querySelector('input');
             checkbox.addEventListener('change', (e) => {
-                toggleAssociation(a.name, e.target.checked);
+                toggleAssociation(a.id, e.target.checked);
             });
  
             assocListContainer.appendChild(item);
@@ -505,19 +505,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
  
     // Handle Guild Selection state
-    function selectGuild(guildName) {
-        state.selectedGuild = guildName;
+    function selectGuild(guildId) {
+        state.selectedGuild = guildId;
         renderGuildList(document.getElementById('guild-search').value);
         renderAssociationList(document.getElementById('assoc-search').value);
         updateCheckerResults();
     }
 
     // Handle Association toggle state
-    function toggleAssociation(assocName, isChecked) {
+    function toggleAssociation(assocId, isChecked) {
         if (isChecked) {
-            state.selectedAssociations.add(assocName);
+            state.selectedAssociations.add(assocId);
         } else {
-            state.selectedAssociations.delete(assocName);
+            state.selectedAssociations.delete(assocId);
         }
         renderAssociationList(document.getElementById('assoc-search').value);
         updateCheckerResults();
@@ -543,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const chip = document.createElement('div');
             chip.className = 'chip chip-guild';
             chip.innerHTML = `
-                <span>🛡️ Guild: <strong>${state.selectedGuild}</strong> <a href="${getWikiUrl(state.selectedGuild)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
+                <span>🛡️ Guild: <strong>${state.groupsMap[state.selectedGuild].name}</strong> <a href="${getWikiUrl(state.groupsMap[state.selectedGuild].name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
                 <span class="chip-remove" title="Deselect Guild">&times;</span>
             `;
             
@@ -559,12 +559,13 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedChipsContainer.appendChild(chip);
         }
 
-        state.selectedAssociations.forEach(name => {
+        state.selectedAssociations.forEach(id => {
             totalSelected++;
+            const assoc = state.groupsMap[id];
             const chip = document.createElement('div');
             chip.className = 'chip chip-association';
             chip.innerHTML = `
-                <span>🤝 ${name} <a href="${getWikiUrl(name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
+                <span>🤝 ${assoc.name} <a href="${getWikiUrl(assoc.name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
                 <span class="chip-remove" title="Deselect Association">&times;</span>
             `;
             
@@ -576,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             
-            chip.querySelector('.chip-remove').addEventListener('click', () => toggleAssociation(name, false));
+            chip.querySelector('.chip-remove').addEventListener('click', () => toggleAssociation(id, false));
             selectedChipsContainer.appendChild(chip);
         });
 
@@ -601,8 +602,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const guildObj = state.groupsMap[state.selectedGuild];
             if (guildObj) activeGroups.push(guildObj);
         }
-        state.selectedAssociations.forEach(assocName => {
-            const assocObj = state.groupsMap[assocName];
+        state.selectedAssociations.forEach(id => {
+            const assocObj = state.groupsMap[id];
             if (assocObj) activeGroups.push(assocObj);
         });
 
@@ -640,9 +641,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let desc = '';
             if (state.selectedGuild && state.selectedAssociations.size > 0) {
-                desc = `Your guild (${state.selectedGuild}) and all ${state.selectedAssociations.size} selected associations are fully compatible!`;
+                desc = `Your guild (${state.groupsMap[state.selectedGuild].name}) and all ${state.selectedAssociations.size} selected associations are fully compatible!`;
             } else if (state.selectedGuild) {
-                desc = `Guild (${state.selectedGuild}) is compatible. Select associations to build your profile.`;
+                desc = `Guild (${state.groupsMap[state.selectedGuild].name}) is compatible. Select associations to build your profile.`;
             } else {
                 desc = `All ${state.selectedAssociations.size} associations are fully compatible with each other!`;
             }
