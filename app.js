@@ -3,7 +3,7 @@
  * Application Logic & Compatibility Engine
  */
 
-import races from './races.js';
+import racesById from './races.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
@@ -158,22 +158,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- RULE 4: Race Restrictions ---
         activeGroups.forEach(g => {
             if (g.allowed_races && g.allowed_races.length > 0) {
-                const allowedRaceNames = g.allowed_races.map(raceId => races.find(race => race.id === raceId).name);
+                const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
                 if (!allowedRaceNames.includes(state.selectedRace)) {
                     conflicts.push({
                         type: 'group_race',
                         title: `${g.name} Race Conflict`,
-                        desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${races.find(race => race.id === state.selectedRace).name}</strong>.`
+                        desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
                     });
                 }
             }
             if (g.excluded_races && g.excluded_races.length > 0) {
-                const excludedRaceNames = g.excluded_races.map(raceId => races.find(race => race.id === raceId).name);
+                const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
                 if (excludedRaceNames.includes(state.selectedRace)) {
                     conflicts.push({
                         type: 'group_race',
                         title: `${g.name} Race Exclusion`,
-                        desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${races.find(race => race.id === state.selectedRace).name}</strong>.`
+                        desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
                     });
                 }
             }
@@ -357,20 +357,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Race Restrictions
         activeGroups.forEach(g => {
             if (g.allowed_races && g.allowed_races.length > 0) {
-                const allowedRaceNames = g.allowed_races.map(raceId => races.find(race => race.id === raceId).name);
+                const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
                 if (!allowedRaceNames.includes(state.selectedRace)) {
                     conflicts.push({
                         type: 'group_race',
-                        reason: `Allowed races: ${allowedRaceNames.join(', ')}. Your race is ${races.find(race => race.id === state.selectedRace).name}`
+                        reason: `Allowed races: ${allowedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
                     });
                 }
             }
             if (g.excluded_races && g.excluded_races.length > 0) {
-                const excludedRaceNames = g.excluded_races.map(raceId => races.find(race => race.id === raceId).name);
+                const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
                 if (excludedRaceNames.includes(state.selectedRace)) {
                     conflicts.push({
                         type: 'group_race',
-                        reason: `Excluded races: ${excludedRaceNames.join(', ')}. Your race is ${races.find(race => race.id === state.selectedRace).name}`
+                        reason: `Excluded races: ${excludedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
                     });
                 }
             }
@@ -962,8 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     const raceSelect = document.getElementById('race-select');
     if (raceSelect) {
-        races.sort((a, b) => a.name.localeCompare(b.name));
-        races.forEach(race => {
+        Object.values(racesById).sort((a, b) => a.name.localeCompare(b.name)).forEach(race => {
             const opt = document.createElement('option');
             opt.value = race.id;
             opt.textContent = race.name;
