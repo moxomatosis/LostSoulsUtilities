@@ -148,57 +148,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // --- RULE 4: Racist Group Restrictions ---
+        // --- RULE 4: Race Restrictions ---
         activeGroups.forEach(g => {
-            if (g.tags.includes('Racist')) {
-                if (state.selectedRace === 'Unspecified') {
+            if (g.allowed_races && g.allowed_races.length > 0) {
+                if (!g.allowed_races.includes(state.selectedRace)) {
                     conflicts.push({
-                        type: 'race_warning',
-                        title: `${g.name} Racial Verification`,
-                        desc: `<strong>${g.name}</strong> is a Racist group. Please select your character's race to verify compatibility.`
+                        type: 'group_race',
+                        title: `${g.name} Race Conflict`,
+                        desc: `<strong>${g.name}</strong> only allows these races: ${g.allowed_races.join(', ')}. Your race is <strong>${state.selectedRace}</strong>.`
                     });
-                } else {
-                    if (g.allowed_races && g.allowed_races.length > 0) {
-                        if (!g.allowed_races.includes(state.selectedRace)) {
-                            conflicts.push({
-                                type: 'group_race',
-                                title: `${g.name} Race Conflict`,
-                                desc: `<strong>${g.name}</strong> only allows these races: ${g.allowed_races.join(', ')}. Your race is <strong>${state.selectedRace}</strong>.`
-                            });
-                        }
-                    }
-                    if (g.excluded_races && g.excluded_races.length > 0) {
-                        if (g.excluded_races.includes(state.selectedRace)) {
-                            conflicts.push({
-                                type: 'group_race',
-                                title: `${g.name} Race Exclusion`,
-                                desc: `<strong>${g.name}</strong> explicitly excludes these races: ${g.excluded_races.join(', ')}. Your race is <strong>${state.selectedRace}</strong>.`
-                            });
-                        }
-                    }
+                }
+            }
+            if (g.excluded_races && g.excluded_races.length > 0) {
+                if (g.excluded_races.includes(state.selectedRace)) {
+                    conflicts.push({
+                        type: 'group_race',
+                        title: `${g.name} Race Exclusion`,
+                        desc: `<strong>${g.name}</strong> explicitly excludes these races: ${g.excluded_races.join(', ')}. Your race is <strong>${state.selectedRace}</strong>.`
+                    });
                 }
             }
         });
 
-        // --- RULE 5: Sexist Group Restrictions ---
+        // --- RULE 5: Gender Restrictions ---
         activeGroups.forEach(g => {
-            if (g.tags.includes('Sexist')) {
-                if (state.selectedGender === 'Unspecified') {
+            if (g.allowed_genders && g.allowed_genders.length > 0) {
+                if (!g.allowed_genders.includes(state.selectedGender)) {
                     conflicts.push({
-                        type: 'gender_warning',
-                        title: `${g.name} Gender Verification`,
-                        desc: `<strong>${g.name}</strong> is a Sexist group. Please select your character's gender to verify compatibility.`
+                        type: 'group_gender',
+                        title: `${g.name} Gender Conflict`,
+                        desc: `<strong>${g.name}</strong> only allows these genders: ${g.allowed_genders.join(', ')}. Your gender is <strong>${state.selectedGender}</strong>.`
                     });
-                } else {
-                    if (g.allowed_genders && g.allowed_genders.length > 0) {
-                        if (!g.allowed_genders.includes(state.selectedGender)) {
-                            conflicts.push({
-                                type: 'group_gender',
-                                title: `${g.name} Gender Conflict`,
-                                desc: `<strong>${g.name}</strong> only allows these genders: ${g.allowed_genders.join(', ')}. Your gender is <strong>${state.selectedGender}</strong>.`
-                            });
-                        }
-                    }
                 }
             }
         });
@@ -361,52 +341,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 4. Racist Group Restrictions
+        // 4. Race Restrictions
         activeGroups.forEach(g => {
-            if (g.tags.includes('Racist')) {
-                if (state.selectedRace === 'Unspecified') {
+            if (g.allowed_races && g.allowed_races.length > 0) {
+                if (!g.allowed_races.includes(state.selectedRace)) {
                     conflicts.push({
-                        type: 'race_warning',
-                        reason: 'Requires race selection'
+                        type: 'group_race',
+                        reason: `Allowed races: ${g.allowed_races.join(', ')}. Your race is ${state.selectedRace}`
                     });
-                } else {
-                    if (g.allowed_races && g.allowed_races.length > 0) {
-                        if (!g.allowed_races.includes(state.selectedRace)) {
-                            conflicts.push({
-                                type: 'group_race',
-                                reason: `Allowed races: ${g.allowed_races.join(', ')}. Your race is ${state.selectedRace}`
-                            });
-                        }
-                    }
-                    if (g.excluded_races && g.excluded_races.length > 0) {
-                        if (g.excluded_races.includes(state.selectedRace)) {
-                            conflicts.push({
-                                type: 'group_race',
-                                reason: `Excluded races: ${g.excluded_races.join(', ')}. Your race is ${state.selectedRace}`
-                            });
-                        }
-                    }
+                }
+            }
+            if (g.excluded_races && g.excluded_races.length > 0) {
+                if (g.excluded_races.includes(state.selectedRace)) {
+                    conflicts.push({
+                        type: 'group_race',
+                        reason: `Excluded races: ${g.excluded_races.join(', ')}. Your race is ${state.selectedRace}`
+                    });
                 }
             }
         });
 
-        // 5. Sexist Group Restrictions
+        // 5. Gender Restrictions
         activeGroups.forEach(g => {
-            if (g.tags.includes('Sexist')) {
-                if (state.selectedGender === 'Unspecified') {
+            if (g.allowed_genders && g.allowed_genders.length > 0) {
+                if (!g.allowed_genders.includes(state.selectedGender)) {
                     conflicts.push({
-                        type: 'gender_warning',
-                        reason: 'Requires gender selection'
+                        type: 'group_gender',
+                        reason: `Allowed genders: ${g.allowed_genders.join(', ')}. Your gender is ${state.selectedGender}`
                     });
-                } else {
-                    if (g.allowed_genders && g.allowed_genders.length > 0) {
-                        if (!g.allowed_genders.includes(state.selectedGender)) {
-                            conflicts.push({
-                                type: 'group_gender',
-                                reason: `Allowed genders: ${g.allowed_genders.join(', ')}. Your gender is ${state.selectedGender}`
-                            });
-                        }
-                    }
                 }
             }
         });
