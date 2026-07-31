@@ -1,133 +1,88 @@
-// Balrog
-// Amberite
-// Dakshin
-// Mantid
-// Balrog
-// Amberite
-// Dakshin
-// Mantid
-// Dragon
-// Chaosborn
-// Vlekthid
-// Fomor
-// Zenun
-// Kedeth
-
-
-// Tuatha
-// Raktorak
-// Gezuuni
-// Cyflymyll
-// Bezhuldaar
-// Shoggoth
-// Eolon
-// Nephilim
-// Oni
-
-
-// Puck
-// Kalashk
-// Quasit
-// Skogarhogg
-// Bergrisi
-// Myrrisi
-// Pnath
-// Lunaeala
-// Iaman
-// Dofleini
-// Zuth
-
-
-// Svirfneblin
-// Rachnei
-// Imp
-// Phaethon
-// Lothar
-// Atterkop
-// Aethoss
-// Minotaur
-// Serentyll
-// Powrie
-// Srazh
-
-
-// Trullja
-// Ardhalokh
-// Advenus
-// Drow
-// Drachannach
-// Slaan
-// Aviar
-// Invae
-// Dana
-
-
-// Duergar
-// Yeti
-// Niedrisi
-// Urga
-// Sleklith
-// Skaven
-// Sekh
-// Iyiyik
-// Urlnlek
-// Quess
-
-
-// Domandan
-// Garou
-// Nyloc
-// Naga
-// Narja
-// Kentaur
-// Kielleth
-// Riishan
-// Dryad
-// Urln
-
-
-// Pixie
-// Sprite
-// Naiad
-// Vaasa
-// Llelimin
-// Thond
-// Bogbogual
-// Kitsune
-// Gnome
-// Aesir
-
-
-// Human
-// Bogual
-// Runtling
-// Kobold
-
-
-
-
 const races = [
-    { id: 'advenus', name: 'Advenus' },
-    { id: 'amberite', name: 'Amberite' },
-    { id: 'avar', name: 'Avar' },
     { id: 'balrog', name: 'Balrog' },
-    { id: 'dana', name: 'Dana' },
-    { id: 'draconian', name: 'Draconian' },
-    { id: 'drow', name: 'Drow' },
-    { id: 'duergar', name: 'Duergar' },
-    { id: 'dwarf', name: 'Dwarf' },
-    { id: 'elf', name: 'Elf' },
+    { id: 'amberite', name: 'Amberite' },
+    { id: 'dakshin', name: 'Dakshin' },
+    { id: 'mantid', name: 'Mantid' },
+    { id: 'dragon', name: 'Dragon' },
+    { id: 'chaosborn', name: 'Chaosborn' },
+    { id: 'vlekthid', name: 'Vlekthid' },
+    { id: 'fomor', name: 'Fomor' },
+    { id: 'zenun', name: 'Zenun' },
+    { id: 'kedeth', name: 'Kedeth' },
+    { id: 'tuatha', name: 'Tuatha' },
+    { id: 'raktorak', name: 'Raktorak' },
+    { id: 'gezuuni', name: 'Gezuuni' },
+    { id: 'cyflymyll', name: 'Cyflymyll' },
+    { id: 'bezhuldaar', name: 'Bezhuldaar' },
+    { id: 'shoggoth', name: 'Shoggoth' },
     { id: 'eolon', name: 'Eolon' },
-    { id: 'hawkman', name: 'Hawkman' },
-    { id: 'human', name: 'Human' },
-    { id: 'llelimin', name: 'Llelimin' },
-    { id: 'lothar', name: 'Lothar' },
     { id: 'nephilim', name: 'Nephilim' },
+    { id: 'oni', name: 'Oni' },
+    { id: 'puck', name: 'Puck' },
+    { id: 'kalashk', name: 'Kalashk' },
+    { id: 'quasit', name: 'Quasit' },
+    { id: 'skogarhogg', name: 'Skogarhogg' },
+    { id: 'bergrisi', name: 'Bergrisi' },
+    { id: 'myrrisi', name: 'Myrrisi' },
+    { id: 'pnath', name: 'Pnath' },
+    { id: 'lunaeala', name: 'Lunaeala' },
+    { id: 'iaman', name: 'Iaman' },
+    { id: 'dofleini', name: 'Dofleini' },
+    { id: 'zuth', name: 'Zuth' },
     { id: 'svirfneblin', name: 'Svirfneblin' },
-    { id: 'thondur', name: 'Thondur' },
-    { id: 'tzak', name: 'Tzak' },
-    { id: 'urlru', name: 'Urlru' },
-    { id: 'zenyte', name: 'Zenyte' }
+    { id: 'rachnei', name: 'Rachnei' },
+    { id: 'imp', name: 'Imp' },
+    { id: 'phaethon', name: 'Phaethon' },
+    { id: 'lothar', name: 'Lothar' },
+    { id: 'atterkop', name: 'Atterkop' },
+    { id: 'aethoss', name: 'Aethoss' },
+    { id: 'minotaur', name: 'Minotaur' },
+    { id: 'serentyll', name: 'Serentyll' },
+    { id: 'powrie', name: 'Powrie' },
+    { id: 'srazh', name: 'Srazh' },
+    { id: 'trullja', name: 'Trullja' },
+    { id: 'ardhalokh', name: 'Ardhalokh' },
+    { id: 'advenus', name: 'Advenus' },
+    { id: 'drow', name: 'Drow' },
+    { id: 'drachannach', name: 'Drachannach' },
+    { id: 'slaan', name: 'Slaan' },
+    { id: 'aviar', name: 'Aviar' },
+    { id: 'invae', name: 'Invae' },
+    { id: 'dana', name: 'Dana' },
+    { id: 'duergar', name: 'Duergar' },
+    { id: 'yeti', name: 'Yeti' },
+    { id: 'niedrisi', name: 'Niedrisi' },
+    { id: 'urga', name: 'Urgha' },
+    { id: 'sleklith', name: 'Sleklith' },
+    { id: 'skaven', name: 'Skaven' },
+    { id: 'sekh', name: 'Sekh' },
+    { id: 'iyiyik', name: 'Iyiyik' },
+    { id: 'urlnlek', name: 'Urlnlek' },
+    { id: 'quess', name: 'Quess' },
+    { id: 'domandan', name: 'Domandan' },
+    { id: 'garou', name: 'Garou' },
+    { id: 'nyloc', name: 'Nyloc' },
+    { id: 'naga', name: 'Naga' },
+    { id: 'narja', name: 'Narja' },
+    { id: 'kentaur', name: 'Kentaur' },
+    { id: 'kielleth', name: 'Kielleth' },
+    { id: 'riishan', name: 'Riishan' },
+    { id: 'dryad', name: 'Dryad' },
+    { id: 'urln', name: 'Urln' },
+    { id: 'pixie', name: 'Pixie' },
+    { id: 'sprite', name: 'Sprite' },
+    { id: 'naiad', name: 'Naiad' },
+    { id: 'vaasa', name: 'Vaasa' },
+    { id: 'llelimin', name: 'Llelimin' },
+    { id: 'thond', name: 'Thond' },
+    { id: 'bogbogual', name: 'Bogbogual' },
+    { id: 'kitsune', name: 'Kitsune' },
+    { id: 'gnome', name: 'Gnome' },
+    { id: 'aesir', name: 'Aesir' },
+    { id: 'human', name: 'Human' },
+    { id: 'bogual', name: 'Bogual' },
+    { id: 'runtling', name: 'Runtling' },
+    { id: 'kobold', name: 'Kobold' }
 ];
 
 export default races;
