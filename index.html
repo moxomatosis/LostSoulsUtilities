@@ -51,6 +51,27 @@
                 <div class="card">
                     <h2 class="card-title">Build Your Character Profile</h2>
                     
+                    <!-- Character Details: Race & Gender -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <div class="selector-group" style="margin-bottom: 0;">
+                            <label class="selector-label" for="race-select">Character Race</label>
+                            <select id="race-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                                <option value="Unspecified">-- Unspecified --</option>
+                                <!-- Populated dynamically by app.js -->
+                            </select>
+                        </div>
+                        <div class="selector-group" style="margin-bottom: 0;">
+                            <label class="selector-label" for="gender-select">Character Gender</label>
+                            <select id="gender-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                                <option value="Unspecified">-- Unspecified --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Neuter">Neuter</option>
+                                <option value="Hermaphrodite">Hermaphrodite</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <!-- Guild Selection -->
                     <div class="selector-group">
                         <label class="selector-label" for="guild-search">Select One Guild</label>

@@ -1,8 +1,8 @@
-// Lost Souls MUD Guild and Association Compatibility Database
+/* Lost Souls MUD Guild and Association Compatibility Database */
 const LOST_SOULS_DATA = {
   "tags": {
     "Aesthete": [],
-    "Agent": [],
+    "Agent": ["Champion"],
     "Altruist": [
       "Evil",
       "Malevolent",
@@ -15,7 +15,7 @@ const LOST_SOULS_DATA = {
     ],
     "Avaricious": [],
     "Caretaker": [],
-    "Champion": [],
+    "Champion": ["Agent"],
     "Chaotic": [
       "Neutral",
       "Ordered"
@@ -532,9 +532,6 @@ const LOST_SOULS_DATA = {
         "Servant",
         "Warrior"
       ],
-      "incompat_groups": [
-      ],
-      // These are likely all undocumented tag compatibilities, but hard to debug.
       "incompat_tags": [
         "Protector",
         "Soldier" 
@@ -710,8 +707,8 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_tags": [
         "Agent",
-        "Furtive",
-        "Servant"
+        "Servant",
+        "Malevolent",
       ],
       "raw_incompat_lines": [
         "Aviar and advenus cannot join.",
@@ -903,11 +900,9 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [
         "Fianna",
-        "Valathyr"
       ],
       "incompat_tags": [],
       "raw_incompat_lines": [
-        "You have to have fey blood and thus cannot have demonic blood. Fianna-granted fey blood can bridge the gap.  You can join by visiting the headmaster in  Valathyr  and say 'pledge me to the Cuar Faernae'.  Be aware that the dana may not be too keen on letting you in the palace area.  One may have to ...",
         "Eaerandyl states, &gt;&gt;-&gt; You cannot join the Cuar Faernae because you are a proponent of chaos. &lt;-&lt;&lt; to you."
       ]
     },
@@ -1262,6 +1257,7 @@ const LOST_SOULS_DATA = {
         "Tzakazhar"
       ],
       "incompat_tags": [
+        "Deceiver",
         "Drunkard",
         "Furtive",
         "Hedonist",
@@ -1517,145 +1513,8 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [],
       "raw_incompat_lines": []
     },
-    "Valathyr": {
-      "name": "Valathyr",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Fezzik": {
-      "name": "Fezzik",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Gardagh": {
-      "name": "Gardagh",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Byundi": {
-      "name": "Byundi",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Sinister Dexter": {
-      "name": "Sinister Dexter",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Shadow Tower": {
-      "name": "Shadow Tower",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Ivory Tower": {
-      "name": "Ivory Tower",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Ebiria": {
-      "name": "Ebiria",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Liathyr": {
-      "name": "Liathyr",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "shoggothim": {
-      "name": "shoggothim",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "available vorgaal is determined by your size and the state of your health; damaged carculgnath cannot be used to form flgathu.  This also means that your"
-      ]
-    },
-    "Devonshire": {
-      "name": "Devonshire",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
     "Ordo Purus Magicae": {
       "name": "Ordo Purus Magicae",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Tenochlan": {
-      "name": "Tenochlan",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Leah's Hill": {
-      "name": "Leah's Hill",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Yevath": {
-      "name": "Yevath",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Othrys": {
-      "name": "Othrys",
       "alias": null,
       "type": "guild",
       "tags": [],
@@ -1679,132 +1538,6 @@ const LOST_SOULS_DATA = {
       "raw_incompat_lines": [
         "4   Incompatible Associations",
         "Incompatible Associations"
-      ]
-    },
-    "Cimbra": {
-      "name": "Cimbra",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Ordo Maleficus": {
-      "name": "Ordo Maleficus",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Ordo Undine Proeliatori": {
-      "name": "Ordo Undine Proeliatori",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "ocean, so deep that light cannot penetrate that deeply.  A few, however, live",
-        "uses can gorge the caster and deplete the host to the point where the host cannot support the feeding any longer.  As a result, if the caster is caught, the host may not much less appreciative of losing large amounts of nutrients than if the",
-        "places that it cannot follow its victims.  This invocation of the Mollusk",
-        "through the digestive system.  Items and particulates that cannot be digested",
-        "the caster's vocal aparatus into the local medium, with such power that it can stun a nearby opponent.  The raw force of the blast is usually enough to stun even opponent who cannot hear, as the shockwaves penetrate through their physical form",
-        "relative wind moves aft. A vessel downwind of another, however, in attempting to attack upwind, is constrained to trim sail as the relative wind moves forward and cannot point too far into the wind for fear of being headed. In sailing warfare,",
-        "results cannot be overlooked.  Repeated exposure to healing waters has been"
-      ]
-    },
-    "Outsiders": {
-      "name": "Outsiders",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Rainbow Magi": {
-      "name": "Rainbow Magi",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Red Magi": {
-      "name": "Red Magi",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Sentinels": {
-      "name": "Sentinels",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Remember to put the armour on. You cannot drop the armor by any means (including death!) if you are in the guild, so you may as well have it on.",
-        "Races that are not anthropic cannot join because their extra limbs will not fit in the suit."
-      ]
-    },
-    "White Magi": {
-      "name": "White Magi",
-      "alias": null,
-      "type": "guild",
-      "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": []
-    },
-    "Devonshire Clerics": {
-      "name": "Devonshire Clerics",
-      "alias": null,
-      "type": "guild",
-      "tags": [
-        "Good",
-        "Healer",
-        "Invested",
-        "Ordered",
-        "Priest"
-      ],
-      "incompat_groups": [
-        "Devonshire"
-      ],
-      "incompat_tags": [
-        "Initiate"
-      ],
-      "raw_incompat_lines": [
-        "Thromdan intones, [ You cannot join the Devonshire Clerics because you are an initiate into"
-      ]
-    },
-    "ELF Guild": {
-      "name": "ELF Guild",
-      "alias": null,
-      "type": "guild",
-      "tags": [
-        "Chaotic",
-        "Devotional",
-        "Initiate",
-        "Invested",
-        "Libertine",
-        "Magician",
-        "Priest"
-      ],
-      "incompat_groups": [
-        "Sinister Dexter"
-      ],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Sinister Dexter murmurs something you cannot hear in Latin.",
-        "Sinister Dexter purports something you cannot hear in Latin."
       ]
     },
     "Archmagus": {

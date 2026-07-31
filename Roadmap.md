@@ -15,3 +15,7 @@ Store wiki links in data.js
 
 
 Change incompat to object array and add incompatibility lines to that.
+
+Don't use name keys, use IDs for incompatability so that names can change? Or use an ID that is brief like elf or poee
+
+Handle Adventurer's Guild as the default (there is no unaffil)
