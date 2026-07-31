@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lost Souls MUD - Affiliation Compatibility Planner</title>
-    
+
     <!-- Google Fonts for Gothic/Fantasy headings and modern body UI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Local Stylesheet -->
     <link rel="stylesheet" href="index.css">
-    
+
     <!-- Preloaded Database from scraped wiki + CSV -->
     <script src="data.js"></script>
 </head>
+
 <body>
 
     <!-- Application Banner Header -->
@@ -26,170 +30,99 @@
 
     <!-- Main Container -->
     <main class="app-container">
-        
-        <!-- Tab Navigation Buttons -->
-        <nav class="tabs-navigation" aria-label="Main Navigation">
-            <button class="tab-button active" data-tab="checker-tab" id="tab-btn-checker">
-                ⚔️ Compatibility Checker
-            </button>
-            <button class="tab-button" data-tab="guild-matrix-tab" id="tab-btn-guild-matrix">
-                🛡️ Guild Tags Matrix
-            </button>
-            <button class="tab-button" data-tab="tag-matrix-tab" id="tab-btn-tag-matrix">
-                📜 Tag Compatibility
-            </button>
-            <button class="tab-button" data-tab="exceptions-tab" id="tab-btn-exceptions">
-                ⚠️ Outliers & Exceptions
-            </button>
-        </nav>
+        <div class="checker-layout">
 
-        <!-- Tab 1: Compatibility Checker -->
-        <section id="checker-tab" class="tab-content active" aria-labelledby="tab-btn-checker">
-            <div class="checker-layout">
-                
-                <!-- Left Input Panel -->
-                <div class="card">
-                    <h2 class="card-title">Build Your Character Profile</h2>
-                    
-                    <!-- Character Details: Race & Gender -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
-                        <div class="selector-group" style="margin-bottom: 0;">
-                            <label class="selector-label" for="race-select">Character Race</label>
-                            <select id="race-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
-                                <option value="Unspecified">-- Unspecified --</option>
-                                <!-- Populated dynamically by app.js -->
-                            </select>
-                        </div>
-                        <div class="selector-group" style="margin-bottom: 0;">
-                            <label class="selector-label" for="gender-select">Character Gender</label>
-                            <select id="gender-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
-                                <option value="Unspecified">-- Unspecified --</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Neuter">Neuter</option>
-                                <option value="Hermaphrodite">Hermaphrodite</option>
-                            </select>
-                        </div>
+            <!-- Left Input Panel -->
+            <div class="card">
+                <h2 class="card-title">Build Your Character Profile</h2>
+
+                <!-- Character Details: Race & Gender -->
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="race-select">Character Race</label>
+                        <select id="race-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                            <option value="Unspecified">-- Unspecified --</option>
+                            <!-- Populated dynamically by app.js -->
+                        </select>
                     </div>
-                    
-                    <!-- Guild Selection -->
-                    <div class="selector-group">
-                        <label class="selector-label" for="guild-search">Select One Guild</label>
-                        <input type="text" id="guild-search" class="search-input" placeholder="Search Guilds (e.g. Justicars, Aligned, Lightbringers)...">
-                        <div class="guild-select-wrapper">
-                            <div class="guild-list-container" id="guild-select-list" role="listbox" aria-label="Guild Options">
-                                <!-- Populated dynamically by app.js -->
-                            </div>
-                        </div>
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="gender-select">Character Gender</label>
+                        <select id="gender-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                            <option value="Unspecified">-- Unspecified --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Neuter">Neuter</option>
+                            <option value="Hermaphrodite">Hermaphrodite</option>
+                        </select>
                     </div>
-                    
-                    <!-- Association Selection -->
-                    <div class="selector-group">
-                        <label class="selector-label" for="assoc-search">Select Multiple Associations</label>
-                        <input type="text" id="assoc-search" class="search-input" placeholder="Search Associations (e.g. Gauric, Fianna, Attuned)...">
-                        <div class="association-checklist" id="assoc-checkbox-list" aria-label="Association Options">
+                </div>
+
+                <!-- Guild Selection -->
+                <div class="selector-group">
+                    <label class="selector-label" for="guild-search">Select One Guild</label>
+                    <input type="text" id="guild-search" class="search-input"
+                        placeholder="Search Guilds (e.g. Justicars, Aligned, Lightbringers)...">
+                    <div class="guild-select-wrapper">
+                        <div class="guild-list-container" id="guild-select-list" role="listbox"
+                            aria-label="Guild Options">
                             <!-- Populated dynamically by app.js -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Results Panel -->
-                <div class="card">
-                    <h2 class="card-title">Compatibility Analysis</h2>
-                    <div class="results-panel">
-                        
-                        <!-- Status Banner Hero -->
-                        <div class="status-hero empty" id="status-hero-banner">
-                            <div class="status-label" id="status-hero-text">Empty Profile</div>
-                            <div class="status-desc" id="status-hero-desc">Select a guild or association to analyze compatibility.</div>
-                        </div>
+                <!-- Association Selection -->
+                <div class="selector-group">
+                    <label class="selector-label" for="assoc-search">Select Multiple Associations</label>
+                    <input type="text" id="assoc-search" class="search-input"
+                        placeholder="Search Associations (e.g. Gauric, Fianna, Attuned)...">
+                    <div class="association-checklist" id="assoc-checkbox-list" aria-label="Association Options">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Chip Bar showing currently selected items -->
-                        <div id="selected-chips-container" class="chips-bar">
+            <!-- Right Results Panel -->
+            <div class="card">
+                <h2 class="card-title">Compatibility Analysis</h2>
+                <div class="results-panel">
+
+                    <!-- Status Banner Hero -->
+                    <div class="status-hero empty" id="status-hero-banner">
+                        <div class="status-label" id="status-hero-text">Empty Profile</div>
+                        <div class="status-desc" id="status-hero-desc">Select a guild or association to analyze
+                            compatibility.</div>
+                    </div>
+
+                    <!-- Chip Bar showing currently selected items -->
+                    <div id="selected-chips-container" class="chips-bar">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+
+                    <!-- Active Tags Summary -->
+                    <div id="active-tags-container" style="margin-bottom: 1.5rem; display: none;">
+                        <h3
+                            style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--accent-gold);">
+                            Possessed Tags</h3>
+                        <div id="active-tags-list" class="group-tags">
                             <!-- Populated dynamically by app.js -->
                         </div>
+                    </div>
 
-                        <!-- Active Tags Summary -->
-                        <div id="active-tags-container" style="margin-bottom: 1.5rem; display: none;">
-                            <h3 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--accent-gold);">Possessed Tags</h3>
-                            <div id="active-tags-list" class="group-tags">
-                                <!-- Populated dynamically by app.js -->
-                            </div>
-                        </div>
-
-                        <!-- Detailed Conflict Warnings List -->
-                        <div class="conflicts-container" id="conflicts-list-container">
-                            <div class="empty-state-message">
-                                <span>No groups selected. Add affiliations in the left panel to test compatibility.</span>
-                            </div>
+                    <!-- Detailed Conflict Warnings List -->
+                    <div class="conflicts-container" id="conflicts-list-container">
+                        <div class="empty-state-message">
+                            <span>No groups selected. Add affiliations in the left panel to test compatibility.</span>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </section>
 
-        <!-- Tab 2: Guild Tags Matrix -->
-        <section id="guild-matrix-tab" class="tab-content" aria-labelledby="tab-btn-guild-matrix">
-            <div class="card">
-                <h2 class="card-title">
-                    <span>Guild Tags Matrix</span>
-                    <input type="text" id="guild-matrix-search" class="search-input" style="max-width: 300px; margin-bottom: 0;" placeholder="Filter Guilds...">
-                </h2>
-                <p class="app-subtitle" style="margin-bottom: 1.5rem;">
-                    Hover over any cell to highlight the row (Guild) and column (Tag). Gold checkmarks (<span style="color: var(--accent-gold); font-weight: bold;">✔</span>) represent active tags assigned to that guild.
-                </p>
-                <div class="matrix-wrapper">
-                    <table class="matrix-table" id="guild-matrix-table">
-                        <!-- Generated dynamically by app.js -->
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab 3: Tag Compatibility Matrix -->
-        <section id="tag-matrix-tab" class="tab-content" aria-labelledby="tab-btn-tag-matrix">
-            <div class="card">
-                <h2 class="card-title">Tag Compatibility Matrix</h2>
-                <p class="app-subtitle" style="margin-bottom: 1.5rem;">
-                    A grid displaying conflicts between all discovered MUD affiliation tags. Red boxes (❌) indicate incompatibility, green boxes (✔) indicate compatibility. Click on a column or row header to learn more about the tag.
-                </p>
-                <div class="matrix-wrapper">
-                    <table class="matrix-table" id="tag-matrix-table">
-                        <!-- Generated dynamically by app.js -->
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tab 4: Exceptions Directory -->
-        <section id="exceptions-tab" class="tab-content" aria-labelledby="tab-btn-exceptions">
-            <div class="exceptions-grid">
-                
-                <!-- Guild Preclusions Panel -->
-                <div class="card">
-                    <h2 class="card-title">Guild Outliers</h2>
-                    <input type="text" id="guild-exceptions-search" class="search-input" placeholder="Filter Guild Outliers...">
-                    <div class="exception-list-container" id="guild-exceptions-list">
-                        <!-- Populated dynamically by app.js -->
-                    </div>
-                </div>
-
-                <!-- Association Preclusions Panel -->
-                <div class="card">
-                    <h2 class="card-title">Association Outliers</h2>
-                    <input type="text" id="assoc-exceptions-search" class="search-input" placeholder="Filter Association Outliers...">
-                    <div class="exception-list-container" id="assoc-exceptions-list">
-                        <!-- Populated dynamically by app.js -->
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
+        </div>
     </main>
 
     <!-- App Logic Script -->
     <script src="app.js" defer type="module"></script>
 </body>
+
 </html>

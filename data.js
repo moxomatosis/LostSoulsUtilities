@@ -1512,7 +1512,7 @@ const LOST_SOULS_DATA = {
       "excluded_races": [
         "duergar",
         "nyloc",
-        "srazhar",
+        "srazh",
         "ardhalokh",
         "rachnei",
         "svirfneblin",
@@ -1579,7 +1579,7 @@ const LOST_SOULS_DATA = {
         "lothar",
         "lunaeala",
         "phaethon",
-        "quessae",
+        "quess",
         "svirfneblin",
         "thond",
         "tuatha",

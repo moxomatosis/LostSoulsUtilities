@@ -943,23 +943,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderAssociationList(e.target.value);
     });
 
-    // Guild Matrix search filter
-    const guildMatrixSearchInput = document.getElementById('guild-matrix-search');
-    guildMatrixSearchInput.addEventListener('input', (e) => {
-        renderGuildMatrix(e.target.value);
-    });
-
-    // Exceptions Search filters
-    const guildExceptionsSearchInput = document.getElementById('guild-exceptions-search');
-    const assocExceptionsSearchInput = document.getElementById('assoc-exceptions-search');
-
-    guildExceptionsSearchInput.addEventListener('input', () => {
-        renderExceptions(guildExceptionsSearchInput.value, assocExceptionsSearchInput.value);
-    });
-    assocExceptionsSearchInput.addEventListener('input', () => {
-        renderExceptions(guildExceptionsSearchInput.value, assocExceptionsSearchInput.value);
-    });
-
     // -------------------------------------------------------------
     // 6.5 RACE AND GENDER POPULATION & LISTENERS
     // -------------------------------------------------------------
@@ -996,9 +979,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGuildList();
     renderAssociationList();
     updateCheckerResults();
-    renderGuildMatrix();
-    renderTagMatrix();
-    renderExceptions();
 
     // -------------------------------------------------------------
     // 8. DOCUMENTATION FOR data.js

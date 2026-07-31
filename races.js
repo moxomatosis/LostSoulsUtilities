@@ -1,88 +1,3 @@
-// Balrog
-// Amberite
-// Dakshin
-// Mantid
-// Dragon
-// Chaosborn
-// Vlekthid
-// Fomor
-// Zenun
-// Kedeth
-// Tuatha
-// Raktorak
-// Gezuuni
-// Cyflymyll
-// Bezhuldaar
-// Shoggoth
-// Eolon
-// Nephilim
-// Oni
-// Puck
-// Kalashk
-// Quasit
-// Skogarhogg
-// Bergrisi
-// Myrrisi
-// Pnath
-// Lunaeala
-// Iaman
-// Dofleini
-// Zuth
-// Svirfneblin
-// Rachnei
-// Imp
-// Phaethon
-// Lothar
-// Atterkop
-// Aethoss
-// Minotaur
-// Serentyll
-// Powrie
-// Srazh
-// Trullja
-// Ardhalokh
-// Advenus
-// Drow
-// Drachannach
-// Slaan
-// Aviar
-// Invae
-// Dana
-// Duergar
-// Yeti
-// Niedrisi
-// Urgha
-// Sleklith
-// Skaven
-// Sekh
-// Iyiyik
-// Urlnlek
-// Quess
-// Domandan
-// Garou
-// Nyloc
-// Naga
-// Narja
-// Kentaur
-// Kielleth
-// Riishan
-// Dryad
-// Urln
-// Pixie
-// Sprite
-// Naiad
-// Vaasa
-// Llelimin
-// Thond
-// Bogbogual
-// Kitsune
-// Gnome
-// Aesir
-// Human
-// Bogual
-// Runtling
-// Kobold
-
 const racesById = {
     balrog: { id: 'balrog', name: 'Balrog' },
     amberite: { id: 'amberite', name: 'Amberite' },
@@ -137,7 +52,7 @@ const racesById = {
     duergar: { id: 'duergar', name: 'Duergar' },
     yeti: { id: 'yeti', name: 'Yeti' },
     niedrisi: { id: 'niedrisi', name: 'Niedrisi' },
-    urgha: { id: 'urga', name: 'Urgha' },
+    urga: { id: 'urga', name: 'Urga' },
     sleklith: { id: 'sleklith', name: 'Sleklith' },
     skaven: { id: 'skaven', name: 'Skaven' },
     sekh: { id: 'sekh', name: 'Sekh' },
@@ -167,7 +82,8 @@ const racesById = {
     human: { id: 'human', name: 'Human' },
     bogual: { id: 'bogual', name: 'Bogual' },
     runtling: { id: 'runtling', name: 'Runtling' },
-    kobold: { id: 'kobold', name: 'Kobold' }
+    kobold: { id: 'kobold', name: 'Kobold' },
+    drochnei: {id: 'drochnei', name: 'Drochnei'}
 };
 
 export default racesById;
