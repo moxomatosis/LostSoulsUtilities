@@ -92,13 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = i + 1; j < activeTags.length; j++) {
                 const tagA = activeTags[i];
                 const tagB = activeTags[j];
-                
+
+                // Skip if both tags come from the same group
+                const sourcesA = tagSources[tagA];
+                const sourcesB = tagSources[tagB];
+                if (sourcesA.length === 1 && sourcesB.length === 1 && sourcesA[0] === sourcesB[0]) {
+                    continue;
+                }
+
                 const tagACompat = state.tagsMeta[tagA] || [];
                 if (tagACompat.includes(tagB)) {
                     // Conflict found
                     const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
                     const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
-                    
+
                     conflicts.push({
                         type: 'tag_tag',
                         title: `Tag Conflict: ${tagA} & ${tagB}`,
@@ -295,12 +302,16 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = i + 1; j < activeTags.length; j++) {
                 const tagA = activeTags[i];
                 const tagB = activeTags[j];
-                
+
+                // Skip if both tags come from the same group
+                const sourcesA = tagSources[tagA];
+                const sourcesB = tagSources[tagB];
+                if (sourcesA.length === 1 && sourcesB.length === 1 && sourcesA[0] === sourcesB[0]) {
+                    continue;
+                }
+
                 const tagACompat = state.tagsMeta[tagA] || [];
                 if (tagACompat.includes(tagB)) {
-                    const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
-                    const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
-                    
                     conflicts.push({
                         type: 'tag_tag',
                         reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
