@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             
-            item.addEventListener('click', () => selectGuild(g.name));
+            item.addEventListener('click', () => selectGuild(g.id));
             guildListContainer.appendChild(item);
         });
     }
@@ -433,8 +433,8 @@ document.addEventListener('DOMContentLoaded', () => {
  
         // Map associations to their status
         const processed = state.associations.map(a => {
-            const isChecked = state.selectedAssociations.has(a.name);
-            const conflicts = isChecked ? [] : testCompatibilityWithCandidate(a.name);
+            const isChecked = state.selectedAssociations.has(a.id);
+            const conflicts = isChecked ? [] : testCompatibilityWithCandidate(a.id);
             const isCompatible = conflicts.length === 0;
             return {
                 assoc: a,
