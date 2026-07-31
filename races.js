@@ -2,18 +2,12 @@
 // Amberite
 // Dakshin
 // Mantid
-// Balrog
-// Amberite
-// Dakshin
-// Mantid
 // Dragon
 // Chaosborn
 // Vlekthid
 // Fomor
 // Zenun
 // Kedeth
-
-
 // Tuatha
 // Raktorak
 // Gezuuni
@@ -23,8 +17,6 @@
 // Eolon
 // Nephilim
 // Oni
-
-
 // Puck
 // Kalashk
 // Quasit
@@ -36,8 +28,6 @@
 // Iaman
 // Dofleini
 // Zuth
-
-
 // Svirfneblin
 // Rachnei
 // Imp
@@ -49,8 +39,6 @@
 // Serentyll
 // Powrie
 // Srazh
-
-
 // Trullja
 // Ardhalokh
 // Advenus
@@ -60,20 +48,16 @@
 // Aviar
 // Invae
 // Dana
-
-
 // Duergar
 // Yeti
 // Niedrisi
-// Urga
+// Urgha
 // Sleklith
 // Skaven
 // Sekh
 // Iyiyik
 // Urlnlek
 // Quess
-
-
 // Domandan
 // Garou
 // Nyloc
@@ -84,8 +68,6 @@
 // Riishan
 // Dryad
 // Urln
-
-
 // Pixie
 // Sprite
 // Naiad
@@ -96,15 +78,10 @@
 // Kitsune
 // Gnome
 // Aesir
-
-
 // Human
 // Bogual
 // Runtling
 // Kobold
-
-
-
 
 const racesById = {
     balrog: { id: 'balrog', name: 'Balrog' },
