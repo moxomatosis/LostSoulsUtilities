@@ -947,6 +947,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     const raceSelect = document.getElementById('race-select');
     if (raceSelect) {
+        races.sort((a, b) => a.name.localeCompare(b.name));
         races.forEach(race => {
             const opt = document.createElement('option');
             opt.value = race.id;
