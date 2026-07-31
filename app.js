@@ -315,17 +315,16 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = i + 1; j < activeTags.length; j++) {
                 const tagA = activeTags[i];
                 const tagB = activeTags[j];
+                
                 const tagACompat = state.tagsMeta[tagA] || [];
                 if (tagACompat.includes(tagB)) {
-                    const sourcesA = tagSources[tagA];
-                    const sourcesB = tagSources[tagB];
-                    if (sourcesA.includes(candidateId) || sourcesB.includes(candidateId)) {
-                        const conflictingWith = [...new Set([...sourcesA, ...sourcesB])].filter(n => n !== candidateId);
-                        conflicts.push({
-                            type: 'tag_tag',
-                            reason: `Tag Conflict (${tagA} & ${tagB}) with ${conflictingWith.join(', ')}`
-                        });
-                    }
+                    const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
+                    const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
+                    
+                    conflicts.push({
+                        type: 'tag_tag',
+                        reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
+                    });
                 }
             }
         }
@@ -337,16 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (tagSources[precludedTag]) {
                         const foreignSources = tagSources[precludedTag].filter(name => name !== g.name);
                         if (foreignSources.length > 0) {
-                            if (g.id === candidateId || foreignSources.includes(candidateId)) {
-                                const subject = g.id === candidateId ? 'precluded tag' : 'precluding group';
-                                const other = g.id === candidateId ? foreignSources.join(', ') : g.name;
-                                conflicts.push({
-                                    type: 'group_tag',
-                                    reason: g.id === candidateId 
-                                        ? `Precluded tag "${precludedTag}" (from ${other})`
-                                        : `Excluded by ${other} (precludes tag "${precludedTag}")`
-                                });
-                            }
+                            conflicts.push({
+                                type: 'group_tag',
+                                reason: `Precluded tag "${precludedTag}" from ${foreignSources.join(', ')}`
+                            });
                         }
                     }
                 });
@@ -357,19 +350,12 @@ document.addEventListener('DOMContentLoaded', () => {
         activeGroups.forEach(g => {
             if (g.incompat_groups && g.incompat_groups.length > 0) {
                 g.incompat_groups.forEach(precludedGroupName => {
-                    const isSelectedOrCand = (state.selectedGuild === precludedGroupName) || 
-                                             state.selectedAssociations.has(precludedGroupName) || 
-                                             (precludedGroupName === candidateId);
-                    if (isSelectedOrCand) {
-                        if (g.id === candidateId || precludedGroupName === candidateId) {
-                            const other = g.id === candidateId ? precludedGroupName : g.name;
-                            conflicts.push({
-                                type: 'group_group',
-                                reason: g.id === candidateId
-                                    ? `Direct conflict with ${other}`
-                                    : `Excluded by ${other}`
-                            });
-                        }
+                    const isSelected = state.selectedGuild === precludedGroupName || state.selectedAssociations.has(precludedGroupName);
+                    if (isSelected) {
+                        conflicts.push({
+                            type: 'group_group',
+                            reason: `Direct conflict with ${precludedGroupName}`
+                        });
                     }
                 });
             }
@@ -378,23 +364,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Racist Group Restrictions
         activeGroups.forEach(g => {
             if (g.tags.includes('Racist')) {
-                if (g.id === candidateId) {
-                    if (state.selectedRace === 'Unspecified') {
-                        conflicts.push({
-                            type: 'race_warning',
-                            reason: 'Requires Race Selection (Racist Group)'
-                        });
-                    } else {
-                        if (g.allowed_races && g.allowed_races.length > 0 && !g.allowed_races.includes(state.selectedRace)) {
+                if (state.selectedRace === 'Unspecified') {
+                    conflicts.push({
+                        type: 'race_warning',
+                        reason: 'Requires race selection'
+                    });
+                } else {
+                    if (g.allowed_races && g.allowed_races.length > 0) {
+                        if (!g.allowed_races.includes(state.selectedRace)) {
                             conflicts.push({
                                 type: 'group_race',
-                                reason: `Requires race: ${g.allowed_races.join(', ')}`
+                                reason: `Allowed races: ${g.allowed_races.join(', ')}. Your race is ${state.selectedRace}`
                             });
                         }
-                        if (g.excluded_races && g.excluded_races.length > 0 && g.excluded_races.includes(state.selectedRace)) {
+                    }
+                    if (g.excluded_races && g.excluded_races.length > 0) {
+                        if (g.excluded_races.includes(state.selectedRace)) {
                             conflicts.push({
                                 type: 'group_race',
-                                reason: `Excludes race: ${state.selectedRace}`
+                                reason: `Excluded races: ${g.excluded_races.join(', ')}. Your race is ${state.selectedRace}`
                             });
                         }
                     }
@@ -405,17 +393,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // 5. Sexist Group Restrictions
         activeGroups.forEach(g => {
             if (g.tags.includes('Sexist')) {
-                if (g.id === candidateId) {
-                    if (state.selectedGender === 'Unspecified') {
-                        conflicts.push({
-                            type: 'gender_warning',
-                            reason: 'Requires Gender Selection (Sexist Group)'
-                        });
-                    } else {
-                        if (g.allowed_genders && g.allowed_genders.length > 0 && !g.allowed_genders.includes(state.selectedGender)) {
+                if (state.selectedGender === 'Unspecified') {
+                    conflicts.push({
+                        type: 'gender_warning',
+                        reason: 'Requires gender selection'
+                    });
+                } else {
+                    if (g.allowed_genders && g.allowed_genders.length > 0) {
+                        if (!g.allowed_genders.includes(state.selectedGender)) {
                             conflicts.push({
                                 type: 'group_gender',
-                                reason: `Requires gender: ${g.allowed_genders.join(', ')}`
+                                reason: `Allowed genders: ${g.allowed_genders.join(', ')}. Your gender is ${state.selectedGender}`
                             });
                         }
                     }
@@ -484,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="${getWikiUrl(a.name)}" target="_blank" class="wiki-link" title="View Wiki Page">📖</a>
                     </span>
                     <div class="group-tags">${tagsHtml}</div>
-                    ${conflictHtml}
                 </div>
             `;
  
