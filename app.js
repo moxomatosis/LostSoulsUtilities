@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         activeGroups.forEach(g => {
             if (g.incompat_groups && g.incompat_groups.length > 0) {
                 g.incompat_groups.forEach(precludedGroupName => {
-                    // Check if the precluded group is selected
                     const isPrecludedGuildSelected = state.selectedGuild === precludedGroupName;
                     const isPrecludedAssocSelected = state.selectedAssociations.has(precludedGroupName);
                     
@@ -157,24 +156,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- RULE 4: Race Restrictions ---
         activeGroups.forEach(g => {
-            if (g.allowed_races && g.allowed_races.length > 0) {
-                const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
-                if (!allowedRaceNames.includes(state.selectedRace)) {
-                    conflicts.push({
-                        type: 'group_race',
-                        title: `${g.name} Race Conflict`,
-                        desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
-                    });
+            if (state.selectedRace !== 'Unspecified') {
+                if (g.allowed_races && g.allowed_races.length > 0) {
+                    const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
+                    if (!allowedRaceNames.includes(state.selectedRace)) {
+                        conflicts.push({
+                            type: 'group_race',
+                            title: `${g.name} Race Conflict`,
+                            desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB}).`
+                        });
+                    }
                 }
-            }
-            if (g.excluded_races && g.excluded_races.length > 0) {
-                const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
-                if (excludedRaceNames.includes(state.selectedRace)) {
-                    conflicts.push({
-                        type: 'group_race',
-                        title: `${g.name} Race Exclusion`,
-                        desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
-                    });
+                if (g.excluded_races && g.excluded_races.length > 0) {
+                    const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
+                    if (excludedRaceNames.includes(state.selectedRace)) {
+                        conflicts.push({
+                            type: 'group_race',
+                            title: `${g.name} Race Exclusion`,
+                            desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
+                        });
+                    }
                 }
             }
         });
@@ -356,22 +357,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Race Restrictions
         activeGroups.forEach(g => {
-            if (g.allowed_races && g.allowed_races.length > 0) {
-                const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
-                if (!allowedRaceNames.includes(state.selectedRace)) {
-                    conflicts.push({
-                        type: 'group_race',
-                        reason: `Allowed races: ${allowedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
-                    });
+            if (state.selectedRace !== 'Unspecified') {
+                if (g.allowed_races && g.allowed_races.length > 0) {
+                    const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
+                    if (!allowedRaceNames.includes(state.selectedRace)) {
+                        conflicts.push({
+                            type: 'group_race',
+                            reason: `Allowed races: ${allowedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
+                        });
+                    }
                 }
-            }
-            if (g.excluded_races && g.excluded_races.length > 0) {
-                const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
-                if (excludedRaceNames.includes(state.selectedRace)) {
-                    conflicts.push({
-                        type: 'group_race',
-                        reason: `Excluded races: ${excludedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
-                    });
+                if (g.excluded_races && g.excluded_races.length > 0) {
+                    const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
+                    if (excludedRaceNames.includes(state.selectedRace)) {
+                        conflicts.push({
+                            type: 'group_race',
+                            reason: `Excluded races: ${excludedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
+                        });
+                    }
                 }
             }
         });
