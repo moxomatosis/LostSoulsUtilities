@@ -3,6 +3,8 @@
  * Application Logic & Compatibility Engine
  */
 
+import races from './races.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 1. STATE MANAGEMENT
@@ -994,18 +996,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 6.5 RACE AND GENDER POPULATION & LISTENERS
     // -------------------------------------------------------------
-    const RACES = [
-        "Advenus", "Amberite", "Avar", "Balrog", "Dana", "Draconian", "Drow",
-        "Duergar", "Dwarf", "Elf", "Eolon", "Hawkman", "Human", "Llelimin",
-        "Lothar", "Nephilim", "Svirfneblin", "Thondur", "Tzak", "Urlru", "Zenyte"
-    ];
-
     const raceSelect = document.getElementById('race-select');
     if (raceSelect) {
-        RACES.forEach(race => {
+        races.forEach(race => {
             const opt = document.createElement('option');
-            opt.value = race;
-            opt.textContent = race;
+            opt.value = race.name;
+            opt.textContent = race.name;
             raceSelect.appendChild(opt);
         });
 
