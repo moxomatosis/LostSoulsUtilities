@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         selectedGuild: null,             // String: Guild ID or null
         selectedAssociations: new Set(),   // Set of Strings: Selected association IDs
-        selectedRace: 'Unspecified',     // String: Selected character race
+        selectedRace: 'Unspecified',     // String: Selected character race (ID)
         selectedGender: 'Unspecified',   // String: Selected character gender
         guilds: [],                      // List of group objects representing guilds
         associations: [],                // List of group objects representing associations
@@ -1000,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (raceSelect) {
         races.forEach(race => {
             const opt = document.createElement('option');
-            opt.value = race.name;
+            opt.value = race.id;
             opt.textContent = race.name;
             raceSelect.appendChild(opt);
         });
