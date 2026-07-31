@@ -1035,4 +1035,49 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGuildMatrix();
     renderTagMatrix();
     renderExceptions();
+
+    // -------------------------------------------------------------
+    // 8. DOCUMENTATION FOR data.js
+    // -------------------------------------------------------------
+    /**
+     * Documentation for data.js
+     *
+     * The `LOST_SOULS_DATA` object contains the guild and association data for the Lost Souls MUD.
+     * It has two main properties: `tags` and `groups`.
+     *
+     * 1. tags:
+     *    - An object where each key is a tag name (string) and the value is an array of tags that are incompatible with it.
+     *    Example:
+     *    ```
+     *    "Agent": [
+     *        "Champion"
+     *    ],
+     *    ```
+     *
+     * 2. groups:
+     *    - An object where each key is a group ID (string) and the value is an object representing the group.
+     *    Each group object has the following properties:
+     *      - name: string
+     *      - alias: string or null
+     *      - type: "guild" or "association"
+     *      - tags: array of strings (tags associated with the group)
+     *      - incompat_groups: array of strings (group IDs that are incompatible with this group)
+     *      - incompat_tags: array of strings (tags that are incompatible with this group)
+     *      - raw_incompat_lines: array of strings (raw lines from the data source indicating compatibility issues)
+     *      - id: string (unique identifier for the group)
+     *
+     * Example:
+     * ```
+     * "adventurers_guild": {
+     *    "name": "Adventurer's Guild",
+     *    "alias": null,
+     *    "type": "guild",
+     *    "tags": [],
+     *    "incompat_groups": [],
+     *    "incompat_tags": [],
+     *    "raw_incompat_lines": [],
+     *    "id": "adventurers_guild"
+     * },
+     * ```
+     */
 });
