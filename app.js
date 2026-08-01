@@ -883,17 +883,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // Raw warnings if any
-            if (g.raw_incompat_lines && g.raw_incompat_lines.length > 0) {
-                const rawLinesHtml = g.raw_incompat_lines
-                    .filter(line => line.toLowerCase().includes('incompat') || line.toLowerCase().includes('exclus') || line.toLowerCase().includes('cannot'))
-                    .map(line => `<div style="font-style: italic; font-size: 0.8rem; margin-top: 0.25rem;">"${line}"</div>`)
-                    .join('');
-                if (rawLinesHtml) {
-                    bodyHtml += `<div style="margin-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 0.5rem;">${rawLinesHtml}</div>`;
-                }
-            }
-
             item.innerHTML = `
                 <div class="exception-item-header">
                     <span class="exception-item-name">
@@ -1007,7 +996,6 @@ document.addEventListener('DOMContentLoaded', () => {
      *      - tags: array of strings (tags associated with the group)
      *      - incompat_groups: array of strings (group IDs that are incompatible with this group)
      *      - incompat_tags: array of strings (tags that are incompatible with this group)
-     *      - raw_incompat_lines: array of strings (raw lines from the data source indicating compatibility issues)
      *      - id: string (unique identifier for the group)
      *
      * Example:
@@ -1019,7 +1007,6 @@ document.addEventListener('DOMContentLoaded', () => {
      *    "tags": [],
      *    "incompat_groups": [],
      *    "incompat_tags": [],
-     *    "raw_incompat_lines": [],
      *    "id": "adventurers_guild"
      * },
      * ```

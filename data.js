@@ -121,7 +121,7 @@ const LOST_SOULS_DATA = {
       "tags": [],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "adventurers_guild"
     },
     "aedarene": {
@@ -137,9 +137,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "You are spiritually disjoined, and cannot will benisons in such a state."
-      ],
       "id": "aedarene"
     },
     "aisenshi": {
@@ -154,7 +151,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "aisenshi"
     },
     "aliavelyrae": {
@@ -183,11 +180,6 @@ const LOST_SOULS_DATA = {
         "quess",
         "lunaeala",
       ],
-
-      "raw_incompat_lines": [
-        "Celeborn states, &lt;= You cannot join the Aliavelyrae because you are a soldier. =&gt;",
-        "Gray-skinned male dana states, &lt;= I'm sorry, Drisanna, but a drow cannot become an Aliavelyr. =&gt; to you in Sperethiel."
-      ],
       "id": "aliavelyrae"
     },
     "aligned": {
@@ -207,9 +199,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "These are in addition to the requirements to be  Attuned , as one cannot be Aligned without also being Attuned."
-      ],
       "id": "aligned"
     },
     "battleragers": {
@@ -229,10 +218,6 @@ const LOST_SOULS_DATA = {
       "allowed_races": [
         "thond", "domandan", "lothar", "eolon", "duergar"
       ],
-      "raw_incompat_lines": [
-        "will increase.  Be aware, however, that even the best warrior cannot sustain",
-        "You cannot see anything."
-      ],
       "id": "battleragers"
     },
     "brute_squad": {
@@ -246,7 +231,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "brute_squad"
     },
     "coven": {
@@ -286,12 +271,6 @@ const LOST_SOULS_DATA = {
         "tuatha",
         "zenun"
       ],
-      "raw_incompat_lines": [
-        "6   Incompatible Affiliations and Other Restrictions",
-        "Sisters of the Coven have the ability to bond with avian totemic familiars via witchcraft. It is a good idea to  trust  your familiar upon bonding, to be sure it is able to keep up with you while moving. Note that this does not help if your character is flying and the familiar cannot, or in some oth...",
-        "Incompatible Affiliations and Other Restrictions",
-        "Coven members are also barred from wearing heavy armor, so while one can be a member of the  Hawkmen  one cannot wear the helmet."
-      ],
       "id": "coven"
     },
     "deep_whisperers": {
@@ -305,7 +284,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "deep_whisperers"
     },
     "equites_serpentina": {
@@ -323,7 +302,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "equites_serpentina"
     },
     "erisian_liberation_front": {
@@ -342,7 +321,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "erisian_liberation_front"
     },
     "faradrim_ilavathar": {
@@ -363,9 +342,6 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [],
       // TODO - All races with valathyr
       // "allowed_races": [],
-      "raw_incompat_lines": [
-        "You cannot join Faradrim il'Avathar because you are a practitioner of deception. - Shadow Brethren may not join"
-      ],
       "id": "faradrim_ilavathar"
     },
     "hantaka": {
@@ -383,9 +359,6 @@ const LOST_SOULS_DATA = {
         "jhan"
       ],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Praying to Kali at her altar below  Jhan  (syntax 'pray to kali' case sensitive, presumed a bug that you cannot 'pray to Kali') at various levels of favour will grant you various boons."
-      ],
       "id": "hantaka"
     },
     "justicars_of_axa": {
@@ -413,13 +386,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Neutral"
       ],
-      "raw_incompat_lines": [
-        "The price of such power, such righteous might, is not cheap.  Upon enlistment with the Justicars, one ceases to be an individual.  All the Justicars are a lesser part of a whole, something which is much larger then themselves.  Each Justicar is expected to follow the orders of those above them in th...",
-        "Lord Marshall Strom Thromgald says, -You cannot wield a Shield of Axa, and are therefore unfit to become a Justicar.- to you.",
-        "The following Affiliations are incompatible with Justies, some you could technically join but they would prevent you from using Justicar abilities due to (mostly) God conflicts",
-        "Incompatible with  magicians  specifically. Justicars are  fanatics  and thus incompatible with the  Attuned . Also incompatible with  Avaricious  types ( Gatherers ).",
-        "Incompatible with  Lightbringers : \"The golden-skinned male human says, -You cannot wield a Shield of Axa, and are therefore unfit to become a Justicar.- to you.\""
-      ],
       "id": "justicars_of_axa"
     },
     "kazarak": {
@@ -435,11 +401,6 @@ const LOST_SOULS_DATA = {
         "travelers"
       ],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Incompatible Associations",
-        "Kazaraks cannot receive  Travelers ' challenges.",
-        "Shoggoths cannot change their sentience with Hurgkthorg"
-      ],
       "id": "kazarak"
     },
     "knights_of_the_round_table": {
@@ -471,9 +432,6 @@ const LOST_SOULS_DATA = {
         "quessae",
         "tuatha",
       ],
-      "raw_incompat_lines": [
-        "true Knight.  I... cannot gainsay that any longer.'"
-      ],
       "id": "knights_of_the_round_table"
     },
     "lightbringers": {
@@ -493,10 +451,6 @@ const LOST_SOULS_DATA = {
         "Neutral",
         "Outlaw"
       ],
-      "raw_incompat_lines": [
-        "Exclusive with neutral, evil, sadist, mercenary, outlaw, destroyer, and libertine affiliation types.",
-        "You cannot join the Lightbringers because you are a libertine."
-      ],
       "id": "lightbringers"
     },
     "nglethk": {
@@ -512,7 +466,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "nglethk"
     },
     "ordo_ignis_aeternis": {
@@ -526,7 +480,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "ordo_ignis_aeternis"
     },
     "ordo_verbus_glacialis": {
@@ -546,12 +500,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Priest"
       ],
-      "raw_incompat_lines": [
-        "9   Incompatible Associations",
-        "OVG is currently hardcoded to be incompatible with the Priest affiliation type, but allows the Devotional affiliation type.",
-        "Incompatible Associations",
-        "The white-skinned male human says, [/\\ You cannot join  The Stalkers of the Gate  because you are a proponent of order. \\/] to you."
-      ],
       "id": "ordo_verbus_glacialis"
     },
     "ordo_zephyrius_mutatoris": {
@@ -566,7 +514,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "ordo_zephyrius_mutatoris"
     },
     "poee": {
@@ -585,9 +533,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Malaclypse the Younger growls, =You cannot join the Paratheo-Anametamystikhood of Eris Esoteric"
-      ],
       "id": "poee"
     },
     "reapers": {
@@ -609,12 +554,6 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Soldier"
       ],
-      "raw_incompat_lines": [
-        "You cannot join the Reapers because you are a protector. ( Mhezlekai )",
-        "Xar states, \"As a Reaper, you could not become a soldier by joining the Weapons of Vengeance, reaper.\" in Siglaryn.",
-        " Janid intones, [- As a Reaper, you could not become a scholar by joining the Crafty Linguists. -] to you.",
-        "The priest of Jinx says, $As a Reaper, you could not become a seeker of gold by joining the Jinxian Plutocracy.$ to you."
-      ],
       "id": "reapers",
       "incompat_groups": []
     },
@@ -629,7 +568,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "riddlemasters"
     },
     "ringwielders": {
@@ -644,9 +583,6 @@ const LOST_SOULS_DATA = {
       "incompat_groups": [],
       "incompat_tags": [
         "Initiate"
-      ],
-      "raw_incompat_lines": [
-        "Rings can resize if you grow/shrink, in order to trigger the resizing, \"will my ring of power to adjust to my shape\". The effect should cost 100 spiritual points to initiate, and cannot be performed when Ahrikol is not in possession of the One Ring or if the RW is in a no-magic area."
       ],
       "id": "ringwielders"
     },
@@ -663,7 +599,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "shapeshifters"
     },
     "shemsu_sutekh": {
@@ -675,12 +611,8 @@ const LOST_SOULS_DATA = {
         "Invested",
         "Ligatory"
       ],
-      "incompat_groups": [],
+      "incompat_groups": ["hellwalkers"],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "5   Incompatible Associations",
-        "Incompatible Associations"
-      ],
       "id": "shemsu_sutekh"
     },
     "travelers": {
@@ -699,12 +631,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "calm state to invoke Ganesha; you cannot invoke him while moving around or",
-        "obstacle and a requirement, but also a taboo and a forfeit.  The taboo is something that must not be",
-        "Pilgrimage ( Level 25+ ) - The Temple of Ganesha relocates to a random mountain range, you get teleported to a location which you cannot teleport to or from and you are enchanted to prevent all teleporting in your immediate vicinity.  The goal is to locate the temple.",
-        "Unarmed - You cannot wield weapons of any type"
-      ],
       "id": "travelers"
     },
     "tzakazhar": {
@@ -718,7 +644,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "tzakazhar"
     },
     "ulfhednar": {
@@ -745,10 +671,6 @@ const LOST_SOULS_DATA = {
         "Neutral",
         "Servant"
       ],
-      "raw_incompat_lines": [
-        "Ulfhednar are a neutral aligned guild, which means they cannot join any order/chaos or good/evil associations, which rules out choices like  Attuned ,  Gauric Legion ,  Questors of Axa ,  Weapons of Vengeance  etc.",
-        "They cannot be servants and therefore cannot join  The Stalkers of the Gate :"
-      ],
       "id": "ulfhednar"
     },
     "verynvelyrae": {
@@ -765,9 +687,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_tags": [
         "Fanatic"
-      ],
-      "raw_incompat_lines": [
-        "Mhezlekai  - \"You cannot join the Verynvelyrae because you are a fanatic.\""
       ],
       "id": "verynvelyrae"
     },
@@ -799,11 +718,6 @@ const LOST_SOULS_DATA = {
       "allowed_races": [
         "human", "ardhalokh", "domandan", "kielleth", "narja", "urlnlek"
       ],
-      "raw_incompat_lines": [
-        "Aviar and advenus cannot join.",
-        "Warbreakers cannot have a second master. This excludes them from being  agents  or  servants   to anyone else (like  The Stalkers of the Gate  or  Weapons of Vengeance ).",
-        "Warbreakers cannot join  Questors of Axa  because Warbreakers are furtive."
-      ],
       "id": "warbreakers"
     },
     "zetesai": {
@@ -819,12 +733,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "The opalescent-white-skinned imp quietly sez to Gwale something you cannot",
-        "The opalescent-white-skinned male imp quietly sez to Tlatzazoca something you cannot hear in Nilasnai.",
-        "The opalescent-white-skinned male imp quietly sez to Tlatzazoca something you cannot hear in halting, squeakingly-accented Nilasnai.",
-        "Determining the exact mechanism for discovering new morphologies, a comprehensive list of morphologies, and the criteria for unlocking each of them is a work in progress. Initial observations indicate that morphology discoveries are triggered by bond growth events that occur while the zetesai meets ..."
-      ],
       "id": "zetesai"
     },
     "apollonian_disciples": {
@@ -844,13 +752,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_tags": [
         "Hedonist"
-      ],
-      "raw_incompat_lines": [
-        "Incompatible with  Erisian Liberation Front .",
-        "Cannot join  Shemsu Sutekh",
-        "Apollo states, |- You cannot join the Apollonian Disciples because you are a hedonist. -|",
-        "Apollo states, |- The worship of Apollo does not allow the veneration of Cthulhu, so you cannot",
-        "Apollo states, |- The worship of Aristes does not allow the veneration of Apollo, so you cannot"
       ],
       "id": "apollonian_disciples"
     },
@@ -872,16 +773,6 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [
         "Nihilist"
       ],
-      "raw_incompat_lines": [
-        "Aedarene : Homer says, .+\\ +> The worship of Aeda does not allow the veneration of Aristes, so you cannot join Aristeia. &lt;+ /+. to you.",
-        "Apollonian Disciples : Homer says, .+\\ +&gt; The worship of Apollo does not allow the veneration of Aristes, so you cannot join Aristeia. &lt;+ /+. to you.",
-        "Chosen of Vashanka : Homer says, .+\\ +&gt; The worship of Aristes does not allow the veneration of Vashanka, so you cannot join Aristeia. &lt;+ /+. to you.",
-        "Haruspices : Homer says, .+\\ +&gt; The worship of Athena does not allow the veneration of Aristes, so you cannot join Aristeia. &lt;+ /+. to you.",
-        "Infucted : Homer says, .+\\ +&gt; You cannot join Aristeia because you are a nihilist. &lt;+ /+. to you.",
-        "Synodia Lykouros : Homer says, .+\\ +&gt; The worship of Aeda does not allow the veneration of Aristes, so you cannot join Aristeia. &lt;+ /+. to you.",
-        "Reaper : Homer says, .+\\ +&gt; You cannot join Aristeia because you are a proponent of malevolence. &lt;+ /+. to you.",
-        "There are certain achievements that mess up your ability to fight effectively while also granting at least somewhat useful rewards. So why not combine them all and suffer efficiently? Analgesia can easily be induced via opiate abuse. Carrying a large amount of weight is trivial to achieve and can be..."
-      ],
       "id": "aristeia"
     },
     "the_attuned": {
@@ -897,12 +788,6 @@ const LOST_SOULS_DATA = {
         "Destroyer",
         "Fanatic",
         "Initiate"
-      ],
-      "raw_incompat_lines": [
-        "One cannot cease being attuned while that attunement is affording one a measure of demonic blood.",
-        "One cannot simply will away attunement in a moment; one must first work it out of one's essence.",
-        "Cannot be  destroyers  or  fanatics .",
-        "Clerics are prohibited from joining, as they are incompatible with the Initiate affiliation type."
       ],
       "id": "the_attuned"
     },
@@ -920,7 +805,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "blades_of_scyria"
     },
     "brotherhood_of_wine_and_song": {
@@ -937,7 +822,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "brotherhood_of_wine_and_song"
     },
     "chosen_of_vashanka": {
@@ -956,12 +841,6 @@ const LOST_SOULS_DATA = {
         "Healer",
         "Rogue"
       ],
-      "raw_incompat_lines": [
-        "Molin says, &lt;| The worship of Athena does not allow the veneration of Ares, so you cannot join the Chosen of Vashanka. |&gt; to you.",
-        "Molin says, &lt;| You cannot join the Chosen of Vashanka because you are a healer. |&gt; to you.",
-        "Molin says, \"You cannot join the Chosen of Vashanka because you are a practitioner of deception and a rogue.\" to you. ( Hantaka )",
-        "Vashanka, so you cannot join the Chosen of Vashanka.\" to Sir Vetius. ( Aristeia )"
-      ],
       "id": "chosen_of_vashanka"
     },
     "collegium_magistrorum": {
@@ -973,7 +852,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "collegium_magistrorum"
     },
     "crafty_linguists": {
@@ -985,7 +864,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "crafty_linguists"
     },
     "cuar_faernae": {
@@ -1001,9 +880,6 @@ const LOST_SOULS_DATA = {
         "fianna"
       ],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Eaerandyl states, &gt;&gt;-&gt; You cannot join the Cuar Faernae because you are a proponent of chaos. &lt;-&lt;&lt; to you."
-      ],
       "id": "cuar_faernae"
     },
     "cult_of_sacrifice": {
@@ -1021,7 +897,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "cult_of_sacrifice"
     },
     "deep_ones": {
@@ -1042,7 +918,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "allowed_races": ["urln"],
       "id": "deep_ones"
     },
@@ -1061,11 +937,6 @@ const LOST_SOULS_DATA = {
         "Nihilist",
         "Racist"
       ],
-      "raw_incompat_lines": [
-        "5   Incompatibilities",
-        "Incompatibilities",
-        "You cannot join if you are a member of a  nihilist ,  racist , or  fanatic  association."
-      ],
       "id": "fianna"
     },
     "garriks_assassins": {
@@ -1081,10 +952,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "4   Incompatibilities",
-        "Incompatibilities"
-      ],
       "id": "garriks_assassins"
     },
     "gatherers": {
@@ -1099,9 +966,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "However, while in debt, the second method cannot be used."
-      ],
       "id": "gatherers"
     },
     "gauric_legion": {
@@ -1123,13 +987,10 @@ const LOST_SOULS_DATA = {
         "coven"
       ],
       "incompat_tags": [
-        "Soldier"
-      ],
-      "raw_incompat_lines": [
-        "in ways that ordinary mortals cannot fathom.  In particular, Gauric Legionnaires pursue harmony and balance of both body and spirit",
-        "9   Exclusions",
-        "Exclusions",
-        "Aliavelyrae ,  Coven , and  Aligned  cannot become soldiers and thus cannot join the Gauric Legion."
+        "Soldier",
+        "Nihilist",
+        "Sexist",
+        "Atheist"
       ],
       "id": "gauric_legion"
     },
@@ -1149,10 +1010,6 @@ const LOST_SOULS_DATA = {
         "Hedonist"
       ],
       "allowed_races":["drow"],
-      "raw_incompat_lines": [
-        "You cannot specialize in ownership:",
-        "Ralgor asserts, [| You cannot join the Ghaunadauri because you are a hedonist. |] to you in Zadjalin. -- Cannot join as a member of the Coven"
-      ],
       "id": "ghaunadauri"
     },
     "glomerates": {
@@ -1167,13 +1024,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Note: Step 3 cannot be specified in \"without\" because the parser splits on \"and\"",
-        "\"You cannot cast nihilsphaera creo because you already have a nihilsphaera.\"",
-        "\"You cannot cast nihilsphaera creo because your fresh mutilated giant spider corpse is not a spinneret.\"",
-        "\"You cannot cast nihilsphaera creo because your fresh spinneret is not large enough of a spinneret.\"",
-        "\"You cannot cast nihilsphaera recro because your nihilsphaera is already extant.\""
-      ],
       "id": "glomerates"
     },
     "hawkmen": {
@@ -1190,9 +1040,6 @@ const LOST_SOULS_DATA = {
         "Guard",
         "Outlaw",
         "Wanderer"
-      ],
-      "raw_incompat_lines": [
-        "Hawkmen are  Guards  and therefore are incompatible with  Outlaw  and  Wanderer  affiliations.  (This precludes many guilds and associations so double-check compatibles before you create an incarnos!)"
       ],
       "id": "hawkmen"
     },
@@ -1212,7 +1059,7 @@ const LOST_SOULS_DATA = {
       "allowed_races": ["urga"],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "hellwalkers"
     },
     "hethar_karad": {
@@ -1225,7 +1072,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "hethar_karad"
     },
     "inducted": {
@@ -1243,14 +1090,7 @@ const LOST_SOULS_DATA = {
       "incompat_groups": [
         "tukrr"
       ],
-      "incompat_tags": [
-        "Chaotic",
-        "Good"
-      ],
-      "raw_incompat_lines": [
-        "Joining the Inducted is challenging and requires a significant amount of effort, and is permanent.  Once you join, you are forever bound in servitude to  Tukrr  - the process warps one's mind and spirit in ways that cannot be undone.",
-        "The Inducted are forbidden to specialize in  Sephirotic Affinity , and are exclusive with Chaotic and Good affiliation types."
-      ],
+      "incompat_tags": [],
       "id": "inducted"
     },
     "kazarzeth": {
@@ -1262,11 +1102,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "It can also blast you with energy, which zots chakras, debuff you, sap your SP, and all of the above things plus these also happen when you do not feed it enough (if at all; that happens when you cannot wield it, for example).",
-        "The blade is a lesser kazar and cannot bond to a greater kazar.",
-        "You cannot bond with a blade so unwieldy to use."
-      ],
       "id": "kazarzeth"
     },
     "legion_of_dynamic_discord": {
@@ -1280,7 +1115,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "legion_of_dynamic_discord"
     },
     "losthaven_guard": {
@@ -1293,7 +1128,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "losthaven_guard"
     },
     "maidens_of_the_spear": {
@@ -1314,14 +1149,6 @@ const LOST_SOULS_DATA = {
         "Soldier"
       ],
       "allowed_genders": ["Female"],
-      "raw_incompat_lines": [
-        "being that you cannot marry or be married while a Maiden.  If you ever do get",
-        "Discipline \t\t\t1..+5\t\tWillpower (might be removed, cannot verify on an Aligned)",
-        "Awareness \t\t\t1..+5\t\tPerception (might be removed, cannot verify on an Aligned)",
-        "Sulin says, ++[ You cannot join the Maidens of the Spear because you are a hedonist. ]++ to you.",
-        "Sulin says, ++[ You cannot join the Maidens of the Spear because you are a drunkard. ]++ to you.",
-        "Maidens are incompatible with  soldier  affiliations."
-      ],
       "id": "maidens_of_the_spear"
     },
     "mhezlekai": {
@@ -1338,7 +1165,7 @@ const LOST_SOULS_DATA = {
       "allowed_races": ["shoggoth"],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "mhezlekai"
     },
     "minervas_haruspices": {
@@ -1353,7 +1180,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "minervas_haruspices"
     },
     "ollin_tonatiuh": {
@@ -1366,7 +1193,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "ollin_tonatiuh"
     },
     "questors_of_axa": {
@@ -1378,7 +1205,6 @@ const LOST_SOULS_DATA = {
         "Ordered"
       ],
       "incompat_groups": [
-        "tzakazhar"
       ],
       "incompat_tags": [
         "Deceiver",
@@ -1386,14 +1212,6 @@ const LOST_SOULS_DATA = {
         "Furtive",
         "Hedonist",
         "Libertine"
-      ],
-      "raw_incompat_lines": [
-        "=You cannot join the Questors of Axa because you are a hedonist.",
-        "=You cannot join the Questors of Axa because you are a drunkard, a hedonist, and a libertine.",
-        "=You cannot join the Questors of Axa because you are a practitioner of deception.",
-        "=You cannot join the Questors of Axa because you are a user of furtive means.",
-        "=The worship of Yehovah does not allow the veneration of any other deity; you cannot join the Questors of Axa because you would then also worship Axa.",
-        "=The worship of Axa does not allow the veneration of Isskarazh, so you cannot join the Questors of Axa.(no Heth Karad, but Tzakazhar fine.)"
       ],
       "id": "questors_of_axa"
     },
@@ -1406,7 +1224,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "rebels_of_syllyac"
     },
     "shadow_brethren": {
@@ -1422,7 +1240,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "shadow_brethren"
     },
     "sodality_of_the_nine_spoked_wheel": {
@@ -1434,12 +1252,8 @@ const LOST_SOULS_DATA = {
         "Drunkard",
         "Evil"
       ],
-      "incompat_groups": [],
+      "incompat_groups": ["aedarene", "synodia_lykouros"],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Note that Lupines cannot join this association:",
-        "sho you cannot join the SHodality of the Nine-SHpoked Wheel.) at you."
-      ],
       "id": "sodality_of_the_nine_spoked_wheel"
     },
     "soulburners": {
@@ -1449,7 +1263,7 @@ const LOST_SOULS_DATA = {
       "tags": [],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "soulburners"
     },
     "steel_serpents": {
@@ -1467,9 +1281,6 @@ const LOST_SOULS_DATA = {
       "incompat_tags": [
         "Soldier"
       ],
-      "raw_incompat_lines": [
-        "Being  soldiers ,  Aliavelyrae  will not allow Steel Serpents among their order (cannot join SS or join Aliavelyrae if already a SS)."
-      ],
       "id": "steel_serpents"
     },
     "synodia_lykouros": {
@@ -1485,14 +1296,9 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Warrior"
       ],
-      "incompat_groups": [],
+      "incompat_groups": ["shemsu_sutekh"],
       "incompat_tags": [],
       "allowed_races": ["garou", "human", "kitsune"],
-      "raw_incompat_lines": [
-        "5   Incompatibilities",
-        "Incompatibilities",
-        "The gray-streaked brown male garou growls, 'The worship of Aeda does not allow the veneration of Sutekh, so you cannot"
-      ],
       "id": "synodia_lykouros"
     },
     "synousia_algesis": {
@@ -1518,9 +1324,6 @@ const LOST_SOULS_DATA = {
         "svirfneblin",
         "llelimin"
       ],
-      "raw_incompat_lines": [
-        "Apparently, there is a list of forbidden races. I am unsure about the other races, but  Svirfneblin  &amp;  Llelimin  cannot join. If you try, you will get the above message."
-      ],
       "id": "synousia_algesis"
     },
     "the_agnihotri": {
@@ -1532,7 +1335,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "the_agnihotri"
     },
     "the_explorers": {
@@ -1545,7 +1348,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "the_explorers"
     },
     "the_pantarchic_church_of_yehovah": {
@@ -1561,7 +1364,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "allowed_races": [
         "advenus",
         "amberite",
@@ -1601,30 +1404,7 @@ const LOST_SOULS_DATA = {
         "Fanatic",
         "Servant"
       ],
-      "raw_incompat_lines": [
-        "1   Affiliation Incompatibilities",
-        "Affiliation Incompatibilities",
-        "Kalyxes says, [/\\ You cannot join the Stalkers of the Gate because you are a fanatic. \\/] to you.",
-        "Kalyxes says, [/\\ You cannot join the Stalkers of the Gate because you are a proponent of order. \\/] to you.",
-        "Kalyxes says, [/\\ You cannot become a Stalker of the Gate without a head. \\/] to you.",
-        "Kalyxes says, [/\\ You cannot join the Stalkers of the Gate because you are a servant and a"
-      ],
       "id": "the_stalkers_of_the_gate"
-    },
-    "the_touched": {
-      "name": "The Touched",
-      "alias": null,
-      "type": "association",
-      "tags": [
-        "Drunkard",
-        "Psychic"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "Set a nickname on a random autonomon, try to sense them by nickname, get \"You concentrate on sensing the latent wild talents within Mindblaster Bez.\" // \"You cannot perceive mindblaster bez.\" - since `for` prefers to use nicknames, this makes batch-sensing difficult."
-      ],
-      "id": "the_touched"
     },
     "wandslingers": {
       "name": "Wandslingers",
@@ -1636,10 +1416,6 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [
-        "You have to be a size that can actually wield wands - if you're too big to hold a wand you cannot join. If you're a sneaky snake and shrink yourself to join, it will kick you out when you next log in!",
-        "Please remove any vigils that cannot be set -- vigils closer to the bottom are largely speculative"
-      ],
       "id": "wandslingers"
     },
     "wardens": {
@@ -1649,7 +1425,7 @@ const LOST_SOULS_DATA = {
       "tags": [],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "wardens"
     },
     "weapons_of_vengeance": {
@@ -1663,12 +1439,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [
-        "Good",
         "Guard"
-      ],
-      "raw_incompat_lines": [
-        "With the advent of some of the more recent WoV changes your runes can now lash out at your opponent while you are fighting, while good (who doesn't love extra damage!) this can and probably  WILL  kill you and destroy a significant amount of your equipment if your opponent has an   Amulet of Magick ...",
-        "Xar states, \"You cannot join the Weapons of Vengeance because you are a guard, kielleth.\" in Siglaryn."
       ],
       "id": "weapons_of_vengeance"
     },
@@ -1685,7 +1456,7 @@ const LOST_SOULS_DATA = {
       "allowed_races": ["drochnei", "drow", "rachnei"],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "ygellethites"
     },
     "ordo_purus_magicae": {
@@ -1695,7 +1466,7 @@ const LOST_SOULS_DATA = {
       "tags": [],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "ordo_purus_magicae"
     },
     "the_syndicate": {
@@ -1709,12 +1480,8 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-      "raw_incompat_lines": [
-        "4   Incompatible Associations",
-        "Incompatible Associations"
-      ],
+      "incompat_groups": ["aristeia"],
+      "incompat_tags": ["Protector"],
       "id": "the_syndicate"
     },
     "archmagus": {
@@ -1726,7 +1493,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "archmagus"
     },
     "followers_of_apollo": {
@@ -1743,17 +1510,11 @@ const LOST_SOULS_DATA = {
       "incompat_groups": [
         "apollonian_disciples",
         "erisian_liberation_front",
-        "shemsu_sutekh"
+        "shemsu_sutekh",
+        "aristeia"
       ],
       "incompat_tags": [
         "Hedonist"
-      ],
-      "raw_incompat_lines": [
-        "Incompatible with  Erisian Liberation Front .",
-        "Cannot join  Shemsu Sutekh",
-        "Apollo states, |- You cannot join the Apollonian Disciples because you are a hedonist. -|",
-        "Apollo states, |- The worship of Apollo does not allow the veneration of Cthulhu, so you cannot",
-        "Apollo states, |- The worship of Aristes does not allow the veneration of Apollo, so you cannot"
       ],
       "id": "followers_of_apollo"
     },
@@ -1769,7 +1530,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "haruspices"
     },
     "storm_walkers": {
@@ -1784,7 +1545,7 @@ const LOST_SOULS_DATA = {
       "allowed_races": ["zuth"],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "storm_walkers"
     },
     "cult_of_decay": {
@@ -1802,7 +1563,7 @@ const LOST_SOULS_DATA = {
       ],
       "incompat_groups": [],
       "incompat_tags": [],
-      "raw_incompat_lines": [],
+
       "id": "cult_of_decay"
     }
   }
