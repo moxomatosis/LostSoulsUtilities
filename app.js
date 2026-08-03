@@ -152,15 +152,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Check against incompatibility pairs
-                if (tagIncompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
+                const isCompatible = !tagIncompatibilityPairs.some(pair => 
+                    pair.tags.includes(tagA) && pair.tags.includes(tagB)
+                );
+
+                if (!isCompatible) {
                     // Conflict found
                     const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
                     const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
 
+                    let description = '';
+                    const conflictingPair = tagIncompatibilityPairs.find(pair => 
+                        pair.tags.includes(tagA) && pair.tags.includes(tagB)
+                    );
+                    if (conflictingPair && conflictingPair.description) {
+                        description = ` (${conflictingPair.description})`;
+                    }
+
                     conflicts.push({
                         type: 'tag_tag',
                         title: `Tag Conflict: ${tagA} & ${tagB}`,
-                        desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB}).`
+                        desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB})${description}.`
                     });
                 }
             }
@@ -366,7 +378,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Check against incompatibility pairs
-                if (tagIncompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
+                const isCompatible = !tagIncompatibilityPairs.some(pair => 
+                    pair.tags.includes(tagA) && pair.tags.includes(tagB)
+                );
+
+                if (!isCompatible) {
                     conflicts.push({
                         type: 'tag_tag',
                         reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
