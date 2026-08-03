@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         conflicts.push({
                             type: 'group_race',
                             title: `${g.name} Race Conflict`,
-                            desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB}).`
+                            desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
                         });
                     }
                 }
