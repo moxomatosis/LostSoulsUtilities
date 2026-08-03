@@ -954,14 +954,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const genderSelect = document.getElementById('gender-select');
-    if (genderSelect) {
-        genderSelect.addEventListener('change', (e) => {
-            state.selectedGender = e.target.value;
-            renderGuildList(document.getElementById('guild-search').value);
-            renderAssociationList(document.getElementById('assoc-search').value);
-            updateCheckerResults();
+    const nameInput = document.getElementById('character-name');
+    if (nameInput) {
+        nameInput.addEventListener('blur', (e) => {
+            state.characterName = e.target.value;
         });
+
+        const genderSelect = document.getElementById('gender-select');
+        if (genderSelect) {
+            genderSelect.addEventListener('change', (e) => {
+                state.selectedGender = e.target.value;
+                renderGuildList(document.getElementById('guild-search').value);
+                renderAssociationList(document.getElementById('assoc-search').value);
+                updateCheckerResults();
+            });
+        }
     }
 
     // -------------------------------------------------------------
