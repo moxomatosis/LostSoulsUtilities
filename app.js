@@ -644,6 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="no-conflicts-message">
                     <h3>⚔️ No Conflicts Detected</h3>
                     <p style="margin-top: 0.5rem; font-size: 0.95rem;">All selected affiliations can be joined concurrently on a single character.</p>
+                    <sub>No gaurantee affiliations are compatible, data is incomplete.</sub>
                 </div>
             `;
         } else {
@@ -1089,7 +1090,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const savedState = JSON.stringify(saveState);
             localStorage.setItem(state.characterName, savedState);
-            alert(`Character profile for "${state.characterName}" has been saved.`);
         });
     }
 
@@ -1110,7 +1110,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderGuildList();
                 renderAssociationList();
                 updateCheckerResults();
-                alert(`Character profile for "${characterName}" has been loaded.`);
             } catch (error) {
                 console.error("Error loading profile:", error);
                 alert(`Failed to load character profile for "${characterName}".`);
