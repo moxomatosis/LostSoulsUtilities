@@ -105,6 +105,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 2. COMPATIBILITY ENGINE
     // -------------------------------------------------------------
+    const incompatibilityPairs = [
+        ["Agent", "Champion"],
+        ["Altruist", "Evil"],
+        ["Atheist", "Devotional"],
+        ["Chaotic", "Neutral"],
+        ["Good", "Malevolent"],
+        ["Guard", "Outlaw"],
+        ["Healer", "Destroyer"],
+        ["Initiate", "Agent"],
+        ["Libertine", "Ascetic"],
+        ["Magician", "Psychic"],
+        ["Mystic", "Scientist"],
+        ["Neutral", "Chaotic"],
+        ["Ordered", "Chaotic"],
+        ["Outlaw", "Guard"],
+        ["Pariah", "Reapers"],
+        ["Protector", "Destroyer"],
+        ["Rogue", "Libertine"],
+        ["Secret", "Ascetic"],
+        ["Servant", "Agent"],
+        ["Soldier", "Warrior"],
+        ["Wanderer", "Guard"],
+        // Add other incompatible pairs here
+    ];
+
     function validateCompatibility() {
         const conflicts = [];
 
@@ -136,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeTags = Object.keys(tagSources);
 
         // --- RULE 1: Tag-to-Tag Incompatibilities ---
-        // Compare every pair of active tags
         for (let i = 0; i < activeTags.length; i++) {
             for (let j = i + 1; j < activeTags.length; j++) {
                 const tagA = activeTags[i];
@@ -149,8 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     continue;
                 }
 
-                const tagACompat = state.tagsMeta[tagA] || [];
-                if (tagACompat.includes(tagB)) {
+                // Check against incompatibility pairs
+                if (incompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
                     // Conflict found
                     const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
                     const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
@@ -363,8 +387,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     continue;
                 }
 
-                const tagACompat = state.tagsMeta[tagA] || [];
-                if (tagACompat.includes(tagB)) {
+                // Check against incompatibility pairs
+                if (incompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
                     conflicts.push({
                         type: 'tag_tag',
                         reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
