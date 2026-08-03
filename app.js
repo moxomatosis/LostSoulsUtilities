@@ -265,7 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         state.selectedAssociations.forEach(assocId => {
             const assocObj = state.groupsMap[assocId];
-            if (assocObj) activeGroups.push(assocObj);
+            if (assocObj && assocId !== candidateId) { // Exclude the candidate itself
+                activeGroups.push(assocObj);
+            }
         });
 
         // Add candidate if it's not already in the active list
@@ -357,7 +359,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         state.selectedAssociations.forEach(assocId => {
             const assocObj = state.groupsMap[assocId];
-            if (assocObj) activeGroups.push(assocObj);
+            if (assocObj && assocId !== candidateId) { // Exclude the candidate itself
+                activeGroups.push(assocObj);
+            }
         });
 
         // Add candidate if it's not already in the active list
