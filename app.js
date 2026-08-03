@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedRace: 'Unspecified',     // String: Selected character race (ID)
         selectedGender: 'Unspecified',   // String: Selected character gender
         characterName: '',               // String: Character's name
+        characterName: '',               // String: Character's name
         guilds: [],                      // List of group objects representing guilds
         associations: [],                // List of group objects representing associations
         allTags: [],                     // List of all tag names
@@ -30,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     state.tagsMeta = LOST_SOULS_DATA.tags;
     state.allTags = Object.keys(LOST_SOULS_DATA.tags).sort();
-    
+
     // Categorize groups into guilds and associations
     const groupsList = Object.values(LOST_SOULS_DATA.groups);
     state.groupsMap = LOST_SOULS_DATA.groups;
-    
+
     groupsList.forEach(group => {
         if (group.type === 'guild') {
             state.guilds.push(group);
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     function validateCompatibility() {
         const conflicts = [];
-        
+
         // Build list of all active selected groups
         const activeGroups = [];
         if (state.selectedGuild) {
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 g.incompat_groups.forEach(precludedGroupName => {
                     const isPrecludedGuildSelected = state.selectedGuild === precludedGroupName;
                     const isPrecludedAssocSelected = state.selectedAssociations.has(precludedGroupName);
-                    
+
                     if (isPrecludedGuildSelected || isPrecludedAssocSelected) {
                         conflicts.push({
                             type: 'group_group',
@@ -200,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 3. UI RENDERING & BINDINGS
     // -------------------------------------------------------------
-    
+
     // Tab Switching Controller
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -208,10 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const targetTab = btn.getAttribute('data-tab');
-            
+
             tabButtons.forEach(b => b.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
-            
+
             btn.classList.add('active');
             const targetSection = document.getElementById(targetTab);
             if (targetSection) targetSection.classList.add('active');
@@ -220,11 +221,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate Guild Selection List
     const guildListContainer = document.getElementById('guild-select-list');
-    
+
     function renderGuildList(filterText = '') {
         guildListContainer.innerHTML = '';
         const search = filterText.toLowerCase();
-        
+
         // Add "None" option at the top
         const noneItem = document.createElement('div');
         noneItem.className = `guild-item ${state.selectedGuild === null ? 'selected' : ''}`;
@@ -237,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (search && !g.name.toLowerCase().includes(search)) {
                 return; // filter out
             }
-            
+
             const item = document.createElement('div');
             item.className = `guild-item ${state.selectedGuild === g.id ? 'selected' : ''}`;
             item.setAttribute('role', 'option');
-            
+
             // Build item description with tags and wiki link
             let tagsHtml = g.tags.map(t => `<span class="tag-badge tag-${t.toLowerCase()}">${t}</span>`).join(' ');
-            
+
             item.innerHTML = `
                 <div class="group-info-col">
                     <span class="group-name-row">
@@ -254,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="group-tags">${tagsHtml}</div>
                 </div>
             `;
-            
+
             // Stop click propagation on the wiki link so it doesn't trigger selection
             const wikiLink = item.querySelector('.wiki-link');
             if (wikiLink) {
@@ -262,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.stopPropagation();
                 });
             }
-            
+
             item.addEventListener('click', () => selectGuild(g.id));
             guildListContainer.appendChild(item);
         });
@@ -279,13 +280,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const assocObj = state.groupsMap[assocId];
             if (assocObj) activeGroups.push(assocObj);
         });
-        
+
         // Add candidate if it's not already in the active list
         if (!state.selectedAssociations.has(candidateId)) {
             const candObj = state.groupsMap[candidateId];
             if (candObj) activeGroups.push(candObj);
         }
-        
+
         if (activeGroups.length === 0) {
             return [];
         }
@@ -397,11 +398,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate Association Checklist
     const assocListContainer = document.getElementById('assoc-checkbox-list');
- 
+
     function renderAssociationList(filterText = '') {
         assocListContainer.innerHTML = '';
         const search = filterText.toLowerCase();
- 
+
         // Map associations to their status
         const processed = state.associations.map(a => {
             const isChecked = state.selectedAssociations.has(a.id);
@@ -433,12 +434,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const a = p.assoc;
             const isChecked = p.isChecked;
             const isCompatible = p.isCompatible;
-            
+
             const item = document.createElement('label');
             item.className = `association-item ${isChecked ? 'selected' : ''} ${!isCompatible ? 'incompatible-item' : ''}`;
-            
+
             let tagsHtml = a.tags.map(t => `<span class="tag-badge tag-${t.toLowerCase()}">${t}</span>`).join(' ');
-            
+
             let conflictHtml = '';
             if (!isCompatible && p.conflicts.length > 0) {
                 const reasonsList = p.conflicts.map(c => c.reason).join(', ');
@@ -455,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="group-tags">${tagsHtml}</div>
                 </div>
             `;
- 
+
             // Stop click propagation on the wiki link so it doesn't trigger selection
             const wikiLink = item.querySelector('.wiki-link');
             if (wikiLink) {
@@ -469,11 +470,11 @@ document.addEventListener('DOMContentLoaded', () => {
             checkbox.addEventListener('change', (e) => {
                 toggleAssociation(a.id, e.target.checked);
             });
- 
+
             assocListContainer.appendChild(item);
         });
     }
- 
+
     // Handle Guild Selection state
     function selectGuild(guildId) {
         state.selectedGuild = guildId;
@@ -505,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCheckerResults() {
         // 1. Render selected items as chips
         selectedChipsContainer.innerHTML = '';
-        
+
         let totalSelected = 0;
 
         if (state.selectedGuild) {
@@ -516,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>🛡️ Guild: <strong>${state.groupsMap[state.selectedGuild].name}</strong> <a href="${getWikiUrl(state.groupsMap[state.selectedGuild].name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
                 <span class="chip-remove" title="Deselect Guild">&times;</span>
             `;
-            
+
             // Prevent deselecting the guild when clicking the wiki link
             const wikiLink = chip.querySelector('.wiki-link-chip');
             if (wikiLink) {
@@ -524,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.stopPropagation();
                 });
             }
-            
+
             chip.querySelector('.chip-remove').addEventListener('click', () => selectGuild(null));
             selectedChipsContainer.appendChild(chip);
         }
@@ -538,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>🤝 ${assoc.name} <a href="${getWikiUrl(assoc.name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
                 <span class="chip-remove" title="Deselect Association">&times;</span>
             `;
-            
+
             // Prevent deselecting the association when clicking the wiki link
             const wikiLink = chip.querySelector('.wiki-link-chip');
             if (wikiLink) {
@@ -546,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.stopPropagation();
                 });
             }
-            
+
             chip.querySelector('.chip-remove').addEventListener('click', () => toggleAssociation(id, false));
             selectedChipsContainer.appendChild(chip);
         });
@@ -556,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
             statusHero.className = 'status-hero empty';
             statusHeroText.textContent = 'Empty Profile';
             statusHeroDesc.textContent = 'Select a guild or association to analyze compatibility.';
-            
+
             conflictsListContainer.innerHTML = `
                 <div class="empty-state-message">
                     <span>No groups selected. Add affiliations in the left panel to test compatibility.</span>
@@ -603,12 +604,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. Validate compatibility
         const conflicts = validateCompatibility();
-        
+
         if (conflicts.length === 0) {
             // COMPATIBLE!
             statusHero.className = 'status-hero compatible';
             statusHeroText.textContent = 'Compatible';
-            
+
             let desc = '';
             if (state.selectedGuild && state.selectedAssociations.size > 0) {
                 desc = `Your guild (${state.groupsMap[state.selectedGuild].name}) and all ${state.selectedAssociations.size} selected associations are fully compatible!`;
@@ -636,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
             conflicts.forEach(c => {
                 const confCard = document.createElement('div');
                 confCard.className = 'conflict-card';
-                
+
                 let icon = '❌';
                 if (c.type === 'tag_tag') icon = '📜 Tag Conflict';
                 else if (c.type === 'group_tag') icon = '🛡️ Tag Preclusion';
@@ -660,14 +661,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 4. MATRICES GENERATORS
     // -------------------------------------------------------------
-    
+
     // Guild Tags Matrix generator
     const guildMatrixTable = document.getElementById('guild-matrix-table');
     const guildMatrixSearch = document.getElementById('guild-matrix-search');
 
     function renderGuildMatrix(filterText = '') {
         guildMatrixTable.innerHTML = '';
-        
+
         // Find tags that are actually used by at least one guild in our list to make table cleaner
         const usedGuildTagsSet = new Set();
         state.guilds.forEach(g => {
@@ -697,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const tr = document.createElement('tr');
-            
+
             // Row Header (Guild Name)
             const rowHeader = document.createElement('th');
             rowHeader.className = 'row-header';
@@ -708,7 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
             usedGuildTags.forEach((tag, colIdx) => {
                 const td = document.createElement('td');
                 td.className = 'cell-tag';
-                
+
                 const hasTag = g.tags.includes(tag);
                 if (hasTag) {
                     td.className += ' present';
@@ -718,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     td.className += ' empty-cell';
                     td.innerHTML = '·';
                 }
-                
+
                 // Crosshair hover highlighting
                 setupMatrixHover(td, tr, colIdx + 1); // colIdx + 1 because column 0 is rowHeader
 
@@ -780,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     const tagACompat = state.tagsMeta[tagA] || [];
                     const isIncompat = tagACompat.includes(tagB);
-                    
+
                     if (isIncompat) {
                         td.className += ' incompatible-cell';
                         td.innerHTML = '❌';
@@ -793,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 setupMatrixHover(td, tr, colIdx + 1);
-                
+
                 tr.appendChild(td);
             });
 
@@ -805,7 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupMatrixHover(cell, row, colIndex) {
         cell.addEventListener('mouseenter', () => {
             row.classList.add('hovered-row');
-            
+
             // Highlight cells in the same column across all rows in the same table
             const table = row.closest('table');
             const rows = table.querySelectorAll('tr');
@@ -819,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cell.addEventListener('mouseleave', () => {
             row.classList.remove('hovered-row');
-            
+
             const table = row.closest('table');
             const cells = table.querySelectorAll('.hovered-col');
             cells.forEach(c => c.classList.remove('hovered-col'));
@@ -831,7 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const desc = state.tagsMeta[tagName] && state.tagsMeta[tagName].description 
             ? state.tagsMeta[tagName].description.replace('id="bodyContent">', '').trim()
             : "No description available.";
-        
+
         // A clean styled alert or confirm modal can be used. Since we want an interactive premium design, we'll display a small banner or alert.
         const cleanDesc = desc.replace(/From LSWiki.*/i, '').trim();
         alert(`🏷️ Tag: ${tagName}\n\n${cleanDesc}`);
@@ -867,7 +868,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Build body clauses
             let bodyHtml = '';
-            
+
             if (hasTagPreclusions) {
                 bodyHtml += `
                     <div class="exception-tag-clause">
@@ -920,7 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 6. EVENT SEARCH BINDINGS
     // -------------------------------------------------------------
-    
+
     // Guild Search input in Checker
     const guildSearchInput = document.getElementById('guild-search');
     guildSearchInput.addEventListener('input', (e) => {
