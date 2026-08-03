@@ -1170,8 +1170,6 @@ document.addEventListener('DOMContentLoaded', () => {
      *      - alias: string or null
      *      - type: "guild" or "association"
      *      - tags: array of strings (tags associated with the group)
-     *      - incompat_groups: array of strings (group IDs that are incompatible with this group)
-     *      - incompat_tags: array of strings (tags that are incompatible with this group)
      *      - id: string (unique identifier for the group)
      *
      * Example:
@@ -1181,8 +1179,6 @@ document.addEventListener('DOMContentLoaded', () => {
      *    "alias": null,
      *    "type": "guild",
      *    "tags": [],
-     *    "incompat_groups": [],
-     *    "incompat_tags": [],
      *    "id": "adventurers_guild"
      * },
      * ```
