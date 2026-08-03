@@ -753,6 +753,7 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Racist"
       ],
+      "allowed_races": ["aviar"],
       "id": "hawkmen"
     },
     "hellwalkers": {
@@ -993,7 +994,7 @@ const LOST_SOULS_DATA = {
       ],
       "id": "the_explorers"
     },
-    "the_pantarchic_church_of_yehovah": {
+    "pantarchic_church": {
       "name": "The Pantarchic Church of Yehovah",
       "alias": null,
       "type": "association",
@@ -1027,7 +1028,7 @@ const LOST_SOULS_DATA = {
         "tuatha",
         "iaman"
       ],
-      "id": "the_pantarchic_church_of_yehovah"
+      "id": "pantarchic_church"
     },
     "the_stalkers_of_the_gate": {
       "name": "The Stalkers of the Gate",
