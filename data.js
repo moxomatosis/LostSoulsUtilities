@@ -876,9 +876,7 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Protector"
       ],
-      "incompat_groups": [
-        "fianna"
-      ],
+      "incompat_groups": [],
       "incompat_tags": [],
       "id": "cuar_faernae"
     },
