@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         groups.forEach(g => {
             g.tags.forEach(t => {
                 if (!tagSources[t]) tagSources[t] = [];
-                tagSources[t].push(g.name);
+                tagSources[t].push(g);
             });
         });
 
@@ -135,17 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Check against incompatibility pairs
-                const isCompatible = !tagIncompatibilityPairs.some(pair => 
+                const isCompatible = !tagIncompatibilityPairs.some(pair =>
                     pair.tags.includes(tagA) && pair.tags.includes(tagB)
                 );
 
                 if (!isCompatible) {
                     // Conflict found
-                    const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
-                    const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
+                    const sourcesA = tagSources[tagA].map(n => n.name).map(n => `<strong>${n}</strong>`).join(', ');
+                    const sourcesB = tagSources[tagB].map(n => n.name).map(n => `<strong>${n}</strong>`).join(', ');
 
                     let description = '';
-                    const conflictingPair = tagIncompatibilityPairs.find(pair => 
+                    const conflictingPair = tagIncompatibilityPairs.find(pair =>
                         pair.tags.includes(tagA) && pair.tags.includes(tagB)
                     );
                     if (conflictingPair && conflictingPair.description) {
@@ -163,16 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- RULE 2: Association vs Tag Preclusions ---
         groups.forEach(g => {
-            if (g.type === 'association') {
-                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                    if (tagSources[assocTagIncompatibilities.tag]) {
-                        conflicts.push({
-                            type: 'assoc_tag',
-                            title: `${g.name} Tag Preclusion`,
-                            desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`
-                        });
-                    }
+            const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
+            if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
+                // Filter out conflicts with our own guild/association, since that is a thing.
+                const conflictSources = (tagSources[assocTagIncompatibilities.tag] || []).filter(s => s.id !== g.id)
+                if (conflictSources.length > 0) {
+                    conflicts.push({
+                        type: 'assoc_tag',
+                        title: `${g.name} Tag Preclusion`,
+                        desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`
+                    });
                 }
             }
         });
@@ -183,21 +183,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assocA = groups[i];
                 const assocB = groups[j];
 
-                if (assocA.type === 'association' && assocB.type === 'association') {
-                    // Skip self-compatibility check
-                    if (assocA.id === assocB.id) continue;
 
-                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
-                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
-                    );
-                    if (assocAssocIncompatibilities) {
-                        conflicts.push({
-                            type: 'assoc_assoc',
-                            title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
-                            desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`
-                        });
-                    }
+                // Skip self-compatibility check
+                if (assocA.id === assocB.id) continue;
+
+                const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item =>
+                    item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
+                );
+                if (assocAssocIncompatibilities) {
+                    conflicts.push({
+                        type: 'assoc_assoc',
+                        title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
+                        desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`
+                    });
                 }
+
             }
         }
 
@@ -807,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal popup to read tag description
     function alertTagDescription(tagName) {
-        const desc = state.tagsMeta[tagName] && state.tagsMeta[tagName].description 
+        const desc = state.tagsMeta[tagName] && state.tagsMeta[tagName].description
             ? state.tagsMeta[tagName].description.replace('id="bodyContent">', '').trim()
             : "No description available.";
 
@@ -835,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
         groups.forEach(g => {
             // Check if group has any outlier rules
             const hasTagPreclusions = g.type === 'association' && associationTagIncompatabilities.some(item => item.association === g.id);
-            const hasGroupExceptions = associationAssociationIncompatabilities.some(item => 
+            const hasGroupExceptions = associationAssociationIncompatabilities.some(item =>
                 item.associations.includes(g.id)
             );
 
@@ -861,14 +861,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (hasGroupExceptions) {
-                const assocAssocIncompatibilities = associationAssociationIncompatabilities.filter(item => 
+                const assocAssocIncompatibilities = associationAssociationIncompatabilities.filter(item =>
                     item.associations.includes(g.id)
                 );
                 bodyHtml += `
                     <div class="exception-group-clause">
-                        ⚠️ Mutual exclusivity with: ${assocAssocIncompatibilities.map(item => 
-                            `<strong>${item.associations.find(a => a !== g.id)} <a href="${getWikiUrl(item.associations.find(a => a !== g.id))}" target="_blank" class="wiki-link" style="font-size: 0.75rem; margin-left: 0.15rem;" title="View Wiki Page">📖</a></strong>`
-                        ).join(', ')}
+                        ⚠️ Mutual exclusivity with: ${assocAssocIncompatibilities.map(item =>
+                    `<strong>${item.associations.find(a => a !== g.id)} <a href="${getWikiUrl(item.associations.find(a => a !== g.id))}" target="_blank" class="wiki-link" style="font-size: 0.75rem; margin-left: 0.15rem;" title="View Wiki Page">📖</a></strong>`
+                ).join(', ')}
                     </div>
                 `;
             }
