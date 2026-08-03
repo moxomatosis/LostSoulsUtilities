@@ -1,118 +1,61 @@
 /* Lost Souls MUD Guild and Association Compatibility Database */
 const LOST_SOULS_DATA = {
-  "tags": {
-    "Aesthete": [],
-    "Agent": [
-      "Champion"
-    ],
-    "Altruist": [
-      "Evil",
-      "Malevolent",
-      "Neutral"
-    ],
-    "Artist": [],
-    "Atheist": [
-      "Devotional",
-      "Priest"
-    ],
-    "Avaricious": [],
-    "Caretaker": [],
-    "Champion": [
-      "Agent"
-    ],
-    "Chaotic": [
-      "Neutral",
-      "Ordered"
-    ],
-    "Conspecific": [],
-    "Deceiver": [],
-    "Destroyer": [],
-    "Devotional": [
-      "Atheist"
-    ],
-    "Drunkard": [
-      "Ascetic"
-    ],
-    "Evil": [
-      "Altruist",
-      "Good",
-      "Neutral"
-    ],
-    "Fanatic": [],
-    "Furtive": [],
-    "Good": [
-      "Evil",
-      "Malevolent",
-      "Neutral"
-    ],
-    "Guard": [
-      "Outlaw",
-      "Wanderer"
-    ],
-    "Healer": [],
-    "Hedonist": [
-      "Ascetic"
-    ],
-    "Initiate": [],
-    "Invested": [],
-    "Libertine": [
-      "Ascetic"
-    ],
-    "Ligatory": [],
-    "Magician": [],
-    "Malevolent": [
-      "Altruist",
-      "Good",
-      "Neutral"
-    ],
-    "Mercenary": [],
-    "Mystic": [],
-    "Neutral": [
-      "Altruist",
-      "Chaotic",
-      "Evil",
-      "Good",
-      "Malevolent",
-      "Ordered"
-    ],
-    "Nihilist": [],
-    "Ordered": [
-      "Chaotic",
-      "Neutral"
-    ],
-    "Outlaw": [
-      "Guard"
-    ],
-    "Pariah": [],
-    "Philosopher": [],
-    "Priest": [
-      "Atheist"
-    ],
-    "Protector": [],
-    "Psychic": [],
-    "Racist": [],
-    "Rogue": [],
-    "Ruler": [],
-    "Scholar": [],
-    "Scientist": [],
-    "Secret": [],
-    "Servant": [],
-    "Sexist": [],
-    "Soldier": [],
-    "Vigilante": [],
-    "Wanderer": [
-      "Guard"
-    ],
-    "Warrior": [],
-    "Worker": [],
-    "Writer": [],
-    "Ascetic": [
-      "Drunkard",
-      "Hedonist",
-      "Libertine"
-    ],
-    "Discordian": []
-  },
+  "tags": [
+    "Aesthete",
+    "Agent",
+    "Altruist",
+    "Artist",
+    "Atheist",
+    "Avaricious",
+    "Caretaker",
+    "Champion",
+    "Chaotic",
+    "Conspecific",
+    "Deceiver",
+    "Destroyer",
+    "Devotional",
+    "Drunkard",
+    "Evil",
+    "Fanatic",
+    "Furtive",
+    "Good",
+    "Guard",
+    "Healer",
+    "Hedonist",
+    "Initiate",
+    "Invested",
+    "Libertine",
+    "Ligatory",
+    "Magician",
+    "Malevolent",
+    "Mercenary",
+    "Mystic",
+    "Neutral",
+    "Nihilist",
+    "Ordered",
+    "Outlaw",
+    "Pariah",
+    "Philosopher",
+    "Priest",
+    "Protector",
+    "Psychic",
+    "Racist",
+    "Rogue",
+    "Ruler",
+    "Scholar",
+    "Scientist",
+    "Secret",
+    "Servant",
+    "Sexist",
+    "Soldier",
+    "Vigilante",
+    "Wanderer",
+    "Warrior",
+    "Worker",
+    "Writer",
+    "Ascetic",
+    "Discordian"
+  ],
   "groups": {
     "adventurers_guild": {
       "name": "Adventurer's Guild",
