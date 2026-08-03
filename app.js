@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // -------------------------------------------------------------
     // 1. STATE MANAGEMENT
     // -------------------------------------------------------------
@@ -34,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedAssociations: new Set(),   // Set of Strings: Selected association IDs
         selectedRace: 'Unspecified',     // String: Selected character race (ID)
         selectedGender: 'Unspecified',   // String: Selected character gender
-        characterName: '',               // String: Character's name
         characterName: '',               // String: Character's name
         guilds: [],                      // List of group objects representing guilds
         associations: [],                // List of group objects representing associations
@@ -1002,6 +1002,27 @@ document.addEventListener('DOMContentLoaded', () => {
         renderGuildList();
         renderAssociationList();
         updateCheckerResults();
+    }
+
+    // Populate Profile Dropdown
+    const profileSelect = document.getElementById('profile-select');
+    if (profileSelect) {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key !== 'initialLoad') {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = key;
+                profileSelect.appendChild(option);
+            }
+        }
+
+        profileSelect.addEventListener('change', (e) => {
+            const selectedProfile = e.target.value;
+            if (selectedProfile) {
+                loadProfile(selectedProfile);
+            }
+        });
     }
 
     // -------------------------------------------------------------
