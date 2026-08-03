@@ -1012,4 +1012,21 @@ document.addEventListener('DOMContentLoaded', () => {
      * },
      * ```
      */
+
+    // -------------------------------------------------------------
+    // 9. SAVE FUNCTIONALITY
+    // -------------------------------------------------------------
+    const saveButton = document.getElementById('save-button');
+    if (saveButton) {
+        saveButton.addEventListener('click', () => {
+            if (!state.characterName) {
+                alert('Please enter a character name to save.');
+                return;
+            }
+
+            const savedState = JSON.stringify(state);
+            localStorage.setItem(state.characterName, savedState);
+            alert(`Character profile for "${state.characterName}" has been saved.`);
+        });
+    }
 });
