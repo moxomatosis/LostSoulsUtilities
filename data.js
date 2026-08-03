@@ -62,10 +62,7 @@ const LOST_SOULS_DATA = {
       "alias": null,
       "type": "guild",
       "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
-      "id": "adventurers_guild"
+            "id": "adventurers_guild"
     },
     "aedarene": {
       "name": "Aedarene",
@@ -78,8 +75,6 @@ const LOST_SOULS_DATA = {
         "Invested",
         "Priest"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "aedarene"
     },
     "aisenshi": {
@@ -92,9 +87,6 @@ const LOST_SOULS_DATA = {
         "Ordered",
         "Warrior"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "aisenshi"
     },
     "aliavelyrae": {
@@ -110,10 +102,6 @@ const LOST_SOULS_DATA = {
         "Ordered",
         "Racist",
         "Warrior"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Soldier"
       ],
       "allowed_races": [
         "dana",
@@ -140,8 +128,6 @@ const LOST_SOULS_DATA = {
         "Scientist",
         "Wanderer"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "aligned"
     },
     "battleragers": {
@@ -152,10 +138,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Fanatic",
         "Racist",
-        "Warrior"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
         "Warrior"
       ],
       "allowed_races": [
@@ -172,9 +154,6 @@ const LOST_SOULS_DATA = {
         "Hedonist",
         "Warrior"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "brute_squad"
     },
     "coven": {
@@ -189,12 +168,6 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Racist",
         "Sexist"
-      ],
-      "incompat_groups": [
-        "hawkmen"
-      ],
-      "incompat_tags": [
-        "Good"
       ],
       "allowed_races": [
         "advenus",
@@ -225,9 +198,6 @@ const LOST_SOULS_DATA = {
         "Psychic",
         "Scientist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "deep_whisperers"
     },
     "equites_serpentina": {
@@ -243,9 +213,6 @@ const LOST_SOULS_DATA = {
         "Soldier",
         "Warrior"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "equites_serpentina"
     },
     "erisian_liberation_front": {
@@ -262,9 +229,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Priest"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "erisian_liberation_front"
     },
     "faradrim_ilavathar": {
@@ -279,10 +243,6 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Secret"
       ],
-      "incompat_groups": [
-        "shadow_brethren"
-      ],
-      "incompat_tags": [],
       // TODO - All races with valathyr
       // "allowed_races": [],
       "id": "faradrim_ilavathar"
@@ -298,10 +258,6 @@ const LOST_SOULS_DATA = {
         "Mystic",
         "Rogue"
       ],
-      "incompat_groups": [
-        "jhan"
-      ],
-      "incompat_tags": [],
       "id": "hantaka"
     },
     "justicars_of_axa": {
@@ -316,19 +272,6 @@ const LOST_SOULS_DATA = {
         "Soldier",
         "Warrior"
       ],
-      "incompat_groups": [
-        "gatherers",
-        "lightbringers",
-        "the_attuned"
-      ],
-      "incompat_tags": [
-        "Avaricious",
-        "Chaotic",
-        "Evil",
-        "Fanatic",
-        "Magician",
-        "Neutral"
-      ],
       "id": "justicars_of_axa"
     },
     "kazarak": {
@@ -340,10 +283,6 @@ const LOST_SOULS_DATA = {
         "Evil",
         "Servant"
       ],
-      "incompat_groups": [
-        "travelers"
-      ],
-      "incompat_tags": [],
       "id": "kazarak"
     },
     "knights_of_the_round_table": {
@@ -358,8 +297,6 @@ const LOST_SOULS_DATA = {
         "Racist",
         "Warrior"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "allowed_races": [
         "amberite",
         "chaosborn",
@@ -385,15 +322,6 @@ const LOST_SOULS_DATA = {
         "Altruist",
         "Champion"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Destroyer",
-        "Evil",
-        "Libertine",
-        "Mercenary",
-        "Neutral",
-        "Outlaw"
-      ],
       "id": "lightbringers"
     },
     "nglethk": {
@@ -407,9 +335,6 @@ const LOST_SOULS_DATA = {
         "Scholar",
         "Scientist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "nglethk"
     },
     "ordo_ignis_aeternis": {
@@ -421,9 +346,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Scholar"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "ordo_ignis_aeternis"
     },
     "ordo_verbus_glacialis": {
@@ -435,13 +357,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Ordered",
         "Scholar"
-      ],
-      "incompat_groups": [
-        "the_stalkers_of_the_gate"
-      ],
-      "incompat_tags": [
-        "Devotional",
-        "Priest"
       ],
       "id": "ordo_verbus_glacialis"
     },
@@ -455,9 +370,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Scholar"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "ordo_zephyrius_mutatoris"
     },
     "poee": {
@@ -474,8 +386,6 @@ const LOST_SOULS_DATA = {
         "Mystic",
         "Philosopher"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "poee"
     },
     "reapers": {
@@ -493,12 +403,7 @@ const LOST_SOULS_DATA = {
         "Servant",
         "Warrior"
       ],
-      "incompat_tags": [
-        "Protector",
-        "Soldier"
-      ],
-      "id": "reapers",
-      "incompat_groups": []
+      "id": "reapers"
     },
     "riddlemasters": {
       "name": "Riddlemasters",
@@ -509,9 +414,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Scholar"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "riddlemasters"
     },
     "ringwielders": {
@@ -522,10 +424,6 @@ const LOST_SOULS_DATA = {
         "Agent",
         "Initiate",
         "Magician"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Initiate"
       ],
       "id": "ringwielders"
     },
@@ -540,9 +438,6 @@ const LOST_SOULS_DATA = {
       "allowed_races": [
         "kentaur"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "shapeshifters"
     },
     "shemsu_sutekh": {
@@ -554,8 +449,6 @@ const LOST_SOULS_DATA = {
         "Invested",
         "Ligatory"
       ],
-      "incompat_groups": ["hellwalkers"],
-      "incompat_tags": [],
       "id": "shemsu_sutekh"
     },
     "travelers": {
@@ -572,8 +465,6 @@ const LOST_SOULS_DATA = {
         "Wanderer",
         "Warrior"
       ],
-      "incompat_groups": ["aristeia"],
-      "incompat_tags": [],
       "id": "travelers"
     },
     "tzakazhar": {
@@ -585,9 +476,6 @@ const LOST_SOULS_DATA = {
         "Ligatory",
         "Racist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "tzakazhar"
     },
     "ulfhednar": {
@@ -601,19 +489,6 @@ const LOST_SOULS_DATA = {
         "Neutral",
         "Warrior"
       ],
-      "incompat_groups": [
-        "aligned",
-        "gauric_legion",
-        "questors_of_axa",
-        "the_stalkers_of_the_gate",
-        "weapons_of_vengeance"
-      ],
-      "incompat_tags": [
-        "Evil",
-        "Good",
-        "Neutral",
-        "Servant"
-      ],
       "id": "ulfhednar"
     },
     "verynvelyrae": {
@@ -624,12 +499,6 @@ const LOST_SOULS_DATA = {
         "Caretaker",
         "Initiate",
         "Ligatory"
-      ],
-      "incompat_groups": [
-        "mhezlekai"
-      ],
-      "incompat_tags": [
-        "Fanatic"
       ],
       "id": "verynvelyrae"
     },
@@ -648,16 +517,6 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Warrior"
       ],
-      "incompat_groups": [
-        "questors_of_axa",
-        "the_stalkers_of_the_gate",
-        "weapons_of_vengeance"
-      ],
-      "incompat_tags": [
-        "Agent",
-        "Servant",
-        "Malevolent"
-      ],
       "allowed_races": [
         "human", "ardhalokh", "domandan", "kielleth", "narja", "urlnlek"
       ],
@@ -674,8 +533,6 @@ const LOST_SOULS_DATA = {
         "Scientist",
         "Wanderer"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "zetesai"
     },
     "apollonian_disciples": {
@@ -689,13 +546,6 @@ const LOST_SOULS_DATA = {
         "Invested",
         "Ordered"
       ],
-      "incompat_groups": [
-        "erisian_liberation_front",
-        "shemsu_sutekh"
-      ],
-      "incompat_tags": [
-        "Hedonist"
-      ],
       "id": "apollonian_disciples"
     },
     "aristeia": {
@@ -706,17 +556,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Warrior"
       ],
-      "incompat_groups": [
-        "aedarene",
-        "apollonian_disciples",
-        "chosen_of_vashanka",
-        "haruspices",
-        "synodia_lykouros",
-        "travelers"
-      ],
-      "incompat_tags": [
-        "Nihilist"
-      ],
       "id": "aristeia"
     },
     "the_attuned": {
@@ -726,12 +565,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Initiate",
         "Ordered"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Destroyer",
-        "Fanatic",
-        "Initiate"
       ],
       "id": "the_attuned"
     },
@@ -747,9 +580,6 @@ const LOST_SOULS_DATA = {
         "Initiate",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "blades_of_scyria"
     },
     "brotherhood_of_wine_and_song": {
@@ -764,9 +594,6 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Wanderer"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "brotherhood_of_wine_and_song"
     },
     "chosen_of_vashanka": {
@@ -777,14 +604,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Warrior"
       ],
-      "incompat_groups": [
-        "aristeia",
-        "hantaka"
-      ],
-      "incompat_tags": [
-        "Healer",
-        "Rogue"
-      ],
       "id": "chosen_of_vashanka"
     },
     "collegium_magistrorum": {
@@ -794,9 +613,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Initiate"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "collegium_magistrorum"
     },
     "crafty_linguists": {
@@ -806,9 +622,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Scholar"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "crafty_linguists"
     },
     "cuar_faernae": {
@@ -820,8 +633,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Protector"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "cuar_faernae"
     },
     "cult_of_sacrifice": {
@@ -837,9 +648,6 @@ const LOST_SOULS_DATA = {
         "Mystic",
         "Servant"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "cult_of_sacrifice"
     },
     "deep_ones": {
@@ -858,9 +666,6 @@ const LOST_SOULS_DATA = {
         "Racist",
         "Servant"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "allowed_races": ["urln"],
       "id": "deep_ones"
     },
@@ -872,12 +677,6 @@ const LOST_SOULS_DATA = {
         "Artist",
         "Mystic",
         "Warrior"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Fanatic",
-        "Nihilist",
-        "Racist"
       ],
       "id": "fianna"
     },
@@ -892,8 +691,6 @@ const LOST_SOULS_DATA = {
         "Mercenary",
         "Rogue"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "garriks_assassins"
     },
     "gatherers": {
@@ -906,8 +703,6 @@ const LOST_SOULS_DATA = {
         "Evil",
         "Priest"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "gatherers"
     },
     "gauric_legion": {
@@ -923,17 +718,6 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Soldier"
       ],
-      "incompat_groups": [
-        "aliavelyrae",
-        "aligned",
-        "coven"
-      ],
-      "incompat_tags": [
-        "Soldier",
-        "Nihilist",
-        "Sexist",
-        "Atheist"
-      ],
       "id": "gauric_legion"
     },
     "ghaunadauri": {
@@ -944,12 +728,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Furtive",
         "Racist"
-      ],
-      "incompat_groups": [
-        "coven"
-      ],
-      "incompat_tags": [
-        "Hedonist"
       ],
       "allowed_races":["drow"],
       "id": "ghaunadauri"
@@ -964,8 +742,6 @@ const LOST_SOULS_DATA = {
         "Magician",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "glomerates"
     },
     "hawkmen": {
@@ -976,12 +752,6 @@ const LOST_SOULS_DATA = {
         "Guard",
         "Protector",
         "Racist"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Guard",
-        "Outlaw",
-        "Wanderer"
       ],
       "id": "hawkmen"
     },
@@ -999,9 +769,6 @@ const LOST_SOULS_DATA = {
         "Wanderer"
       ],
       "allowed_races": ["urga"],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "hellwalkers"
     },
     "hethar_karad": {
@@ -1012,9 +779,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Racist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "hethar_karad"
     },
     "inducted": {
@@ -1029,10 +793,6 @@ const LOST_SOULS_DATA = {
         "Nihilist",
         "Ordered"
       ],
-      "incompat_groups": [
-        "tukrr"
-      ],
-      "incompat_tags": [],
       "id": "inducted"
     },
     "kazarzeth": {
@@ -1042,8 +802,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Servant"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "kazarzeth"
     },
     "legion_of_dynamic_discord": {
@@ -1055,9 +813,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Libertine"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "legion_of_dynamic_discord"
     },
     "losthaven_guard": {
@@ -1068,9 +823,6 @@ const LOST_SOULS_DATA = {
         "Guard",
         "Protector"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "losthaven_guard"
     },
     "maidens_of_the_spear": {
@@ -1081,14 +833,6 @@ const LOST_SOULS_DATA = {
         "Sexist",
         "Wanderer",
         "Warrior"
-      ],
-      "incompat_groups": [
-        "aligned"
-      ],
-      "incompat_tags": [
-        "Drunkard",
-        "Hedonist",
-        "Soldier"
       ],
       "allowed_genders": ["Female"],
       "id": "maidens_of_the_spear"
@@ -1105,9 +849,6 @@ const LOST_SOULS_DATA = {
         "Servant"
       ],
       "allowed_races": ["shoggoth"],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "mhezlekai"
     },
     "minervas_haruspices": {
@@ -1120,11 +861,9 @@ const LOST_SOULS_DATA = {
         "Ordered",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "minervas_haruspices"
     },
+    // TODO- Real?
     "ollin_tonatiuh": {
       "name": "Ollin Tonatiuh",
       "alias": null,
@@ -1133,9 +872,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Evil"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "ollin_tonatiuh"
     },
     "questors_of_axa": {
@@ -1146,15 +882,6 @@ const LOST_SOULS_DATA = {
         "Devotional",
         "Ordered"
       ],
-      "incompat_groups": [
-      ],
-      "incompat_tags": [
-        "Deceiver",
-        "Drunkard",
-        "Furtive",
-        "Hedonist",
-        "Libertine"
-      ],
       "id": "questors_of_axa"
     },
     "rebels_of_syllyac": {
@@ -1164,9 +891,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "rebels_of_syllyac"
     },
     "shadow_brethren": {
@@ -1180,9 +904,6 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "shadow_brethren"
     },
     "sodality_of_the_nine_spoked_wheel": {
@@ -1194,8 +915,6 @@ const LOST_SOULS_DATA = {
         "Drunkard",
         "Evil"
       ],
-      "incompat_groups": ["aedarene", "synodia_lykouros"],
-      "incompat_tags": [],
       "id": "sodality_of_the_nine_spoked_wheel"
     },
     "soulburners": {
@@ -1203,9 +922,6 @@ const LOST_SOULS_DATA = {
       "alias": null,
       "type": "association",
       "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "soulburners"
     },
     "steel_serpents": {
@@ -1215,12 +931,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Guard",
         "Protector",
-        "Soldier"
-      ],
-      "incompat_groups": [
-        "aliavelyrae"
-      ],
-      "incompat_tags": [
         "Soldier"
       ],
       "id": "steel_serpents"
@@ -1238,8 +948,6 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Warrior"
       ],
-      "incompat_groups": ["shemsu_sutekh"],
-      "incompat_tags": [],
       "allowed_races": ["garou", "human", "kitsune"],
       "id": "synodia_lykouros"
     },
@@ -1255,8 +963,6 @@ const LOST_SOULS_DATA = {
         "Racist",
         "Sexist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "excluded_races": [
         "duergar",
         "nyloc",
@@ -1275,9 +981,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Devotional"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "the_agnihotri"
     },
     "the_explorers": {
@@ -1288,9 +991,6 @@ const LOST_SOULS_DATA = {
         "Wanderer",
         "Writer"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "the_explorers"
     },
     "the_pantarchic_church_of_yehovah": {
@@ -1304,9 +1004,6 @@ const LOST_SOULS_DATA = {
         "Racist",
         "Sexist"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "allowed_races": [
         "advenus",
         "amberite",
@@ -1341,11 +1038,6 @@ const LOST_SOULS_DATA = {
         "Neutral",
         "Servant"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Fanatic",
-        "Servant"
-      ],
       "id": "the_stalkers_of_the_gate"
     },
     "wandslingers": {
@@ -1356,8 +1048,6 @@ const LOST_SOULS_DATA = {
         "Protector",
         "Vigilante"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
       "id": "wandslingers"
     },
     "wardens": {
@@ -1365,9 +1055,6 @@ const LOST_SOULS_DATA = {
       "alias": null,
       "type": "association",
       "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "wardens"
     },
     "weapons_of_vengeance": {
@@ -1378,10 +1065,6 @@ const LOST_SOULS_DATA = {
         "Evil",
         "Servant",
         "Soldier"
-      ],
-      "incompat_groups": [],
-      "incompat_tags": [
-        "Guard"
       ],
       "id": "weapons_of_vengeance"
     },
@@ -1396,9 +1079,6 @@ const LOST_SOULS_DATA = {
         "Racist"
       ],
       "allowed_races": ["drochnei", "drow", "rachnei"],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "ygellethites"
     },
     "ordo_purus_magicae": {
@@ -1406,9 +1086,6 @@ const LOST_SOULS_DATA = {
       "alias": null,
       "type": "guild",
       "tags": [],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "ordo_purus_magicae"
     },
     "the_syndicate": {
@@ -1422,8 +1099,6 @@ const LOST_SOULS_DATA = {
         "Rogue",
         "Secret"
       ],
-      "incompat_groups": ["aristeia"],
-      "incompat_tags": ["Protector"],
       "id": "the_syndicate"
     },
     "archmagus": {
@@ -1433,9 +1108,6 @@ const LOST_SOULS_DATA = {
       "tags": [
         "Magician"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "archmagus"
     },
     "followers_of_apollo": {
@@ -1449,15 +1121,6 @@ const LOST_SOULS_DATA = {
         "Invested",
         "Ordered"
       ],
-      "incompat_groups": [
-        "apollonian_disciples",
-        "erisian_liberation_front",
-        "shemsu_sutekh",
-        "aristeia"
-      ],
-      "incompat_tags": [
-        "Hedonist"
-      ],
       "id": "followers_of_apollo"
     },
     "haruspices": {
@@ -1470,9 +1133,6 @@ const LOST_SOULS_DATA = {
         "Ordered",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "haruspices"
     },
     "storm_walkers": {
@@ -1485,9 +1145,6 @@ const LOST_SOULS_DATA = {
         "Warrior"
       ],
       "allowed_races": ["zuth"],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "storm_walkers"
     },
     "cult_of_decay": {
@@ -1503,9 +1160,6 @@ const LOST_SOULS_DATA = {
         "Pariah",
         "Secret"
       ],
-      "incompat_groups": [],
-      "incompat_tags": [],
-
       "id": "cult_of_decay"
     }
   }
