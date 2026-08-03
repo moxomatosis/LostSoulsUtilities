@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedAssociations: new Set(),   // Set of Strings: Selected association IDs
         selectedRace: 'Unspecified',     // String: Selected character race (ID)
         selectedGender: 'Unspecified',   // String: Selected character gender
+        characterName: '',               // String: Character's name
         guilds: [],                      // List of group objects representing guilds
         associations: [],                // List of group objects representing associations
         allTags: [],                     // List of all tag names
@@ -455,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
  
-            // Stop click propagation on the wiki link so it doesn't toggle checkbox selection
+            // Stop click propagation on the wiki link so it doesn't trigger selection
             const wikiLink = item.querySelector('.wiki-link');
             if (wikiLink) {
                 wikiLink.addEventListener('click', (e) => {
