@@ -6,6 +6,26 @@
 import racesById from './races.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Add event listener to load button or input field for character name
+    const loadButton = document.getElementById('load-button');
+    if (loadButton) {
+        loadButton.addEventListener('click', () => {
+            const characterName = prompt("Enter the character name to load:");
+            if (characterName) {
+                loadProfile(characterName);
+            }
+        });
+    }
+
+    // Optionally, add a text input field for loading profiles
+    const loadInput = document.getElementById('load-input');
+    if (loadInput) {
+        loadInput.addEventListener('input', (e) => {
+            if (e.key === 'Enter') {
+                loadProfile(e.target.value);
+            }
+        });
+    }
     // -------------------------------------------------------------
     // 1. STATE MANAGEMENT
     // -------------------------------------------------------------
@@ -974,9 +994,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 7. APP START / INITIAL RENDER
     // -------------------------------------------------------------
-    renderGuildList();
-    renderAssociationList();
-    updateCheckerResults();
+    const initialLoad = localStorage.getItem('initialLoad');
+    if (initialLoad) {
+        loadProfile(initialLoad);
+        localStorage.removeItem('initialLoad'); // Clear the flag after loading
+    } else {
+        renderGuildList();
+        renderAssociationList();
+        updateCheckerResults();
+    }
 
     // -------------------------------------------------------------
     // 8. DOCUMENTATION FOR data.js
@@ -1036,5 +1062,30 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem(state.characterName, savedState);
             alert(`Character profile for "${state.characterName}" has been saved.`);
         });
+    }
+
+    // Function to load a profile from local storage
+    function loadProfile(characterName) {
+        if (!characterName) {
+            console.error("No character name provided to load.");
+            return;
+        }
+
+        const savedState = localStorage.getItem(characterName);
+        if (savedState) {
+            try {
+                const loadedState = JSON.parse(savedState);
+                Object.assign(state, loadedState);
+                renderGuildList();
+                renderAssociationList();
+                updateCheckerResults();
+                alert(`Character profile for "${characterName}" has been loaded.`);
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                alert(`Failed to load character profile for "${characterName}".`);
+            }
+        } else {
+            alert(`No saved profile found for "${characterName}".`);
+        }
     }
 });
