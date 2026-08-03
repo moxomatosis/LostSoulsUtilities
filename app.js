@@ -178,45 +178,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // --- RULE 2: Group vs Tag Preclusions ---
-        // For each active group, check if any of its precluded tags are active in other groups
+        // --- RULE 2: Association vs Tag Preclusions ---
         activeGroups.forEach(g => {
-            if (g.incompat_tags && g.incompat_tags.length > 0) {
-                g.incompat_tags.forEach(precludedTag => {
-                    if (tagSources[precludedTag]) {
-                        // Check if the precluded tag is contributed by OTHER groups (not this one itself)
-                        const foreignSources = tagSources[precludedTag].filter(name => name !== g.name);
-                        if (foreignSources.length > 0) {
-                            conflicts.push({
-                                type: 'group_tag',
-                                title: `${g.name} Tag Preclusion`,
-                                desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${precludedTag}</strong> (contributed by: ${foreignSources.map(n => `<strong>${n}</strong>`).join(', ')}).`
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        // --- RULE 3: Group vs Group Preclusions ---
-        // For each active group, check if it directly excludes any other selected group
-        activeGroups.forEach(g => {
-            if (g.incompat_groups && g.incompat_groups.length > 0) {
-                g.incompat_groups.forEach(precludedGroupId => {
-                    const isPrecludedGuildSelected = state.selectedGuild === precludedGroupId;
-                    const isPrecludedAssocSelected = state.selectedAssociations.has(precludedGroupId);
-                    // TODO - Get group name instead of showing ID.
-
-                    if (isPrecludedGuildSelected || isPrecludedAssocSelected) {
+            if (g.type === 'association') {
+                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
+                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
+                    if (tagSources[assocTagIncompatibilities.tag]) {
                         conflicts.push({
-                            type: 'group_group',
-                            title: `Direct Outlier Conflict: ${g.name} & ${getGroupNameById(precludedGroupId)}`,
-                            desc: `<strong>${g.name}</strong> is directly incompatible with <strong>${getGroupNameById(precludedGroupId)}</strong>, bypassing general tag rules.`
+                            type: 'assoc_tag',
+                            title: `${g.name} Tag Preclusion`,
+                            desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`
                         });
                     }
-                });
+                }
             }
         });
+
+        // --- RULE 3: Association vs Association Preclusions ---
+        for (let i = 0; i < activeGroups.length; i++) {
+            for (let j = i + 1; j < activeGroups.length; j++) {
+                const assocA = activeGroups[i];
+                const assocB = activeGroups[j];
+
+                if (assocA.type === 'association' && assocB.type === 'association') {
+                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
+                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
+                    );
+                    if (assocAssocIncompatibilities) {
+                        conflicts.push({
+                            type: 'assoc_assoc',
+                            title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
+                            desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`
+                        });
+                    }
+                }
+            }
+        }
 
         // --- RULE 4: Race Restrictions ---
         activeGroups.forEach(g => {
@@ -256,43 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
-        // --- RULE 6: Association vs Tag Preclusions ---
-        activeGroups.forEach(g => {
-            if (g.type === 'association') {
-                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                    if (tagSources[assocTagIncompatibilities.tag]) {
-                        conflicts.push({
-                            type: 'assoc_tag',
-                            title: `${g.name} Tag Preclusion`,
-                            desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`
-                        });
-                    }
-                }
-            }
-        });
-
-        // --- RULE 7: Association vs Association Preclusions ---
-        for (let i = 0; i < activeGroups.length; i++) {
-            for (let j = i + 1; j < activeGroups.length; j++) {
-                const assocA = activeGroups[i];
-                const assocB = activeGroups[j];
-
-                if (assocA.type === 'association' && assocB.type === 'association') {
-                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
-                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
-                    );
-                    if (assocAssocIncompatibilities) {
-                        conflicts.push({
-                            type: 'assoc_assoc',
-                            title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
-                            desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`
-                        });
-                    }
-                }
-            }
-        }
 
         return conflicts;
     }
@@ -428,37 +388,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 2. Group vs Tag Preclusions
+        // 2. Association vs Tag Preclusions
         activeGroups.forEach(g => {
-            if (g.incompat_tags && g.incompat_tags.length > 0) {
-                g.incompat_tags.forEach(precludedTag => {
-                    if (tagSources[precludedTag]) {
-                        const foreignSources = tagSources[precludedTag].filter(name => name !== g.name);
-                        if (foreignSources.length > 0) {
-                            conflicts.push({
-                                type: 'group_tag',
-                                reason: `Precluded tag "${precludedTag}" from ${foreignSources.join(', ')}`
-                            });
-                        }
+            if (g.type === 'association') {
+                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
+                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
+                    if (tagSources[assocTagIncompatibilities.tag]) {
+                        conflicts.push({
+                            type: 'assoc_tag',
+                            reason: `Precluded tag "${assocTagIncompatibilities.tag}" (${assocTagIncompatibilities.description})`
+                        });
                     }
-                });
+                }
             }
         });
 
-        // 3. Group vs Group Preclusions
-        activeGroups.forEach(g => {
-            if (g.incompat_groups && g.incompat_groups.length > 0) {
-                g.incompat_groups.forEach(precludedGroupName => {
-                    const isSelected = state.selectedGuild === precludedGroupName || state.selectedAssociations.has(precludedGroupName);
-                    if (isSelected) {
+        // 3. Association vs Association Preclusions
+        for (let i = 0; i < activeGroups.length; i++) {
+            for (let j = i + 1; j < activeGroups.length; j++) {
+                const assocA = activeGroups[i];
+                const assocB = activeGroups[j];
+
+                if (assocA.type === 'association' && assocB.type === 'association') {
+                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
+                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
+                    );
+                    if (assocAssocIncompatibilities) {
                         conflicts.push({
-                            type: 'group_group',
-                            reason: `Direct conflict with ${precludedGroupName}`
+                            type: 'assoc_assoc',
+                            reason: `Direct conflict with ${assocB.name} (${assocAssocIncompatibilities.description})`
                         });
                     }
-                });
+                }
             }
-        });
+        }
 
         // 4. Race Restrictions
         activeGroups.forEach(g => {
@@ -495,41 +458,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
-        // 6. Association vs Tag Preclusions
-        activeGroups.forEach(g => {
-            if (g.type === 'association') {
-                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                    if (tagSources[assocTagIncompatibilities.tag]) {
-                        conflicts.push({
-                            type: 'assoc_tag',
-                            reason: `Precluded tag "${assocTagIncompatibilities.tag}" (${assocTagIncompatibilities.description})`
-                        });
-                    }
-                }
-            }
-        });
-
-        // 7. Association vs Association Preclusions
-        for (let i = 0; i < activeGroups.length; i++) {
-            for (let j = i + 1; j < activeGroups.length; j++) {
-                const assocA = activeGroups[i];
-                const assocB = activeGroups[j];
-
-                if (assocA.type === 'association' && assocB.type === 'association') {
-                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
-                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
-                    );
-                    if (assocAssocIncompatibilities) {
-                        conflicts.push({
-                            type: 'assoc_assoc',
-                            reason: `Direct conflict with ${assocB.name} (${assocAssocIncompatibilities.description})`
-                        });
-                    }
-                }
-            }
-        }
 
         return conflicts;
     }
@@ -778,14 +706,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let icon = '❌';
                 if (c.type === 'tag_tag') icon = '📜 Tag Conflict';
-                else if (c.type === 'group_tag') icon = '🛡️ Tag Preclusion';
-                else if (c.type === 'group_group') icon = '⚠️ Outlier Exception';
-                else if (c.type === 'race_warning') icon = '👤 Race Verification Required';
-                else if (c.type === 'group_race') icon = '🧬 Race Restriction';
-                else if (c.type === 'gender_warning') icon = '👥 Gender Verification Required';
-                else if (c.type === 'group_gender') icon = '⚧️ Gender Restriction';
                 else if (c.type === 'assoc_tag') icon = '🏷️ Association Tag Preclusion';
                 else if (c.type === 'assoc_assoc') icon = '🤝 Association Conflict';
+                else if (c.type === 'group_race') icon = '🧬 Race Restriction';
+                else if (c.type === 'group_gender') icon = '⚧️ Gender Restriction';
 
                 confCard.innerHTML = `
                     <div class="conflict-card-title">
@@ -996,8 +920,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         groups.forEach(g => {
             // Check if group has any outlier rules
-            const hasTagPreclusions = g.incompat_tags && g.incompat_tags.length > 0;
-            const hasGroupExceptions = g.incompat_groups && g.incompat_groups.length > 0;
+            const hasTagPreclusions = g.type === 'association' && associationTagIncompatabilities.some(item => item.association === g.id);
+            const hasGroupExceptions = associationAssociationIncompatabilities.some(item => 
+                item.associations.includes(g.id)
+            );
 
             if (!hasTagPreclusions && !hasGroupExceptions) {
                 return; // skip if it's completely standard
@@ -1010,17 +936,25 @@ document.addEventListener('DOMContentLoaded', () => {
             let bodyHtml = '';
 
             if (hasTagPreclusions) {
-                bodyHtml += `
-                    <div class="exception-tag-clause">
-                        🚫 Incompatible with tags: ${g.incompat_tags.map(t => `<strong>${t}</strong>`).join(', ')}
-                    </div>
-                `;
+                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
+                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
+                    bodyHtml += `
+                        <div class="exception-tag-clause">
+                            🚫 Incompatible with tags: ${assocTagIncompatibilities.tag}
+                        </div>
+                    `;
+                }
             }
 
             if (hasGroupExceptions) {
+                const assocAssocIncompatibilities = associationAssociationIncompatabilities.filter(item => 
+                    item.associations.includes(g.id)
+                );
                 bodyHtml += `
                     <div class="exception-group-clause">
-                        ⚠️ Mutual exclusivity with: ${g.incompat_groups.map(gn => `<strong>${gn} <a href="${getWikiUrl(gn)}" target="_blank" class="wiki-link" style="font-size: 0.75rem; margin-left: 0.15rem;" title="View Wiki Page">📖</a></strong>`).join(', ')}
+                        ⚠️ Mutual exclusivity with: ${assocAssocIncompatibilities.map(item => 
+                            `<strong>${item.associations.find(a => a !== g.id)} <a href="${getWikiUrl(item.associations.find(a => a !== g.id))}" target="_blank" class="wiki-link" style="font-size: 0.75rem; margin-left: 0.15rem;" title="View Wiki Page">📖</a></strong>`
+                        ).join(', ')}
                     </div>
                 `;
             }
@@ -1170,6 +1104,9 @@ document.addEventListener('DOMContentLoaded', () => {
      *      - alias: string or null
      *      - type: "guild" or "association"
      *      - tags: array of strings (tags associated with the group)
+     *      - allowed_races: array of race IDs that are allowed for this group
+     *      - excluded_races: array of race IDs that are excluded from this group
+     *      - allowed_genders: array of genders that are allowed for this group
      *      - id: string (unique identifier for the group)
      *
      * Example:
@@ -1179,6 +1116,9 @@ document.addEventListener('DOMContentLoaded', () => {
      *    "alias": null,
      *    "type": "guild",
      *    "tags": [],
+     *    "allowed_races": [],
+     *    "excluded_races": [],
+     *    "allowed_genders": [],
      *    "id": "adventurers_guild"
      * },
      * ```
