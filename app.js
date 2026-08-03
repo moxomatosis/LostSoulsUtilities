@@ -17,6 +17,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Add event listener for clear button
+    const clearButton = document.getElementById('clear-button');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            state.selectedGuild = null;
+            state.selectedAssociations.clear();
+            state.selectedRace = 'Unspecified';
+            state.selectedGender = 'Unspecified';
+            state.characterName = '';
+
+            // Reset UI elements
+            document.getElementById('character-name').value = '';
+            document.getElementById('race-select').value = 'Unspecified';
+            document.getElementById('gender-select').value = 'Unspecified';
+
+            renderGuildList();
+            renderAssociationList();
+            updateCheckerResults();
+        });
+    }
+
     // Optionally, add a text input field for loading profiles
     const loadInput = document.getElementById('load-input');
     if (loadInput) {
@@ -644,7 +665,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="no-conflicts-message">
                     <h3>⚔️ No Conflicts Detected</h3>
                     <p style="margin-top: 0.5rem; font-size: 0.95rem;">All selected affiliations can be joined concurrently on a single character.</p>
-                    <sub>No gaurantee affiliations are compatible, data is incomplete.</sub>
                 </div>
             `;
         } else {
