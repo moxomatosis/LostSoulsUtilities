@@ -4,6 +4,7 @@
  */
 
 import racesById from './races.js';
+import {tagIncompatibilityPairs} from './compatability.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener to load button or input field for character name
@@ -105,30 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 2. COMPATIBILITY ENGINE
     // -------------------------------------------------------------
-    const incompatibilityPairs = [
-        ["Agent", "Champion"],
-        ["Altruist", "Evil"],
-        ["Atheist", "Devotional"],
-        ["Chaotic", "Neutral"],
-        ["Good", "Malevolent"],
-        ["Guard", "Outlaw"],
-        ["Healer", "Destroyer"],
-        ["Initiate", "Agent"],
-        ["Libertine", "Ascetic"],
-        ["Magician", "Psychic"],
-        ["Mystic", "Scientist"],
-        ["Neutral", "Chaotic"],
-        ["Ordered", "Chaotic"],
-        ["Outlaw", "Guard"],
-        ["Pariah", "Reapers"],
-        ["Protector", "Destroyer"],
-        ["Rogue", "Libertine"],
-        ["Secret", "Ascetic"],
-        ["Servant", "Agent"],
-        ["Soldier", "Warrior"],
-        ["Wanderer", "Guard"],
-        // Add other incompatible pairs here
-    ];
+
 
     function validateCompatibility() {
         const conflicts = [];
@@ -174,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Check against incompatibility pairs
-                if (incompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
+                if (tagIncompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
                     // Conflict found
                     const sourcesA = tagSources[tagA].map(n => `<strong>${n}</strong>`).join(', ');
                     const sourcesB = tagSources[tagB].map(n => `<strong>${n}</strong>`).join(', ');
@@ -388,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Check against incompatibility pairs
-                if (incompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
+                if (tagIncompatibilityPairs.some(pair => (pair.includes(tagA) && pair.includes(tagB)))) {
                     conflicts.push({
                         type: 'tag_tag',
                         reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
