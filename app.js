@@ -1079,7 +1079,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const savedState = JSON.stringify(state);
+            const saveState = {
+                selectedGuild: state.selectedGuild,
+                selectedRace: state.selectedRace,
+                selectedGender: state.selectedGender,
+                characterName: state.characterName,
+                selectedAssociations: [...state.selectedAssociations]
+            }
+
+            const savedState = JSON.stringify(saveState);
             localStorage.setItem(state.characterName, savedState);
             alert(`Character profile for "${state.characterName}" has been saved.`);
         });
