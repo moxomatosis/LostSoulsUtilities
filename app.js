@@ -107,29 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. COMPATIBILITY ENGINE
     // -------------------------------------------------------------
 
-
-    function validateCompatibility() {
+    function checkCompatibility(groups) {
         const conflicts = [];
 
-        // Build list of all active selected groups
-        const activeGroups = [];
-        if (state.selectedGuild) {
-            const guildObj = state.groupsMap[state.selectedGuild];
-            if (guildObj) activeGroups.push(guildObj);
-        }
-        state.selectedAssociations.forEach(assocId => {
-            const assocObj = state.groupsMap[assocId];
-            if (assocObj) activeGroups.push(assocObj);
-        });
-
-        if (activeGroups.length === 0) {
-            return conflicts;
-        }
-
         // Tag Sources Map to track which group contributed which tag
-        // tagSources[tag] = [groupName, groupName, ...]
         const tagSources = {};
-        activeGroups.forEach(g => {
+        groups.forEach(g => {
             g.tags.forEach(t => {
                 if (!tagSources[t]) tagSources[t] = [];
                 tagSources[t].push(g.name);
@@ -179,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- RULE 2: Association vs Tag Preclusions ---
-        activeGroups.forEach(g => {
+        groups.forEach(g => {
             if (g.type === 'association') {
                 const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
                 if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
@@ -195,10 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // --- RULE 3: Association vs Association Preclusions ---
-        for (let i = 0; i < activeGroups.length; i++) {
-            for (let j = i + 1; j < activeGroups.length; j++) {
-                const assocA = activeGroups[i];
-                const assocB = activeGroups[j];
+        for (let i = 0; i < groups.length; i++) {
+            for (let j = i + 1; j < groups.length; j++) {
+                const assocA = groups[i];
+                const assocB = groups[j];
 
                 if (assocA.type === 'association' && assocB.type === 'association') {
                     const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
@@ -216,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- RULE 4: Race Restrictions ---
-        activeGroups.forEach(g => {
+        groups.forEach(g => {
             if (state.selectedRace !== 'Unspecified') {
                 if (g.allowed_races && g.allowed_races.length > 0) {
                     const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
@@ -242,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // --- RULE 5: Gender Restrictions ---
-        activeGroups.forEach(g => {
+        groups.forEach(g => {
             if (g.allowed_genders && g.allowed_genders.length > 0) {
                 if (!g.allowed_genders.includes(state.selectedGender)) {
                     conflicts.push({
@@ -255,6 +238,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         return conflicts;
+    }
+
+    function validateCompatibility() {
+        const activeGroups = [];
+        if (state.selectedGuild) {
+            const guildObj = state.groupsMap[state.selectedGuild];
+            if (guildObj) activeGroups.push(guildObj);
+        }
+        state.selectedAssociations.forEach(assocId => {
+            const assocObj = state.groupsMap[assocId];
+            if (assocObj) activeGroups.push(assocObj);
+        });
+
+        return checkCompatibility(activeGroups);
+    }
+
+    function testCompatibilityWithCandidate(candidateId) {
+        const activeGroups = [];
+        if (state.selectedGuild) {
+            const guildObj = state.groupsMap[state.selectedGuild];
+            if (guildObj) activeGroups.push(guildObj);
+        }
+        state.selectedAssociations.forEach(assocId => {
+            const assocObj = state.groupsMap[assocId];
+            if (assocObj) activeGroups.push(assocObj);
+        });
+
+        // Add candidate if it's not already in the active list
+        if (!state.selectedAssociations.has(candidateId)) {
+            const candObj = state.groupsMap[candidateId];
+            if (candObj) activeGroups.push(candObj);
+        }
+
+        return checkCompatibility(activeGroups);
     }
 
     // -------------------------------------------------------------
@@ -346,120 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (candObj) activeGroups.push(candObj);
         }
 
-        if (activeGroups.length === 0) {
-            return [];
-        }
-
-        const conflicts = [];
-        const tagSources = {};
-        activeGroups.forEach(g => {
-            g.tags.forEach(t => {
-                if (!tagSources[t]) tagSources[t] = [];
-                tagSources[t].push(g.name);
-            });
-        });
-
-        const activeTags = Object.keys(tagSources);
-
-        // 1. Tag-to-Tag Incompatibilities
-        for (let i = 0; i < activeTags.length; i++) {
-            for (let j = i + 1; j < activeTags.length; j++) {
-                const tagA = activeTags[i];
-                const tagB = activeTags[j];
-
-                // Skip if both tags come from the same group
-                const sourcesA = tagSources[tagA];
-                const sourcesB = tagSources[tagB];
-                if (sourcesA.length === 1 && sourcesB.length === 1 && sourcesA[0] === sourcesB[0]) {
-                    continue;
-                }
-
-                // Check against incompatibility pairs
-                const isCompatible = !tagIncompatibilityPairs.some(pair => 
-                    pair.tags.includes(tagA) && pair.tags.includes(tagB)
-                );
-
-                if (!isCompatible) {
-                    conflicts.push({
-                        type: 'tag_tag',
-                        reason: `Tag Conflict (${tagA} & ${tagB}) with ${sourcesA}`
-                    });
-                }
-            }
-        }
-
-        // 2. Association vs Tag Preclusions
-        activeGroups.forEach(g => {
-            if (g.type === 'association') {
-                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                    if (tagSources[assocTagIncompatibilities.tag]) {
-                        conflicts.push({
-                            type: 'assoc_tag',
-                            reason: `Precluded tag "${assocTagIncompatibilities.tag}" (${assocTagIncompatibilities.description})`
-                        });
-                    }
-                }
-            }
-        });
-
-        // 3. Association vs Association Preclusions
-        for (let i = 0; i < activeGroups.length; i++) {
-            for (let j = i + 1; j < activeGroups.length; j++) {
-                const assocA = activeGroups[i];
-                const assocB = activeGroups[j];
-
-                if (assocA.type === 'association' && assocB.type === 'association') {
-                    const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
-                        item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
-                    );
-                    if (assocAssocIncompatibilities) {
-                        conflicts.push({
-                            type: 'assoc_assoc',
-                            reason: `Direct conflict with ${assocB.name} (${assocAssocIncompatibilities.description})`
-                        });
-                    }
-                }
-            }
-        }
-
-        // 4. Race Restrictions
-        activeGroups.forEach(g => {
-            if (state.selectedRace !== 'Unspecified') {
-                if (g.allowed_races && g.allowed_races.length > 0) {
-                    const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
-                    if (!allowedRaceNames.includes(state.selectedRace)) {
-                        conflicts.push({
-                            type: 'group_race',
-                            reason: `Allowed races: ${allowedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
-                        });
-                    }
-                }
-                if (g.excluded_races && g.excluded_races.length > 0) {
-                    const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
-                    if (excludedRaceNames.includes(state.selectedRace)) {
-                        conflicts.push({
-                            type: 'group_race',
-                            reason: `Excluded races: ${excludedRaceNames.join(', ')}. Your race is ${racesById[state.selectedRace].name}`
-                        });
-                    }
-                }
-            }
-        });
-
-        // 5. Gender Restrictions
-        activeGroups.forEach(g => {
-            if (g.allowed_genders && g.allowed_genders.length > 0) {
-                if (!g.allowed_genders.includes(state.selectedGender)) {
-                    conflicts.push({
-                        type: 'group_gender',
-                        reason: `Allowed genders: ${g.allowed_genders.join(', ')}. Your gender is ${state.selectedGender}`
-                    });
-                }
-            }
-        });
-
-        return conflicts;
+        return checkCompatibility(activeGroups);
     }
 
     // Populate Association Checklist
