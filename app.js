@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return `https://wiki.lostsouls.org/${encodeURIComponent(safeName)}`;
     }
 
+    // Helper to get group display name by ID
+    function getGroupNameById(groupId) {
+        const group = state.groupsMap[groupId];
+        return group ? group.name : groupId;
+    }
+
     // -------------------------------------------------------------
     // 2. COMPATIBILITY ENGINE
     // -------------------------------------------------------------
@@ -190,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (isPrecludedGuildSelected || isPrecludedAssocSelected) {
                         conflicts.push({
                             type: 'group_group',
-                            title: `Direct Outlier Conflict: ${g.name} & ${precludedGroupId}`,
-                            desc: `<strong>${g.name}</strong> is directly incompatible with <strong>${precludedGroupId}</strong>, bypassing general tag rules.`
+                            title: `Direct Outlier Conflict: ${g.name} & ${getGroupNameById(precludedGroupId)}`,
+                            desc: `<strong>${g.name}</strong> is directly incompatible with <strong>${getGroupNameById(precludedGroupId)}</strong>, bypassing general tag rules.`
                         });
                     }
                 });
