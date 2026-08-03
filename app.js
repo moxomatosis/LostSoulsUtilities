@@ -182,15 +182,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // For each active group, check if it directly excludes any other selected group
         activeGroups.forEach(g => {
             if (g.incompat_groups && g.incompat_groups.length > 0) {
-                g.incompat_groups.forEach(precludedGroupName => {
-                    const isPrecludedGuildSelected = state.selectedGuild === precludedGroupName;
-                    const isPrecludedAssocSelected = state.selectedAssociations.has(precludedGroupName);
+                g.incompat_groups.forEach(precludedGroupId => {
+                    const isPrecludedGuildSelected = state.selectedGuild === precludedGroupId;
+                    const isPrecludedAssocSelected = state.selectedAssociations.has(precludedGroupId);
+                    // TODO - Get group name instead of showing ID.
 
                     if (isPrecludedGuildSelected || isPrecludedAssocSelected) {
                         conflicts.push({
                             type: 'group_group',
-                            title: `Direct Outlier Conflict: ${g.name} & ${precludedGroupName}`,
-                            desc: `<strong>${g.name}</strong> is directly incompatible with <strong>${precludedGroupName}</strong>, bypassing general tag rules.`
+                            title: `Direct Outlier Conflict: ${g.name} & ${precludedGroupId}`,
+                            desc: `<strong>${g.name}</strong> is directly incompatible with <strong>${precludedGroupId}</strong>, bypassing general tag rules.`
                         });
                     }
                 });

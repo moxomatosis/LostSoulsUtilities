@@ -629,7 +629,7 @@ const LOST_SOULS_DATA = {
         "Wanderer",
         "Warrior"
       ],
-      "incompat_groups": [],
+      "incompat_groups": ["aristeia"],
       "incompat_tags": [],
       "id": "travelers"
     },
@@ -768,7 +768,8 @@ const LOST_SOULS_DATA = {
         "apollonian_disciples",
         "chosen_of_vashanka",
         "haruspices",
-        "synodia_lykouros"
+        "synodia_lykouros",
+        "travelers"
       ],
       "incompat_tags": [
         "Nihilist"

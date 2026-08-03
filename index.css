@@ -75,59 +75,8 @@ body {
 
 /* Main Container & Layout */
 .app-container {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
-}
-
-/* Tabs Navigation */
-.tabs-navigation {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.tab-button {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all var(--transition-speed) ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-}
-
-.tab-button:hover {
-    color: var(--accent-gold);
-    border-color: var(--accent-gold);
-    background-color: rgba(160, 120, 16, 0.03);
-    transform: translateY(-1px);
-}
-
-.tab-button.active {
-    background-color: var(--accent-gold);
-    color: #ffffff;
-    border-color: var(--accent-gold);
-    box-shadow: 0 4px 10px rgba(160, 120, 16, 0.2);
-}
-
-/* Tab Contents */
-.tab-content {
-    display: none;
-    animation: fadeIn 0.4s ease;
-}
-
-.tab-content.active {
-    display: block;
 }
 
 @keyframes fadeIn {
@@ -144,6 +93,7 @@ body {
     box-shadow: var(--shadow-main);
     margin-bottom: 2rem;
     transition: border-color var(--transition-speed) ease;
+    flex: 1 0;
 }
 
 .card:hover {
@@ -166,6 +116,7 @@ body {
 .checker-layout {
     display: flex;
     gap: 2rem;
+    flex-wrap:wrap;
 }
 
 @media (max-width: 900px) {
