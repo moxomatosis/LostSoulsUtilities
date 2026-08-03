@@ -1127,6 +1127,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 Object.assign(state, loadedState);
                 // Ensure selectedAssociations is a Set
                 state.selectedAssociations = new Set(loadedState.selectedAssociations || []);
+
+                // Update UI elements
+                document.getElementById('character-name').value = state.characterName;
+                document.getElementById('race-select').value = state.selectedRace;
+                document.getElementById('gender-select').value = state.selectedGender;
+
                 renderGuildList();
                 renderAssociationList();
                 updateCheckerResults();
