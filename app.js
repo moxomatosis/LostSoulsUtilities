@@ -1097,6 +1097,8 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const loadedState = JSON.parse(savedState);
                 Object.assign(state, loadedState);
+                // Ensure selectedAssociations is a Set
+                state.selectedAssociations = new Set(loadedState.selectedAssociations || []);
                 renderGuildList();
                 renderAssociationList();
                 updateCheckerResults();
