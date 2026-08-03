@@ -164,14 +164,13 @@ body {
 
 /* Compatibility Checker Grid */
 .checker-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
+    display: flex;
     gap: 2rem;
 }
 
 @media (max-width: 900px) {
     .checker-layout {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 }
 
