@@ -184,6 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assocB = groups[j];
 
                 if (assocA.type === 'association' && assocB.type === 'association') {
+                    // Skip self-compatibility check
+                    if (assocA.id === assocB.id) continue;
+
                     const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item => 
                         item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
                     );
@@ -456,7 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle Association toggle state
     function toggleAssociation(assocId, isChecked) {
         if (isChecked) {
-            state.selectedAssociations.add(assocId);
+            // Check if the association is already selected
+            if (!state.selectedAssociations.has(assocId)) {
+                state.selectedAssociations.add(assocId);
+            }
         } else {
             state.selectedAssociations.delete(assocId);
         }
