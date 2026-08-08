@@ -23,15 +23,17 @@ export const tagIncompatibilityPairs = [
     { tags: ["Neutral", "Malevolent"] },
     { tags: ["Neutral", "Ordered"] },
     { tags: ["Wanderer", "Guard"] }
-    // Maybe warrior/soldier?
-    // Mostly devotional/devotional?
-    // Mostly soldier/soldier?
+    // Protector/Destroyer?
 ];
 
 export const associationTagIncompatabilities = [
-    { association: "aliavelyrae", tag: "Soldier", description: "" },
+    { association: "aliavelyrae", tag: "Soldier", description: "You cannot join the Aliavelyrae because you are a soldier." },
     { association: "battleragers", tag: "Warrior", description: "" },
-    { association: "coven", tag: "Good", description: "" },
+    { association: "coven", tag: "Agent", description: "" },
+    { association: "coven", tag: "Destroyer", description: "" },
+    { association: "coven", tag: "Malevolent", description: "" },
+    { association: "coven", tag: "Soldier", description: "" },
+    { association: "coven", tag: "Warrior", description: "" },
     { association: "justicars_of_axa", tag: "Avaricious", description: "" },
     { association: "justicars_of_axa", tag: "Chaotic", description: "" },
     { association: "justicars_of_axa", tag: "Evil", description: "" },
@@ -42,30 +44,30 @@ export const associationTagIncompatabilities = [
     { association: "lightbringers", tag: "Evil", description: "" },
     { association: "lightbringers", tag: "Libertine", description: "" },
     { association: "lightbringers", tag: "Mercenary", description: "" },
-    { association: "lightbringers", tag: "Neutral", description: "" }, // Duplicate altruist?
     { association: "lightbringers", tag: "Outlaw", description: "" },
-    { association: "ordo_verbus_glacialis", tag: "Devotional", description: "" }, // TODO - Atheist?
+    { association: "ordo_verbus_glacialis", tag: "Devotional", description: "" },
     { association: "ordo_verbus_glacialis", tag: "Priest", description: "" },
-    { association: "reapers", tag: "Protector", description: "" }, // Protector/Destroyer?
-    { association: "reapers", tag: "Soldier", description: "" },
+    { association: "ordo_verbus_glacialis", tag: "Guard", description: "As a Soror Verbus Glacialis, you could not become a guard by joining the Losthaven Guard." },
+    { association: "ordo_verbus_glacialis", tag: "Soldier", description: "" },
+    { association: "reapers", tag: "Protector", description: "You cannot join the Reapers because you are a protector." },
+    { association: "reapers", tag: "Soldier", description: "As a Reaper, you could not become a soldier by joining the Weapons of Vengeance, reaper." },
+    { association: "reapers", tag: "Scholar", description: "As a Reaper, you could not become a scholar by joining the Crafty Linguists." },
     { association: "ringwielders", tag: "Initiate", description: "" },
-    { association: "ulfhednar", tag: "Neutral", description: "" }, // TODO - But they are neutral?
     { association: "ulfhednar", tag: "Servant", description: "" },
     { association: "verynvelyrae", tag: "Fanatic", description: "" },
-    { association: "warbreakers", tag: "Agent", description: "" }, // TODO - Probably just champion
     { association: "warbreakers", tag: "Servant", description: "" },
     { association: "warbreakers", tag: "Malevolent", description: "" },
     { association: "apollonian_disciples", tag: "Hedonist", description: "" },
-    { association: "aristeia", tag: "Nihilist", description: "" },
+    { association: "aristeia", tag: "Nihilist", description: "You cannot join Aristeia because you are a nihilist." },
+    { association: "aristeia", tag: "Malevolent", description: "You cannot join Aristeia because you are a proponent of malevolence." },
     { association: "the_attuned", tag: "Destroyer", description: "" },
     { association: "the_attuned", tag: "Fanatic", description: "" },
-    { association: "the_attuned", tag: "Initiate", description: "" }, // But they are initiates
-    { association: "chosen_of_vashanka", tag: "Healer", description: "" },
-    { association: "chosen_of_vashanka", tag: "Rogue", description: "" },
+    { association: "chosen_of_vashanka", tag: "Healer", description: "You cannot join the Chosen of Vashanka because you are a healer." },
+    { association: "chosen_of_vashanka", tag: "Rogue", description: "You may not worship Vashanka because you are a rogue" },
     { association: "fianna", tag: "Fanatic", description: "" },
     { association: "fianna", tag: "Nihilist", description: "" },
     { association: "fianna", tag: "Racist", description: "" },
-    { association: "gauric_legion", tag: "Nihilist", description: "" },// TODO - Probably all tags?
+    { association: "gauric_legion", tag: "Nihilist", description: "" },
     { association: "gauric_legion", tag: "Sexist", description: "" },
     { association: "gauric_legion", tag: "Atheist", description: "" },
     { association: "ghaunadauri", tag: "Hedonist", description: "" },
@@ -78,21 +80,18 @@ export const associationTagIncompatabilities = [
     { association: "questors_of_axa", tag: "Furtive", description: "" },
     { association: "questors_of_axa", tag: "Hedonist", description: "" },
     { association: "questors_of_axa", tag: "Libertine", description: "" },
-    { association: "steel_serpents", tag: "Soldier", description: "" },
-    { association: "synodia_lykouros", tag: "shemsu_sutekh", description: "" },
-    { association: "the_stalkers_of_the_gate", tag: "Fanatic", description: "" },
-    { association: "the_stalkers_of_the_gate", tag: "Servant", description: "" },
+    { association: "the_stalkers_of_the_gate", tag: "Fanatic", description: "You cannot join the Stalkers of the Gate because you are a fanatic." },
+    { association: "the_stalkers_of_the_gate", tag: "Servant", description: "You cannot join the Stalkers of the Gate because you are a servant and a proponent of evil" },
     { association: "weapons_of_vengeance", tag: "Guard", description: "" },
-    { association: "the_syndicate", tag: "Protector", description: "" },
-    { association: "followers_of_apollo", tag: "Hedonist", description: "" },
-    { association: "", tag: "", description: "" },
-    { association: "", tag: "", description: "" },
-
-
+    { association: "the_syndicate", tag:"Protector", description: "As a Syndicate operative, you could not become a protector by joining the Wandslingers." },
+    { association: "apollonian_disciples", tag: "Hedonist", description: "You cannot join the Apollonian Disciples because you are a hedonist." },
+    {association: "steel_serpents", tag: "Drunkard", description: ""},
+    {association: "steel_serpents", tag: "Vigilante", description: ""},
 ]
 
 export const associationAssociationIncompatabilities = [
     { associations: ["coven", "hawkmen"], description: "" },
+    { associations: ["coven", "apollonian_disciples"], description: "" },
     { associations: ["faradrim_ilavathar", "shadow_brethren"], description: "" },
     { associations: ["justicars_of_axa", "the_attuned"], description: "" },
     { associations: ["justicars_of_axa", "agnihotri"], description: "Assumed due to God conflict" },
@@ -103,7 +102,7 @@ export const associationAssociationIncompatabilities = [
     { associations: ["justicars_of_axa", "collegium_magistrorum"] },
     { associations: ["justicars_of_axa", "cuar_faernae"] },
     { associations: ["justicars_of_axa", "fianna"] },
-    { associations: ["justicars_of_axa", "followers_of_apollo"], description: "Assumed due to God conflict" },
+    { associations: ["justicars_of_axa", "apollonian_disciples"], description: "Assumed due to God conflict" },
     { associations: ["justicars_of_axa", "ghaunadauri"], description: "Assumed due to God conflict" },
     { associations: ["justicars_of_axa", "glomerates"] },
     { associations: ["justicars_of_axa", "haruspices"], description: "Assumed due to God conflict" },
@@ -116,39 +115,20 @@ export const associationAssociationIncompatabilities = [
     { associations: ["justicars_of_axa", "synousia_algesis"], description: "Assumed due to God conflict" },
     { associations: ["justicars_of_axa", "ygellethites"], description: "Assumed due to God conflict" },
     { associations: ["ordo_verbus_glacialis", "the_stalkers_of_the_gate"], description: "" }, // TODO - Probably just from ordered/neutral
-    { associations: ["shemsu_sutekh", "hellwalkers"], description: "" },
-    { associations: ["travelers", "aristeia"], description: "" }, // TODO - Probably a tag?
-    { associations: ["ulfhednar", "aligned"], description: "" }, // TODO - Might all just be Neutral?
-    { associations: ["ulfhednar", "gauric_legion"], description: "" },
-    { associations: ["ulfhednar", "questors_of_axa"], description: "" },
-    { associations: ["ulfhednar", "the_stalkers_of_the_gate"], description: "" },
-    { associations: ["ulfhednar", "weapons_of_vengeance"], description: "" },
+    { associations: ["shemsu_sutekh", "hellwalkers"], description: "As a Hellwalker, you could not become a follower of a deity by joining Shemsu Sutekh." },
+    { associations: ["travelers", "aristeia"], description: "" },
     { associations: ["verynvelyrae", "mhezlekai"], description: "" },
-    { associations: ["warbreakers", "questors_of_axa"], description: "" }, // TODO - Probably all just champion <> agent
-    { associations: ["warbreakers", "the_stalkers_of_the_gate"], description: "" },
-    { associations: ["warbreakers", "weapons_of_vengeance"], description: "" },
-    { associations: ["apollonian_disciples", "shemsu_sutekh"], description: "" }, // TODO - Probably just order/good
-    { associations: ["aristeia", "aedarene"], description: "" },
-    { associations: ["aristeia", "apollonian_disciples"], description: "" },
-    { associations: ["aristeia", "chosen_of_vashanka"], description: "" },
-    { associations: ["aristeia", "haruspices"], description: "" },
-    { associations: ["aristeia", "synodia_lykouros"], description: "" },
-    { associations: ["aristeia", "travelers"], description: "" },
-    { associations: ["chosen_of_vashanka", "hantaka"], description: "" },
-    { associations: ["gauric_legion", "aliavelyrae"], description: "" }, // TODO - Probably all tags
-    { associations: ["gauric_legion", "aligned"], description: "" },
-    { associations: ["gauric_legion", "coven"], description: "" },
-    { associations: ["ghaunadauri", "coven"], description: "" },
-    { associations: ["maidens_of_the_spear", "aligned"], description: "" }, //TODO - Tag?
-    { associations: ["sodality_of_the_nine_spoked_wheel", "aedarene"], description: "" },
-    { associations: ["sodality_of_the_nine_spoked_wheel", "synodia_lykouros"], description: "" },
-    { associations: ["steel_serpents", "aliavelyrae"], description: "" },
-    { associations: ["the_syndicate", "aristeia"], description: "" },
-    { associations: ["followers_of_apollo", "apollonian_disciples"], description: "" },
-    { associations: ["followers_of_apollo", "erisian_liberation_front"], description: "" }, // TODO - order/chaos
-    { associations: ["followers_of_apollo", "shemsu_sutekh"], description: "" },// TODO - order/chaos
-    { associations: ["followers_of_apollo", "aristeia"], description: "" },
-    { associations: ["followers_of_apollo", ""], description: "" },
-    { associations: ["", ""], description: "" },
-    { associations: ["", ""], description: "" },
+    { associations: ["apollonian_disciples", "shemsu_sutekh"], description: "" },
+    { associations: ["aristeia", "aedarene"], description: " The worship of Aeda does not allow the veneration of Aristes, so you cannot join Aristeia. " },
+    { associations: ["aristeia", "apollonian_disciples"], description: "The worship of Apollo does not allow the veneration of Aristes, so you cannot join Aristeia." },
+    { associations: ["aristeia", "chosen_of_vashanka"], description: "The worship of Aristes does not allow the veneration of Vashanka, so you cannot join Aristeia." },
+    { associations: ["aristeia", "haruspices"], description: "The worship of Athena does not allow the veneration of Aristes, so you cannot join Aristeia. " },
+    { associations: ["aristeia", "synodia_lykouros"], description: "The worship of Aeda does not allow the veneration of Aristes, so you cannot join Aristeia. " },
+    { associations: ["aristeia", "travelers"], description: "As a Traveler, you could not become a follower of a deity by joining Aristeia." },
+    { associations: ["aristeia", "hellwalkers"], description: "As a Hellwalker, you could not become a follower of a deity by joining Aristeia" },
+    { associations: ["gauric_legion", "aligned"], description: "" }, // Guaric wiki says aligned can't be soldier, but aligned wiki does not say this.
+    { associations: ["sodality_of_the_nine_spoked_wheel", "aedarene"], description: "The worship of Aeda doesh not allow the veneration of Ashmodai, sho you cannot join the SHodality of the Nine-SHpoked Wheel." },
+    { associations: ["sodality_of_the_nine_spoked_wheel", "synodia_lykouros"], description: "The worship of Aeda doesh not allow the veneration of Ashmodai, sho you cannot join the SHodality of the Nine-SHpoked Wheel." },
+    { associations: ["the_syndicate", "aristeia"], description: "As a Syndicate operative, you could not become a follower of a deity by joining Aristeia." },
+    { associations: ["apollonian_disciples", "shemsu_sutekh"], description: "" },
 ]
