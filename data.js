@@ -453,6 +453,7 @@ const LOST_SOULS_DATA = {
     },
     "travelers": {
       "name": "Travelers",
+      "warning": "Forbids the worship of deities Ganesha does not have a prior connection with.",
       "alias": null,
       "type": "guild",
       "tags": [
@@ -537,7 +538,7 @@ const LOST_SOULS_DATA = {
     },
     "apollonian_disciples": {
       "name": "Apollonian Disciples",
-      "alias": null,
+      "alias": "Followers Of Apollo",
       "type": "association",
       "tags": [
         "Devotional",
@@ -852,19 +853,6 @@ const LOST_SOULS_DATA = {
       "allowed_races": ["shoggoth"],
       "id": "mhezlekai"
     },
-    "minervas_haruspices": {
-      "name": "Minerva's Haruspices",
-      "alias": null,
-      "type": "association",
-      "tags": [
-        "Devotional",
-        "Magician",
-        "Ordered",
-        "Secret"
-      ],
-      "id": "minervas_haruspices"
-    },
-    // TODO- Real?
     "ollin_tonatiuh": {
       "name": "Ollin Tonatiuh",
       "alias": null,
@@ -1110,19 +1098,6 @@ const LOST_SOULS_DATA = {
         "Magician"
       ],
       "id": "archmagus"
-    },
-    "followers_of_apollo": {
-      "name": "Followers of Apollo",
-      "alias": null,
-      "type": "association",
-      "tags": [
-        "Devotional",
-        "Good",
-        "Healer",
-        "Invested",
-        "Ordered"
-      ],
-      "id": "followers_of_apollo"
     },
     "haruspices": {
       "name": "Haruspices",

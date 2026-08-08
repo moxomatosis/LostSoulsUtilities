@@ -603,7 +603,8 @@ document.addEventListener('DOMContentLoaded', () => {
             conflictsListContainer.innerHTML = `
                 <div class="no-conflicts-message">
                     <h3>⚔️ No Conflicts Detected</h3>
-                    <p style="margin-top: 0.5rem; font-size: 0.95rem;">All selected affiliations can be joined concurrently on a single character.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.95rem;">All selected affiliations can (probably) be joined concurrently on a single character.</p>
+                    <sub>In theory, but things might not work, and you might not be able to join.</sub>
                 </div>
             `;
         } else {
