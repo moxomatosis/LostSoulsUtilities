@@ -283,7 +283,9 @@ const LOST_SOULS_DATA = {
         "Evil",
         "Servant"
       ],
-      "id": "kazarak"
+      "id": "kazarak",
+      "warning": "Can't join most/all associations after converting. Cannot use many skills due to Spiritual Disjunction, so most associations are useless.",
+
     },
     "knights_of_the_round_table": {
       "name": "Knights of the Round Table",
