@@ -746,3 +746,23 @@ body {
     border-color: var(--text-secondary);
 }
 
+/* Warning Status Hero & Warning Cards */
+.status-hero.warning {
+    background: linear-gradient(135deg, rgba(160, 120, 16, 0.08) 0%, rgba(160, 120, 16, 0.18) 100%);
+    border: 1px solid var(--color-warning);
+    box-shadow: 0 2px 10px rgba(160, 120, 16, 0.05);
+}
+
+.status-hero.warning .status-label {
+    color: var(--color-warning);
+}
+
+.conflict-card.warning-card {
+    background-color: rgba(160, 120, 16, 0.04);
+    border-left: 4px solid var(--color-warning);
+    border-top: 1px solid rgba(160, 120, 16, 0.05);
+    border-right: 1px solid rgba(160, 120, 16, 0.05);
+    border-bottom: 1px solid rgba(160, 120, 16, 0.05);
+}
+
+

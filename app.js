@@ -155,7 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     conflicts.push({
                         type: 'tag_tag',
                         title: `Tag Conflict: ${tagA} & ${tagB}`,
-                        desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB})${description}.`
+                        desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB})${description}.`,
+                        reason: `Tag ${tagA}/${tagB} conflict`
                     });
                 }
             }
@@ -171,7 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     conflicts.push({
                         type: 'assoc_tag',
                         title: `${g.name} Tag Preclusion`,
-                        desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`
+                        desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`,
+                        reason: `Precluded by tag ${assocTagIncompatibilities.tag}`
                     });
                 }
             }
@@ -194,7 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     conflicts.push({
                         type: 'assoc_assoc',
                         title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
-                        desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`
+                        desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`,
+                        reason: `${assocA.name} & ${assocB.name} conflict`
                     });
                 }
 
@@ -210,7 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         conflicts.push({
                             type: 'group_race',
                             title: `${g.name} Race Conflict`,
-                            desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
+                            desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`,
+                            reason: 'Race restricted'
                         });
                     }
                 }
@@ -220,7 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         conflicts.push({
                             type: 'group_race',
                             title: `${g.name} Race Exclusion`,
-                            desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`
+                            desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`,
+                            reason: 'Race excluded'
                         });
                     }
                 }
@@ -234,7 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     conflicts.push({
                         type: 'group_gender',
                         title: `${g.name} Gender Conflict`,
-                        desc: `<strong>${g.name}</strong> only allows these genders: ${g.allowed_genders.join(', ')}. Your gender is <strong>${state.selectedGender}</strong>.`
+                        desc: `<strong>${g.name}</strong> only allows these genders: ${g.allowed_genders.join(', ')}. Your gender is <strong>${state.selectedGender}</strong>.`,
+                        reason: 'Gender restricted'
                     });
                 }
             }
@@ -254,7 +260,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (assocObj) activeGroups.push(assocObj);
         });
 
-        return checkCompatibility(activeGroups);
+        const conflicts = checkCompatibility(activeGroups);
+        const warnings = [];
+
+        activeGroups.forEach(g => {
+            if (g.warning) {
+                warnings.push({
+                    type: 'warning',
+                    title: `${g.name} Warning`,
+                    desc: g.warning
+                });
+            }
+        });
+
+        return { conflicts, warnings };
     }
 
     function testCompatibilityWithCandidate(candidateId) {
@@ -419,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let conflictHtml = '';
             if (!isCompatible && p.conflicts.length > 0) {
-                const reasonsList = p.conflicts.map(c => c.reason).join(', ');
+                const reasonsList = p.conflicts.map(c => c.reason || c.title).join(', ');
                 conflictHtml = `<div class="association-conflict-reason">Conflicts: ${reasonsList}</div>`;
             }
 
@@ -431,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="${getWikiUrl(a.name)}" target="_blank" class="wiki-link" title="View Wiki Page">📖</a>
                     </span>
                     <div class="group-tags">${tagsHtml}</div>
+                    ${conflictHtml}
                 </div>
             `;
 
@@ -583,9 +603,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 2. Validate compatibility
-        const conflicts = validateCompatibility();
+        const { conflicts, warnings } = validateCompatibility();
 
-        if (conflicts.length === 0) {
+        if (conflicts.length === 0 && warnings.length === 0) {
             // COMPATIBLE!
             statusHero.className = 'status-hero compatible';
             statusHeroText.textContent = 'Compatible';
@@ -608,13 +628,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         } else {
-            // INCOMPATIBLE!
-            statusHero.className = 'status-hero incompatible';
-            statusHeroText.textContent = 'Incompatible';
-            statusHeroDesc.textContent = `Found ${conflicts.length} conflict(s) in your profile. See details below.`;
+            // Either hard conflicts or warnings (or both) exist!
+            if (conflicts.length > 0) {
+                // INCOMPATIBLE! (Hard conflict takes precedence)
+                statusHero.className = 'status-hero incompatible';
+                statusHeroText.textContent = 'Incompatible';
+                statusHeroDesc.textContent = `Found ${conflicts.length} conflict(s) in your profile. See details below.`;
+            } else {
+                // Compatible but with warnings!
+                statusHero.className = 'status-hero warning';
+                statusHeroText.textContent = 'Compatible with Warnings';
+                statusHeroDesc.textContent = `Profile is compatible, but has ${warnings.length} warning(s). See details below.`;
+            }
 
-            // Render conflicts
+            // Render conflicts & warnings
             conflictsListContainer.innerHTML = '';
+
+            // Render hard conflicts first
             conflicts.forEach(c => {
                 const confCard = document.createElement('div');
                 confCard.className = 'conflict-card';
@@ -633,6 +663,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="conflict-card-desc">${c.desc}</div>
                 `;
                 conflictsListContainer.appendChild(confCard);
+            });
+
+            // Render warnings second
+            warnings.forEach(w => {
+                const warnCard = document.createElement('div');
+                warnCard.className = 'conflict-card warning-card';
+
+                warnCard.innerHTML = `
+                    <div class="conflict-card-title" style="color: var(--accent-gold);">
+                        <span>⚠️ ${w.title}</span>
+                    </div>
+                    <div class="conflict-card-desc">${w.desc}</div>
+                `;
+                conflictsListContainer.appendChild(warnCard);
             });
         }
     }
