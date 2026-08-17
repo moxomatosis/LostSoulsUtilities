@@ -220,18 +220,21 @@ body {
 }
 
 /* Grayed out incompatible association items */
-.association-item.incompatible-item {
+.association-item.incompatible-item,
+.guild-item.incompatible-item {
     opacity: 0.65;
     background-color: rgba(189, 33, 48, 0.01);
     border-left: 3px solid rgba(189, 33, 48, 0.3);
 }
 
-.association-item.incompatible-item:hover {
+.association-item.incompatible-item:hover,
+.guild-item.incompatible-item:hover {
     opacity: 0.9;
     background-color: rgba(189, 33, 48, 0.03);
 }
 
-.association-conflict-reason {
+.association-conflict-reason,
+.guild-conflict-reason {
     font-size: 0.75rem;
     color: var(--color-incompatible);
     font-weight: 500;

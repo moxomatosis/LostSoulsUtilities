@@ -26,7 +26,7 @@ export const tagIncompatibilityPairs = [
     // Protector/Destroyer?
 ];
 
-export const associationTagIncompatabilities = [
+export const associationTagIncompatibilities = [
     { association: "aliavelyrae", tag: "Soldier", description: "You cannot join the Aliavelyrae because you are a soldier." },
     { association: "battleragers", tag: "Warrior", description: "" },
     { association: "coven", tag: "Agent", description: "" },
@@ -50,7 +50,7 @@ export const associationTagIncompatabilities = [
     { association: "ordo_verbus_glacialis", tag: "Guard", description: "As a Soror Verbus Glacialis, you could not become a guard by joining the Losthaven Guard." },
     { association: "ordo_verbus_glacialis", tag: "Soldier", description: "" },
     { association: "reapers", tag: "Protector", description: "You cannot join the Reapers because you are a protector." },
-    { association: "reapers", tag: "Soldier", description: "As a Reaper, you could not become a soldier by joining the Weapons of Vengeance, reaper." },
+    { association: "reapers", tag: "Soldier", description: "As a Reaper, you could not become a soldier by joining the Weapons of Vengeance, reaper." }, // This is not working.
     { association: "reapers", tag: "Scholar", description: "As a Reaper, you could not become a scholar by joining the Crafty Linguists." },
     { association: "ringwielders", tag: "Initiate", description: "" },
     { association: "ulfhednar", tag: "Servant", description: "" },
@@ -89,7 +89,7 @@ export const associationTagIncompatabilities = [
     {association: "steel_serpents", tag: "Vigilante", description: ""},
 ]
 
-export const associationAssociationIncompatabilities = [
+export const associationAssociationIncompatibilities = [
     { associations: ["coven", "hawkmen"], description: "" },
     { associations: ["coven", "apollonian_disciples"], description: "" },
     { associations: ["faradrim_ilavathar", "shadow_brethren"], description: "" },

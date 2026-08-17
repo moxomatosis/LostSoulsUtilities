@@ -4,7 +4,7 @@
  */
 
 import racesById from './races.js';
-import { tagIncompatibilityPairs, associationTagIncompatabilities, associationAssociationIncompatabilities } from './compatability.js';
+import { tagIncompatibilityPairs, associationTagIncompatibilities, associationAssociationIncompatibilities } from './compatibility.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener to load button or input field for character name
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearButton = document.getElementById('clear-button');
     if (clearButton) {
         clearButton.addEventListener('click', () => {
-            state.selectedGuild = null;
+            state.selectedGuilds.clear();
             state.selectedAssociations.clear();
             state.selectedRace = 'Unspecified';
             state.selectedGender = 'Unspecified';
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. STATE MANAGEMENT
     // -------------------------------------------------------------
     const state = {
-        selectedGuild: null,             // String: Guild ID or null
+        selectedGuilds: new Set(),             // Set of Strings: Selected guild IDs
         selectedAssociations: new Set(),   // Set of Strings: Selected association IDs
         selectedRace: 'Unspecified',     // String: Selected character race (ID)
         selectedGender: 'Unspecified',   // String: Selected character gender
@@ -164,18 +164,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- RULE 2: Association vs Tag Preclusions ---
         groups.forEach(g => {
-            const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-            if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                // Filter out conflicts with our own guild/association, since that is a thing.
-                const conflictSources = (tagSources[assocTagIncompatibilities.tag] || []).filter(s => s.id !== g.id)
-                if (conflictSources.length > 0) {
-                    conflicts.push({
-                        type: 'assoc_tag',
-                        title: `${g.name} Tag Preclusion`,
-                        desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${assocTagIncompatibilities.tag}</strong>. ${assocTagIncompatibilities.description ? ` (${assocTagIncompatibilities.description})` : ''}`,
-                        reason: `Precluded by tag ${assocTagIncompatibilities.tag}`
-                    });
-                }
+            // FIXED: Use .filter() instead of .find() to catch multiple tag incompatibilities per group
+            const assocTagIncompatibilities = associationTagIncompatibilities.filter(item => item.association === g.id);
+
+            if (assocTagIncompatibilities.length > 0) {
+                assocTagIncompatibilities.forEach(incompat => {
+                    if (incompat.tag) {
+                        // Filter out conflicts with our own guild/association, since that is a thing.
+                        const conflictSources = (tagSources[incompat.tag] || []).filter(s => s.id !== g.id);
+                        if (conflictSources.length > 0) {
+                            conflicts.push({
+                                type: 'assoc_tag',
+                                title: `${g.name} Tag Preclusion`,
+                                desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${incompat.tag}</strong>. ${incompat.description ? ` (${incompat.description})` : ''}`,
+                                reason: `Precluded by tag ${incompat.tag}`
+                            });
+                        }
+                    }
+                });
             }
         });
 
@@ -185,22 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assocA = groups[i];
                 const assocB = groups[j];
 
-
                 // Skip self-compatibility check
                 if (assocA.id === assocB.id) continue;
 
-                const assocAssocIncompatibilities = associationAssociationIncompatabilities.find(item =>
+                // FIXED: Use .filter() instead of .find() to catch multiple association conflicts between the same pair
+                const assocAssocIncompatibilities = associationAssociationIncompatibilities.filter(item =>
                     item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
                 );
-                if (assocAssocIncompatibilities) {
-                    conflicts.push({
-                        type: 'assoc_assoc',
-                        title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
-                        desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${assocAssocIncompatibilities.description ? ` (${assocAssocIncompatibilities.description})` : ''}`,
-                        reason: `${assocA.name} & ${assocB.name} conflict`
+
+                if (assocAssocIncompatibilities.length > 0) {
+                    assocAssocIncompatibilities.forEach(incompat => {
+                        conflicts.push({
+                            type: 'assoc_assoc',
+                            title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
+                            desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${incompat.description ? ` (${incompat.description})` : ''}`,
+                            reason: `${assocA.name} & ${assocB.name} conflict`
+                        });
                     });
                 }
-
             }
         }
 
@@ -251,9 +259,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateCompatibility() {
         const activeGroups = [];
-        if (state.selectedGuild) {
-            const guildObj = state.groupsMap[state.selectedGuild];
-            if (guildObj) activeGroups.push(guildObj);
+        if (state.selectedGuilds.size > 0) {
+            state.selectedGuilds.forEach(guildId => {
+                const guildObj = state.groupsMap[guildId];
+                if (guildObj) activeGroups.push(guildObj);
+            });
+        } else {
+            const defaultGuild = state.groupsMap['adventurers_guild'];
+            if (defaultGuild) activeGroups.push(defaultGuild);
         }
         state.selectedAssociations.forEach(assocId => {
             const assocObj = state.groupsMap[assocId];
@@ -262,6 +275,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const conflicts = checkCompatibility(activeGroups);
         const warnings = [];
+
+        if (state.selectedGuilds.size > 1) {
+            warnings.push({
+                type: 'warning',
+                title: 'Multi-Guild Compatibility Warning',
+                desc: 'Selecting multiple guilds is not well documented or tested. Compatibility rules between multiple guilds may not be fully accurate.'
+            });
+        }
 
         activeGroups.forEach(g => {
             if (g.warning) {
@@ -276,24 +297,46 @@ document.addEventListener('DOMContentLoaded', () => {
         return { conflicts, warnings };
     }
 
+    // Helper to simulate compatibility for a candidate group (guild or association)
     function testCompatibilityWithCandidate(candidateId) {
         const activeGroups = [];
-        if (state.selectedGuild) {
-            const guildObj = state.groupsMap[state.selectedGuild];
-            if (guildObj) activeGroups.push(guildObj);
-        }
-        state.selectedAssociations.forEach(assocId => {
-            const assocObj = state.groupsMap[assocId];
-            if (assocObj && assocId !== candidateId) { // Exclude the candidate itself
-                activeGroups.push(assocObj);
-            }
-        });
 
-        // Add candidate if it's not already in the active list
-        if (!state.selectedAssociations.has(candidateId)) {
-            const candObj = state.groupsMap[candidateId];
-            if (candObj) activeGroups.push(candObj);
+        // Build the simulated set of selected guilds
+        const simulatedGuilds = new Set(state.selectedGuilds);
+        if (state.groupsMap[candidateId] && state.groupsMap[candidateId].type === 'guild') {
+            if (simulatedGuilds.has(candidateId)) {
+                simulatedGuilds.delete(candidateId);
+            } else {
+                simulatedGuilds.add(candidateId);
+            }
         }
+
+        // Build the simulated set of selected associations
+        const simulatedAssocs = new Set(state.selectedAssociations);
+        if (state.groupsMap[candidateId] && state.groupsMap[candidateId].type === 'association') {
+            if (simulatedAssocs.has(candidateId)) {
+                simulatedAssocs.delete(candidateId);
+            } else {
+                simulatedAssocs.add(candidateId);
+            }
+        }
+
+        // Add simulated guilds or default to Adventurer's Guild
+        if (simulatedGuilds.size > 0) {
+            simulatedGuilds.forEach(guildId => {
+                const guildObj = state.groupsMap[guildId];
+                if (guildObj) activeGroups.push(guildObj);
+            });
+        } else {
+            const defaultGuild = state.groupsMap['adventurers_guild'];
+            if (defaultGuild) activeGroups.push(defaultGuild);
+        }
+
+        // Add simulated associations
+        simulatedAssocs.forEach(assocId => {
+            const assocObj = state.groupsMap[assocId];
+            if (assocObj) activeGroups.push(assocObj);
+        });
 
         return checkCompatibility(activeGroups);
     }
@@ -326,25 +369,60 @@ document.addEventListener('DOMContentLoaded', () => {
         guildListContainer.innerHTML = '';
         const search = filterText.toLowerCase();
 
-        // Add "None" option at the top
+        // Add "Adventurer's Guild" option at the top as the default
         const noneItem = document.createElement('div');
-        noneItem.className = `guild-item ${state.selectedGuild === null ? 'selected' : ''}`;
+        noneItem.className = `guild-item ${state.selectedGuilds.size === 0 || state.selectedGuilds.has('adventurers_guild') ? 'selected' : ''}`;
         noneItem.setAttribute('role', 'option');
-        noneItem.innerHTML = '<span><em>No Guild (Unaffiliated)</em></span>';
-        noneItem.addEventListener('click', () => selectGuild(null));
+        noneItem.innerHTML = '<span><em>Adventurer\'s Guild (Default)</em></span>';
+        noneItem.addEventListener('click', () => toggleGuild(null));
         guildListContainer.appendChild(noneItem);
 
-        state.guilds.forEach(g => {
-            if (search && !g.name.toLowerCase().includes(search)) {
-                return; // filter out
-            }
+        // Map guilds to their status, filtering out the Adventurer's Guild from the search list
+        const processed = state.guilds
+            .filter(g => g.id !== 'adventurers_guild')
+            .map(g => {
+                const isChecked = state.selectedGuilds.has(g.id);
+                const conflicts = isChecked ? [] : testCompatibilityWithCandidate(g.id);
+                const isCompatible = conflicts.length === 0;
+                return {
+                    guild: g,
+                    isChecked,
+                    isCompatible,
+                    conflicts
+                };
+            });
+
+        // Filter by search text
+        const filtered = processed.filter(p => {
+            return !search || p.guild.name.toLowerCase().includes(search);
+        });
+
+        // Sort: checked first, then compatible, then incompatible, then alphabetical
+        filtered.sort((x, y) => {
+            if (x.isChecked && !y.isChecked) return -1;
+            if (!x.isChecked && y.isChecked) return 1;
+            if (x.isCompatible && !y.isCompatible) return -1;
+            if (!x.isCompatible && y.isCompatible) return 1;
+            return x.guild.name.localeCompare(y.guild.name);
+        });
+
+        filtered.forEach(p => {
+            const g = p.guild;
+            const isChecked = p.isChecked;
+            const isCompatible = p.isCompatible;
 
             const item = document.createElement('div');
-            item.className = `guild-item ${state.selectedGuild === g.id ? 'selected' : ''}`;
+            item.className = `guild-item ${isChecked ? 'selected' : ''} ${!isCompatible ? 'incompatible-item' : ''}`;
             item.setAttribute('role', 'option');
 
             // Build item description with tags and wiki link
             let tagsHtml = g.tags.map(t => `<span class="tag-badge tag-${t.toLowerCase()}">${t}</span>`).join(' ');
+
+            let conflictHtml = '';
+            if (!isCompatible && p.conflicts.length > 0) {
+                const reasonsList = p.conflicts.map(c => c.reason || c.title).join(', ');
+                conflictHtml = `<div class="guild-conflict-reason">Conflicts: ${reasonsList}</div>`;
+            }
 
             item.innerHTML = `
                 <div class="group-info-col">
@@ -353,6 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="${getWikiUrl(g.name)}" target="_blank" class="wiki-link" title="View Wiki Page">📖</a>
                     </span>
                     <div class="group-tags">${tagsHtml}</div>
+                    ${conflictHtml}
                 </div>
             `;
 
@@ -364,33 +443,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            item.addEventListener('click', () => selectGuild(g.id));
+            item.addEventListener('click', () => toggleGuild(g.id));
             guildListContainer.appendChild(item);
         });
     }
 
-    // Helper to simulate compatibility for a single candidate association
-    function testCompatibilityWithCandidate(candidateId) {
-        const activeGroups = [];
-        if (state.selectedGuild) {
-            const guildObj = state.groupsMap[state.selectedGuild];
-            if (guildObj) activeGroups.push(guildObj);
-        }
-        state.selectedAssociations.forEach(assocId => {
-            const assocObj = state.groupsMap[assocId];
-            if (assocObj && assocId !== candidateId) { // Exclude the candidate itself
-                activeGroups.push(assocObj);
-            }
-        });
 
-        // Add candidate if it's not already in the active list
-        if (!state.selectedAssociations.has(candidateId)) {
-            const candObj = state.groupsMap[candidateId];
-            if (candObj) activeGroups.push(candObj);
-        }
-
-        return checkCompatibility(activeGroups);
-    }
 
     // Populate Association Checklist
     const assocListContainer = document.getElementById('assoc-checkbox-list');
@@ -473,8 +531,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle Guild Selection state
-    function selectGuild(guildId) {
-        state.selectedGuild = guildId;
+    // Handle Guild toggle state
+    function toggleGuild(guildId, forceState) {
+        if (guildId === null) {
+            state.selectedGuilds.clear();
+        } else {
+            if (forceState !== undefined) {
+                if (forceState) {
+                    state.selectedGuilds.add(guildId);
+                } else {
+                    state.selectedGuilds.delete(guildId);
+                }
+            } else {
+                if (state.selectedGuilds.has(guildId)) {
+                    state.selectedGuilds.delete(guildId);
+                } else {
+                    state.selectedGuilds.add(guildId);
+                }
+            }
+        }
         renderGuildList(document.getElementById('guild-search').value);
         renderAssociationList(document.getElementById('assoc-search').value);
         updateCheckerResults();
@@ -509,25 +584,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let totalSelected = 0;
 
-        if (state.selectedGuild) {
-            totalSelected++;
-            const chip = document.createElement('div');
-            chip.className = 'chip chip-guild';
-            chip.innerHTML = `
-                <span>🛡️ Guild: <strong>${state.groupsMap[state.selectedGuild].name}</strong> <a href="${getWikiUrl(state.groupsMap[state.selectedGuild].name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
-                <span class="chip-remove" title="Deselect Guild">&times;</span>
-            `;
+        if (state.selectedGuilds.size > 0) {
+            state.selectedGuilds.forEach(guildId => {
+                totalSelected++;
+                const guild = state.groupsMap[guildId];
+                if (!guild) return;
+                const chip = document.createElement('div');
+                chip.className = 'chip chip-guild';
+                chip.innerHTML = `
+                    <span>🛡️ Guild: <strong>${guild.name}</strong> <a href="${getWikiUrl(guild.name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
+                    <span class="chip-remove" title="Deselect Guild">&times;</span>
+                `;
 
-            // Prevent deselecting the guild when clicking the wiki link
-            const wikiLink = chip.querySelector('.wiki-link-chip');
-            if (wikiLink) {
-                wikiLink.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
+                // Prevent deselecting the guild when clicking the wiki link
+                const wikiLink = chip.querySelector('.wiki-link-chip');
+                if (wikiLink) {
+                    wikiLink.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+
+                chip.querySelector('.chip-remove').addEventListener('click', () => toggleGuild(guildId, false));
+                selectedChipsContainer.appendChild(chip);
+            });
+        } else {
+            // Default to Adventurer's Guild
+            const guild = state.groupsMap['adventurers_guild'];
+            if (guild) {
+                totalSelected++;
+                const chip = document.createElement('div');
+                chip.className = 'chip chip-guild';
+                chip.innerHTML = `
+                    <span>🛡️ Guild: <strong>${guild.name}</strong> <a href="${getWikiUrl(guild.name)}" target="_blank" class="wiki-link-chip" title="View Wiki Page">📖</a></span>
+                `;
+                selectedChipsContainer.appendChild(chip);
             }
-
-            chip.querySelector('.chip-remove').addEventListener('click', () => selectGuild(null));
-            selectedChipsContainer.appendChild(chip);
         }
 
         state.selectedAssociations.forEach(id => {
@@ -552,8 +643,8 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedChipsContainer.appendChild(chip);
         });
 
-        // If nothing selected, show empty state
-        if (totalSelected === 0) {
+        // If no user selections, show empty state
+        if (state.selectedGuilds.size === 0 && state.selectedAssociations.size === 0) {
             statusHero.className = 'status-hero empty';
             statusHeroText.textContent = 'Empty Profile';
             statusHeroDesc.textContent = 'Select a guild or association to analyze compatibility.';
@@ -564,14 +655,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             activeTagsContainer.style.display = 'none';
+            selectedChipsContainer.innerHTML = '';
             return;
         }
 
         // Render possessed tags summary
         const activeGroups = [];
-        if (state.selectedGuild) {
-            const guildObj = state.groupsMap[state.selectedGuild];
-            if (guildObj) activeGroups.push(guildObj);
+        if (state.selectedGuilds.size > 0) {
+            state.selectedGuilds.forEach(id => {
+                const guildObj = state.groupsMap[id];
+                if (guildObj) activeGroups.push(guildObj);
+            });
+        } else {
+            const defaultGuild = state.groupsMap['adventurers_guild'];
+            if (defaultGuild) activeGroups.push(defaultGuild);
         }
         state.selectedAssociations.forEach(id => {
             const assocObj = state.groupsMap[id];
@@ -611,12 +708,14 @@ document.addEventListener('DOMContentLoaded', () => {
             statusHeroText.textContent = 'Compatible';
 
             let desc = '';
-            if (state.selectedGuild && state.selectedAssociations.size > 0) {
-                desc = `Your guild (${state.groupsMap[state.selectedGuild].name}) and all ${state.selectedAssociations.size} selected associations are fully compatible!`;
-            } else if (state.selectedGuild) {
-                desc = `Guild (${state.groupsMap[state.selectedGuild].name}) is compatible. Select associations to build your profile.`;
+            const guildNames = state.selectedGuilds.size > 0 
+                ? Array.from(state.selectedGuilds).map(id => state.groupsMap[id].name).join(', ')
+                : "Adventurer's Guild";
+            
+            if (state.selectedAssociations.size > 0) {
+                desc = `Your guild(s) (${guildNames}) and all ${state.selectedAssociations.size} selected associations are fully compatible!`;
             } else {
-                desc = `All ${state.selectedAssociations.size} associations are fully compatible with each other!`;
+                desc = `Guild(s) (${guildNames}) are compatible. Select associations to build your profile.`;
             }
             statusHeroDesc.textContent = desc;
 
@@ -678,276 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 conflictsListContainer.appendChild(warnCard);
             });
-        }
-    }
-
-    // -------------------------------------------------------------
-    // 4. MATRICES GENERATORS
-    // -------------------------------------------------------------
-
-    // Guild Tags Matrix generator
-    const guildMatrixTable = document.getElementById('guild-matrix-table');
-    const guildMatrixSearch = document.getElementById('guild-matrix-search');
-
-    function renderGuildMatrix(filterText = '') {
-        guildMatrixTable.innerHTML = '';
-
-        // Find tags that are actually used by at least one guild in our list to make table cleaner
-        const usedGuildTagsSet = new Set();
-        state.guilds.forEach(g => {
-            g.tags.forEach(t => usedGuildTagsSet.add(t));
-        });
-        const usedGuildTags = Array.from(usedGuildTagsSet).sort();
-
-        // 1. Create table headers
-        const headerRow = document.createElement('tr');
-        const originHeader = document.createElement('th');
-        originHeader.className = 'origin-header';
-        originHeader.textContent = 'Guild / Affiliation Tags';
-        headerRow.appendChild(originHeader);
-
-        usedGuildTags.forEach(tag => {
-            const th = document.createElement('th');
-            th.textContent = tag;
-            headerRow.appendChild(th);
-        });
-        guildMatrixTable.appendChild(headerRow);
-
-        // 2. Create table rows (Guilds)
-        const search = filterText.toLowerCase();
-        state.guilds.forEach((g, rowIdx) => {
-            if (search && !g.name.toLowerCase().includes(search)) {
-                return;
-            }
-
-            const tr = document.createElement('tr');
-
-            // Row Header (Guild Name)
-            const rowHeader = document.createElement('th');
-            rowHeader.className = 'row-header';
-            rowHeader.textContent = g.name;
-            tr.appendChild(rowHeader);
-
-            // Cells (Presence indicators)
-            usedGuildTags.forEach((tag, colIdx) => {
-                const td = document.createElement('td');
-                td.className = 'cell-tag';
-
-                const hasTag = g.tags.includes(tag);
-                if (hasTag) {
-                    td.className += ' present';
-                    td.innerHTML = '✔';
-                    td.title = `${g.name} has the "${tag}" tag`;
-                } else {
-                    td.className += ' empty-cell';
-                    td.innerHTML = '·';
-                }
-
-                // Crosshair hover highlighting
-                setupMatrixHover(td, tr, colIdx + 1); // colIdx + 1 because column 0 is rowHeader
-
-                tr.appendChild(td);
-            });
-
-            guildMatrixTable.appendChild(tr);
-        });
-    }
-
-    // Tag Compatibility Matrix generator
-    const tagMatrixTable = document.getElementById('tag-matrix-table');
-
-    function renderTagMatrix() {
-        tagMatrixTable.innerHTML = '';
-
-        // Find tags that have at least one incompatibility so that table is not giant
-        const conflictingTags = state.allTags.filter(tag => {
-            const incompats = state.tagsMeta[tag] || [];
-            return incompats.length > 0;
-        });
-
-        // 1. Headers
-        const headerRow = document.createElement('tr');
-        const originHeader = document.createElement('th');
-        originHeader.className = 'origin-header';
-        originHeader.textContent = 'Tags Conflict Grid';
-        headerRow.appendChild(originHeader);
-
-        conflictingTags.forEach(tag => {
-            const th = document.createElement('th');
-            th.textContent = tag;
-            th.title = "Click to inspect tag description";
-            th.style.cursor = 'pointer';
-            th.addEventListener('click', () => alertTagDescription(tag));
-            headerRow.appendChild(th);
-        });
-        tagMatrixTable.appendChild(headerRow);
-
-        // 2. Rows
-        conflictingTags.forEach((tagA, rowIdx) => {
-            const tr = document.createElement('tr');
-
-            const rowHeader = document.createElement('th');
-            rowHeader.className = 'row-header';
-            rowHeader.textContent = tagA;
-            rowHeader.title = "Click to inspect tag description";
-            rowHeader.style.cursor = 'pointer';
-            rowHeader.addEventListener('click', () => alertTagDescription(tagA));
-            tr.appendChild(rowHeader);
-
-            conflictingTags.forEach((tagB, colIdx) => {
-                const td = document.createElement('td');
-                td.className = 'cell-tag';
-
-                if (tagA === tagB) {
-                    td.innerHTML = '—';
-                    td.style.color = 'var(--text-secondary)';
-                } else {
-                    const tagACompat = state.tagsMeta[tagA] || [];
-                    const isIncompat = tagACompat.includes(tagB);
-
-                    if (isIncompat) {
-                        td.className += ' incompatible-cell';
-                        td.innerHTML = '❌';
-                        td.title = `${tagA} is INCOMPATIBLE with ${tagB}`;
-                    } else {
-                        td.className += ' compatible-cell';
-                        td.innerHTML = '✔';
-                        td.title = `${tagA} is compatible with ${tagB}`;
-                    }
-                }
-
-                setupMatrixHover(td, tr, colIdx + 1);
-
-                tr.appendChild(td);
-            });
-
-            tagMatrixTable.appendChild(tr);
-        });
-    }
-
-    // Helper for crosshair highlights on matrix tables
-    function setupMatrixHover(cell, row, colIndex) {
-        cell.addEventListener('mouseenter', () => {
-            row.classList.add('hovered-row');
-
-            // Highlight cells in the same column across all rows in the same table
-            const table = row.closest('table');
-            const rows = table.querySelectorAll('tr');
-            rows.forEach(r => {
-                const cells = r.querySelectorAll('th, td');
-                if (cells[colIndex]) {
-                    cells[colIndex].classList.add('hovered-col');
-                }
-            });
-        });
-
-        cell.addEventListener('mouseleave', () => {
-            row.classList.remove('hovered-row');
-
-            const table = row.closest('table');
-            const cells = table.querySelectorAll('.hovered-col');
-            cells.forEach(c => c.classList.remove('hovered-col'));
-        });
-    }
-
-    // Modal popup to read tag description
-    function alertTagDescription(tagName) {
-        const desc = state.tagsMeta[tagName] && state.tagsMeta[tagName].description
-            ? state.tagsMeta[tagName].description.replace('id="bodyContent">', '').trim()
-            : "No description available.";
-
-        // A clean styled alert or confirm modal can be used. Since we want an interactive premium design, we'll display a small banner or alert.
-        const cleanDesc = desc.replace(/From LSWiki.*/i, '').trim();
-        alert(`🏷️ Tag: ${tagName}\n\n${cleanDesc}`);
-    }
-
-    // -------------------------------------------------------------
-    // 5. EXCEPTIONS DIRECTORY GENERATOR
-    // -------------------------------------------------------------
-    const guildExceptionsContainer = document.getElementById('guild-exceptions-list');
-    const assocExceptionsContainer = document.getElementById('assoc-exceptions-list');
-
-    function renderExceptions(guildFilter = '', assocFilter = '') {
-        guildExceptionsContainer.innerHTML = '';
-        assocExceptionsContainer.innerHTML = '';
-
-        const gSearch = guildFilter.toLowerCase();
-        const aSearch = assocFilter.toLowerCase();
-
-        // Separate groups with preclusions
-        const groups = Object.values(state.groupsMap);
-
-        groups.forEach(g => {
-            // Check if group has any outlier rules
-            const hasTagPreclusions = g.type === 'association' && associationTagIncompatabilities.some(item => item.association === g.id);
-            const hasGroupExceptions = associationAssociationIncompatabilities.some(item =>
-                item.associations.includes(g.id)
-            );
-
-            if (!hasTagPreclusions && !hasGroupExceptions) {
-                return; // skip if it's completely standard
-            }
-
-            const item = document.createElement('div');
-            item.className = 'exception-list-item';
-
-            // Build body clauses
-            let bodyHtml = '';
-
-            if (hasTagPreclusions) {
-                const assocTagIncompatibilities = associationTagIncompatabilities.find(item => item.association === g.id);
-                if (assocTagIncompatibilities && assocTagIncompatibilities.tag) {
-                    bodyHtml += `
-                        <div class="exception-tag-clause">
-                            🚫 Incompatible with tags: ${assocTagIncompatibilities.tag}
-                        </div>
-                    `;
-                }
-            }
-
-            if (hasGroupExceptions) {
-                const assocAssocIncompatibilities = associationAssociationIncompatabilities.filter(item =>
-                    item.associations.includes(g.id)
-                );
-                bodyHtml += `
-                    <div class="exception-group-clause">
-                        ⚠️ Mutual exclusivity with: ${assocAssocIncompatibilities.map(item =>
-                    `<strong>${item.associations.find(a => a !== g.id)} <a href="${getWikiUrl(item.associations.find(a => a !== g.id))}" target="_blank" class="wiki-link" style="font-size: 0.75rem; margin-left: 0.15rem;" title="View Wiki Page">📖</a></strong>`
-                ).join(', ')}
-                    </div>
-                `;
-            }
-
-            item.innerHTML = `
-                <div class="exception-item-header">
-                    <span class="exception-item-name">
-                        ${g.name}
-                        <a href="${getWikiUrl(g.name)}" target="_blank" class="wiki-link" title="View Wiki Page">📖</a>
-                    </span>
-                    <span class="exception-item-type">${g.type}</span>
-                </div>
-                <div class="exception-item-body">
-                    ${bodyHtml}
-                </div>
-            `;
-
-            if (g.type === 'guild') {
-                if (!gSearch || g.name.toLowerCase().includes(gSearch)) {
-                    guildExceptionsContainer.appendChild(item);
-                }
-            } else {
-                if (!aSearch || g.name.toLowerCase().includes(aSearch)) {
-                    assocExceptionsContainer.appendChild(item);
-                }
-            }
-        });
-
-        // Add empty states if no items match
-        if (guildExceptionsContainer.children.length === 0) {
-            guildExceptionsContainer.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-secondary);">No matching guild outliers.</div>';
-        }
-        if (assocExceptionsContainer.children.length === 0) {
-            assocExceptionsContainer.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-secondary);">No matching association outliers.</div>';
         }
     }
 
@@ -1095,7 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const saveState = {
-                selectedGuild: state.selectedGuild,
+                selectedGuilds: [...state.selectedGuilds],
                 selectedRace: state.selectedRace,
                 selectedGender: state.selectedGender,
                 characterName: state.characterName,
@@ -1119,6 +948,16 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const loadedState = JSON.parse(savedState);
                 Object.assign(state, loadedState);
+
+                // Migrate legacy selectedGuild or load selectedGuilds Set
+                if (loadedState.selectedGuilds) {
+                    state.selectedGuilds = new Set(loadedState.selectedGuilds);
+                } else if (loadedState.selectedGuild) {
+                    state.selectedGuilds = new Set([loadedState.selectedGuild]);
+                } else {
+                    state.selectedGuilds = new Set();
+                }
+
                 // Ensure selectedAssociations is a Set
                 state.selectedAssociations = new Set(loadedState.selectedAssociations || []);
 
