@@ -1,2 +1,6 @@
-
+Dockerfile
+entrypoint.sh
 .aider*
+mudlet
+conventions.md
+.dsh-data

@@ -4,7 +4,11 @@
  */
 
 import racesById from './races.js';
-import { tagIncompatibilityPairs, associationTagIncompatibilities, associationAssociationIncompatibilities } from './compatibility.js';
+import {
+    checkCompatibility as engineCheckCompatibility,
+    validateCompatibility as engineValidateCompatibility,
+    buildActiveGroups,
+} from './engine.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener to load button or input field for character name
@@ -108,199 +112,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
 
     function checkCompatibility(groups) {
-        const conflicts = [];
-
-        // Tag Sources Map to track which group contributed which tag
-        const tagSources = {};
-        groups.forEach(g => {
-            g.tags.forEach(t => {
-                if (!tagSources[t]) tagSources[t] = [];
-                tagSources[t].push(g);
-            });
-        });
-
-        const activeTags = Object.keys(tagSources);
-
-        // --- RULE 1: Tag-to-Tag Incompatibilities ---
-        for (let i = 0; i < activeTags.length; i++) {
-            for (let j = i + 1; j < activeTags.length; j++) {
-                const tagA = activeTags[i];
-                const tagB = activeTags[j];
-
-                // Skip if both tags come from the same group
-                const sourcesA = tagSources[tagA];
-                const sourcesB = tagSources[tagB];
-                if (sourcesA.length === 1 && sourcesB.length === 1 && sourcesA[0] === sourcesB[0]) {
-                    continue;
-                }
-
-                // Check against incompatibility pairs
-                const isCompatible = !tagIncompatibilityPairs.some(pair =>
-                    pair.tags.includes(tagA) && pair.tags.includes(tagB)
-                );
-
-                if (!isCompatible) {
-                    // Conflict found
-                    const sourcesA = tagSources[tagA].map(n => n.name).map(n => `<strong>${n}</strong>`).join(', ');
-                    const sourcesB = tagSources[tagB].map(n => n.name).map(n => `<strong>${n}</strong>`).join(', ');
-
-                    let description = '';
-                    const conflictingPair = tagIncompatibilityPairs.find(pair =>
-                        pair.tags.includes(tagA) && pair.tags.includes(tagB)
-                    );
-                    if (conflictingPair && conflictingPair.description) {
-                        description = ` (${conflictingPair.description})`;
-                    }
-
-                    conflicts.push({
-                        type: 'tag_tag',
-                        title: `Tag Conflict: ${tagA} & ${tagB}`,
-                        desc: `Tag <strong>${tagA}</strong> (from ${sourcesA}) is incompatible with tag <strong>${tagB}</strong> (from ${sourcesB})${description}.`,
-                        reason: `Tag ${tagA}/${tagB} conflict`
-                    });
-                }
-            }
-        }
-
-        // --- RULE 2: Association vs Tag Preclusions ---
-        groups.forEach(g => {
-            // FIXED: Use .filter() instead of .find() to catch multiple tag incompatibilities per group
-            const assocTagIncompatibilities = associationTagIncompatibilities.filter(item => item.association === g.id);
-
-            if (assocTagIncompatibilities.length > 0) {
-                assocTagIncompatibilities.forEach(incompat => {
-                    if (incompat.tag) {
-                        // Filter out conflicts with our own guild/association, since that is a thing.
-                        const conflictSources = (tagSources[incompat.tag] || []).filter(s => s.id !== g.id);
-                        if (conflictSources.length > 0) {
-                            conflicts.push({
-                                type: 'assoc_tag',
-                                title: `${g.name} Tag Preclusion`,
-                                desc: `<strong>${g.name}</strong> cannot be joined because you have the tag <strong>${incompat.tag}</strong>. ${incompat.description ? ` (${incompat.description})` : ''}`,
-                                reason: `Precluded by tag ${incompat.tag}`
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        // --- RULE 3: Association vs Association Preclusions ---
-        for (let i = 0; i < groups.length; i++) {
-            for (let j = i + 1; j < groups.length; j++) {
-                const assocA = groups[i];
-                const assocB = groups[j];
-
-                // Skip self-compatibility check
-                if (assocA.id === assocB.id) continue;
-
-                // FIXED: Use .filter() instead of .find() to catch multiple association conflicts between the same pair
-                const assocAssocIncompatibilities = associationAssociationIncompatibilities.filter(item =>
-                    item.associations.includes(assocA.id) && item.associations.includes(assocB.id)
-                );
-
-                if (assocAssocIncompatibilities.length > 0) {
-                    assocAssocIncompatibilities.forEach(incompat => {
-                        conflicts.push({
-                            type: 'assoc_assoc',
-                            title: `Association Conflict: ${assocA.name} & ${assocB.name}`,
-                            desc: `<strong>${assocA.name}</strong> and <strong>${assocB.name}</strong> cannot be joined together. ${incompat.description ? ` (${incompat.description})` : ''}`,
-                            reason: `${assocA.name} & ${assocB.name} conflict`
-                        });
-                    });
-                }
-            }
-        }
-
-        // --- RULE 4: Race Restrictions ---
-        groups.forEach(g => {
-            if (state.selectedRace !== 'Unspecified') {
-                if (g.allowed_races && g.allowed_races.length > 0) {
-                    const allowedRaceNames = g.allowed_races.map(raceId => racesById[raceId].name);
-                    if (!allowedRaceNames.includes(state.selectedRace)) {
-                        conflicts.push({
-                            type: 'group_race',
-                            title: `${g.name} Race Conflict`,
-                            desc: `<strong>${g.name}</strong> only allows these races: ${allowedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`,
-                            reason: 'Race restricted'
-                        });
-                    }
-                }
-                if (g.excluded_races && g.excluded_races.length > 0) {
-                    const excludedRaceNames = g.excluded_races.map(raceId => racesById[raceId].name);
-                    if (excludedRaceNames.includes(state.selectedRace)) {
-                        conflicts.push({
-                            type: 'group_race',
-                            title: `${g.name} Race Exclusion`,
-                            desc: `<strong>${g.name}</strong> explicitly excludes these races: ${excludedRaceNames.join(', ')}. Your race is <strong>${racesById[state.selectedRace].name}</strong>.`,
-                            reason: 'Race excluded'
-                        });
-                    }
-                }
-            }
-        });
-
-        // --- RULE 5: Gender Restrictions ---
-        groups.forEach(g => {
-            if (g.allowed_genders && g.allowed_genders.length > 0) {
-                if (!g.allowed_genders.includes(state.selectedGender)) {
-                    conflicts.push({
-                        type: 'group_gender',
-                        title: `${g.name} Gender Conflict`,
-                        desc: `<strong>${g.name}</strong> only allows these genders: ${g.allowed_genders.join(', ')}. Your gender is <strong>${state.selectedGender}</strong>.`,
-                        reason: 'Gender restricted'
-                    });
-                }
-            }
-        });
-
-        return conflicts;
+        // Delegate to the pure engine (see engine.js); pass current race/gender state.
+        return engineCheckCompatibility(groups, state.selectedRace, state.selectedGender);
     }
 
     function validateCompatibility() {
-        const activeGroups = [];
-        if (state.selectedGuilds.size > 0) {
-            state.selectedGuilds.forEach(guildId => {
-                const guildObj = state.groupsMap[guildId];
-                if (guildObj) activeGroups.push(guildObj);
-            });
-        } else {
-            const defaultGuild = state.groupsMap['adventurers_guild'];
-            if (defaultGuild) activeGroups.push(defaultGuild);
-        }
-        state.selectedAssociations.forEach(assocId => {
-            const assocObj = state.groupsMap[assocId];
-            if (assocObj) activeGroups.push(assocObj);
+        // Delegate to the pure engine (see engine.js).
+        return engineValidateCompatibility(state.groupsMap, state.selectedGuilds, state.selectedAssociations, {
+            selectedRace: state.selectedRace,
+            selectedGender: state.selectedGender,
         });
-
-        const conflicts = checkCompatibility(activeGroups);
-        const warnings = [];
-
-        if (state.selectedGuilds.size > 1) {
-            warnings.push({
-                type: 'warning',
-                title: 'Multi-Guild Compatibility Warning',
-                desc: 'Selecting multiple guilds is not well documented or tested. Compatibility rules between multiple guilds may not be fully accurate.'
-            });
-        }
-
-        activeGroups.forEach(g => {
-            if (g.warning) {
-                warnings.push({
-                    type: 'warning',
-                    title: `${g.name} Warning`,
-                    desc: g.warning
-                });
-            }
-        });
-
-        return { conflicts, warnings };
     }
 
     // Helper to simulate compatibility for a candidate group (guild or association)
     function testCompatibilityWithCandidate(candidateId) {
-        const activeGroups = [];
-
         // Build the simulated set of selected guilds
         const simulatedGuilds = new Set(state.selectedGuilds);
         if (state.groupsMap[candidateId] && state.groupsMap[candidateId].type === 'guild') {
@@ -321,24 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Add simulated guilds or default to Adventurer's Guild
-        if (simulatedGuilds.size > 0) {
-            simulatedGuilds.forEach(guildId => {
-                const guildObj = state.groupsMap[guildId];
-                if (guildObj) activeGroups.push(guildObj);
-            });
-        } else {
-            const defaultGuild = state.groupsMap['adventurers_guild'];
-            if (defaultGuild) activeGroups.push(defaultGuild);
-        }
-
-        // Add simulated associations
-        simulatedAssocs.forEach(assocId => {
-            const assocObj = state.groupsMap[assocId];
-            if (assocObj) activeGroups.push(assocObj);
-        });
-
-        return checkCompatibility(activeGroups);
+        // Evaluate the simulated selection against the pure engine.
+        const activeGroups = buildActiveGroups(state.groupsMap, simulatedGuilds, simulatedAssocs);
+        return engineCheckCompatibility(activeGroups, state.selectedRace, state.selectedGender);
     }
 
     // -------------------------------------------------------------
@@ -660,20 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Render possessed tags summary
-        const activeGroups = [];
-        if (state.selectedGuilds.size > 0) {
-            state.selectedGuilds.forEach(id => {
-                const guildObj = state.groupsMap[id];
-                if (guildObj) activeGroups.push(guildObj);
-            });
-        } else {
-            const defaultGuild = state.groupsMap['adventurers_guild'];
-            if (defaultGuild) activeGroups.push(defaultGuild);
-        }
-        state.selectedAssociations.forEach(id => {
-            const assocObj = state.groupsMap[id];
-            if (assocObj) activeGroups.push(assocObj);
-        });
+        const activeGroups = buildActiveGroups(state.groupsMap, state.selectedGuilds, state.selectedAssociations);
 
         const tagSources = {};
         activeGroups.forEach(g => {
