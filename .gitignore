@@ -4,5 +4,6 @@ docker-compose.yml
 .aider*
 mudlet
 conventions.md
+CLAUDE.md
 .dsh-data
 .env
