@@ -27,6 +27,7 @@ export const tagIncompatibilityPairs = [
 ];
 
 export const associationTagIncompatibilities = [
+    { association: "aedarene", tag: "Evil"},
     { association: "aliavelyrae", tag: "Soldier", description: "You cannot join the Aliavelyrae because you are a soldier." },
     { association: "battleragers", tag: "Warrior", description: "" },
     { association: "coven", tag: "Agent", description: "" },
