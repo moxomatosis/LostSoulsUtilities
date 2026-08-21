@@ -848,4 +848,28 @@ code {
 .color-dot.I { background-color: #5e60ce; }
 .color-dot.V { background-color: #9d4edd; }
 
+/* Site footer (license + non-affiliation disclaimer) */
+.site-footer {
+    text-align: center;
+    padding: 1.5rem 1.5rem 2.5rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    margin-top: 1rem;
+}
+
+.site-footer p {
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.site-footer a {
+    color: var(--text-secondary);
+}
+
+.site-footer a:hover {
+    color: var(--accent-gold);
+}
+
 
