@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Souls MUD - Affiliation Compatibility Planner</title>
+
+    <!-- Google Fonts for Gothic/Fantasy headings and modern body UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Preloaded Database from scraped wiki + CSV -->
+    <script src="data.js"></script>
+</head>
+
+<body>
+
+    <!-- Application Banner Header -->
+    <header class="app-header">
+        <h1 class="app-title" id="main-title">Lost Souls MUD</h1>
+        <p class="app-subtitle" id="main-subtitle">Guild & Association Compatibility Planner</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <div class="checker-layout">
+
+            <!-- Left Input Panel -->
+            <div class="card">
+                <h2 class="card-title">Build Your Character Profile</h2>
+
+                <!-- Character Details Grid -->
+                <div class="profile-grid">
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="character-name">Character Name</label>
+                        <input type="text" id="character-name" class="search-input" style="margin-bottom: 0;"
+                            placeholder="Enter character name...">
+                    </div>
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="profile-select">Load Existing Profile</label>
+                        <select id="profile-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                            <option value="">-- Select a profile --</option>
+                            <!-- Populated dynamically by app.js -->
+                        </select>
+                    </div>
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="race-select">Character Race</label>
+                        <select id="race-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                            <option value="Unspecified">-- Unspecified --</option>
+                            <!-- Populated dynamically by app.js -->
+                        </select>
+                    </div>
+                    <div class="selector-group" style="margin-bottom: 0;">
+                        <label class="selector-label" for="gender-select">Character Gender</label>
+                        <select id="gender-select" class="search-input" style="margin-bottom: 0; cursor: pointer;">
+                            <option value="Unspecified">-- Unspecified --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Neuter">Neuter</option>
+                            <option value="Hermaphrodite">Hermaphrodite</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Group -->
+                <div class="profile-actions">
+                    <button id="save-button" class="btn btn-primary">Save Profile</button>
+                    <button id="clear-button" class="btn btn-secondary">Clear Profile</button>
+                </div>
+            </div>
+            <div class="card">    
+                <h2 class="card-title">Guilds and Associations</h2>            
+                <!-- Guild Selection -->
+                <div class="selector-group">
+                    <label class="selector-label" for="guild-search">Select Multiple Guilds</label>
+                    <input type="text" id="guild-search" class="search-input"
+                        placeholder="Search Guilds (e.g. Justicars, Aligned, Lightbringers)...">
+                    <div class="guild-select-wrapper">
+                        <div class="guild-list-container" id="guild-select-list" role="listbox"
+                            aria-label="Guild Options">
+                            <!-- Populated dynamically by app.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Association Selection -->
+                <div class="selector-group">
+                    <label class="selector-label" for="assoc-search">Select Multiple Associations</label>
+                    <input type="text" id="assoc-search" class="search-input"
+                        placeholder="Search Associations (e.g. Gauric, Fianna, Attuned)...">
+                    <div class="association-checklist" id="assoc-checkbox-list" aria-label="Association Options">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+                </div></div>
+
+            <!-- Right Results Panel -->
+            <div class="card">
+                <h2 class="card-title">Compatibility Analysis</h2>
+                <div class="results-panel">
+
+                    <!-- Status Banner Hero -->
+                    <div class="status-hero empty" id="status-hero-banner">
+                        <div class="status-label" id="status-hero-text">Empty Profile</div>
+                        <div class="status-desc" id="status-hero-desc">Select a guild or association to analyze
+                            compatibility.</div>
+                    </div>
+
+                    <!-- Chip Bar showing currently selected items -->
+                    <div id="selected-chips-container" class="chips-bar">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+
+                    <!-- Active Tags Summary -->
+                    <div id="active-tags-container" style="margin-bottom: 1.5rem; display: none;">
+                        <h3
+                            style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--accent-gold);">
+                            Possessed Tags</h3>
+                        <div id="active-tags-list" class="group-tags">
+                            <!-- Populated dynamically by app.js -->
+                        </div>
+                    </div>
+
+                    <!-- Detailed Conflict Warnings List -->
+                    <div class="conflicts-container" id="conflicts-list-container">
+                        <div class="empty-state-message">
+                            <span>No groups selected. Add affiliations in the left panel to test compatibility.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- App Logic Script -->
+    <script src="app.js" defer type="module"></script>
+</body>
+
+</html>

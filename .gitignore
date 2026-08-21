@@ -1,6 +1,8 @@
 Dockerfile
 entrypoint.sh
+docker-compose.yml
 .aider*
 mudlet
 conventions.md
 .dsh-data
+.env

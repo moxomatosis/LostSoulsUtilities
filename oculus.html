@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Souls MUD - Oculus Puzzle Solver</title>
+
+    <!-- Google Fonts for Gothic/Fantasy headings and modern body UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Local Stylesheet (shared by all utility pages) -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <!-- Application Banner Header -->
+    <header class="app-header">
+        <h1 class="app-title">Lost Souls MUD</h1>
+        <p class="app-subtitle">Oculus Puzzle Solver</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+
+        <p class="back-link"><a href="index.html">&larr; All Utilities</a></p>
+
+        <!-- How to Use -->
+        <div class="card">
+            <h2 class="card-title">How to Use</h2>
+            <ol class="instructions">
+                <li><strong>Read the runes.</strong> In the MUD, <code>look at runes on oculus</code> to see the seven
+                    runes arranged around the disc. Your goal is to get the colors in rainbow order — red, orange,
+                    yellow, green, blue, indigo, violet (<code>roygbiv</code>) — with every rune facing the same way.
+                    The oculus wraps around, so where the sequence starts doesn't matter.</li>
+                <li><strong>Enter the arrangement.</strong> Type the runes as one 7-letter string using the first letter
+                    of each color (<code>R</code> <code>O</code> <code>Y</code> <code>G</code> <code>B</code>
+                    <code>I</code> <code>V</code>), in the order they appear around the disc. Use <strong>uppercase
+                        when a rune points up, lowercase when it points down</strong> — e.g. <code>rOygBiV</code>.</li>
+                <li><strong>Solve.</strong> Click <strong>Solve</strong> (or press Enter). The tool searches up to 14
+                    flips for a sequence that reaches the target — comfortably inside the game's 15-move limit before
+                    the oculus resets.</li>
+                <li><strong>Flip the runes.</strong> The result lists the runes to flip, in order. Flip each one in the
+                    MUD (e.g. <code>flip red rune on oculus</code>). Each flip reorients that rune and the runes
+                    reposition themselves.</li>
+                <li><strong>Orient the oculus.</strong> If the solution ends with the runes all pointing <strong>down</strong>
+                    (lowercase), <code>flip oculus</code> to turn the whole disc over — then enter the portal to
+                    complete the quest.</li>
+            </ol>
+            <p class="field-hint">Reading the oculus can be confusing: you only see three runes at a time and rotating
+                shifts the view by two. If the solver can't find a solution, double-check the order and orientation you
+                entered.</p>
+        </div>
+
+        <!-- Solver -->
+        <div class="card">
+            <h2 class="card-title">Solver</h2>
+            <div class="selector-group">
+                <label class="selector-label" for="colors">Current Rune Arrangement</label>
+                <input type="text" id="colors" class="search-input" spellcheck="false" autocomplete="off"
+                    placeholder="e.g. rOygBiV" aria-describedby="input-hint">
+                <p class="field-hint" id="input-hint">Seven letters from ROYGBIV — uppercase = rune pointing up,
+                    lowercase = pointing down.</p>
+            </div>
+            <div class="button-row">
+                <button id="solve-button" class="btn btn-primary" type="button">Solve</button>
+                <button id="example-button" class="btn btn-secondary" type="button">Try example: rOygBiV</button>
+            </div>
+
+            <div id="output" class="solver-output empty-state-message" aria-live="polite">
+                Enter an arrangement above and press <strong>Solve</strong>.
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Solver Logic -->
+    <script>
+        const GOAL = 'ROYGBIV';
+        const GOAL_LOWER = GOAL.toLowerCase().split('');
+        const GOAL_UPPER = GOAL.toUpperCase().split('');
+
+        // Generate every state reachable from `pattern` with a single flip:
+        // take the rune at position i, flip its orientation (case), move it two
+        // places ahead (never into the top slot), then rotate the disc so that
+        // Red is at the reference position.
+        function allShifts(shifts, pattern) {
+            const results = {};
+            for (let i = 0; i < pattern.length; i++) {
+                const newPattern = [...pattern];
+                const char = pattern[i].toUpperCase() === pattern[i] ? pattern[i].toLowerCase() : pattern[i].toUpperCase();
+                const newPos = (i + 2) % (pattern.length - 1) + 1;
+                newPattern.splice(i, 1);
+                newPattern.splice(newPos, 0, char);
+
+                let rotatedPattern = [...newPattern];
+                while (rotatedPattern[0] !== 'R' && rotatedPattern[0] !== 'r') {
+                    rotatedPattern.push(rotatedPattern.shift());
+                }
+                results[shifts + pattern[i]] = rotatedPattern;
+            }
+            return results;
+        }
+
+        function renderMessage(output, kind, label, desc) {
+            output.className = 'solver-output status-hero ' + kind;
+            output.innerHTML = '<div class="status-label">' + label + '</div>' +
+                '<div class="status-desc">' + desc + '</div>';
+        }
+
+        function renderSolution(output, moves, target) {
+            const targetStr = target.join('');
+            output.className = 'solver-output status-hero compatible';
+            output.innerHTML =
+                '<div class="status-label">Solution Found</div>' +
+                '<div class="status-desc">Flip these runes in order — the oculus will read <strong>' +
+                targetStr + '</strong>:</div>';
+
+            const chips = document.createElement('div');
+            chips.className = 'chips-bar';
+            for (const ch of moves) {
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.innerHTML = '<span class="color-dot ' + ch.toUpperCase() + '"></span>' + ch;
+                chips.appendChild(chip);
+            }
+            output.appendChild(chips);
+
+            const hint = document.createElement('div');
+            hint.className = 'status-desc';
+            hint.innerHTML = targetStr === GOAL_LOWER.join('')
+                ? 'The runes now all point <strong>down</strong> — <code>flip oculus</code> to complete the puzzle.'
+                : 'The runes now all point <strong>up</strong> — enter the portal to complete the puzzle.';
+            output.appendChild(hint);
+        }
+
+        function solve() {
+            const input = document.getElementById('colors');
+            const output = document.getElementById('output');
+            const pattern = input.value.trim().replace(/\s+/g, '');
+            console.log('origin: ' + pattern);
+
+            if (pattern.length !== 7) {
+                renderMessage(output, 'incompatible', 'Invalid Input',
+                    'Enter exactly 7 characters (found ' + (pattern.length || 0) + ').');
+                return;
+            }
+            for (const c of pattern) {
+                if (!GOAL.includes(c.toUpperCase())) {
+                    console.error('Invalid color ' + c);
+                    renderMessage(output, 'incompatible', 'Invalid Input',
+                        'Invalid color "' + c + '" — use only the letters R O Y G B I V.');
+                    return;
+                }
+            }
+
+            let loops = 1;
+            const states = [];
+            states[0] = allShifts('', pattern);
+
+            while (loops < 14) {
+                for (const [shifts, state] of Object.entries(states[loops - 1])) {
+                    const newStates = allShifts(shifts, state);
+                    const matchedLower = Object.keys(newStates).filter(k => newStates[k].join('') === GOAL_LOWER.join(''));
+                    const matchedUpper = Object.keys(newStates).filter(k => newStates[k].join('') === GOAL_UPPER.join(''));
+                    if (matchedLower.length > 0) {
+                        console.log(matchedLower + ' => ' + GOAL_LOWER.join(''));
+                        renderSolution(output, matchedLower[0], GOAL_LOWER);
+                        return;
+                    }
+                    if (matchedUpper.length > 0) {
+                        console.log(matchedUpper + ' => ' + GOAL_UPPER.join(''));
+                        renderSolution(output, matchedUpper[0], GOAL_UPPER);
+                        return;
+                    }
+                    if (!states[loops]) {
+                        states[loops] = {};
+                    }
+                    Object.assign(states[loops], newStates);
+                }
+                loops++;
+            }
+
+            console.log("Couldn't find a solution");
+            renderMessage(output, 'incompatible', 'No Solution',
+                "Couldn't find a sequence within 14 flips. Double-check the order and orientation you entered.");
+        }
+
+        document.getElementById('solve-button').addEventListener('click', solve);
+        document.getElementById('example-button').addEventListener('click', () => {
+            document.getElementById('colors').value = 'rOygBiV';
+            solve();
+        });
+        document.getElementById('colors').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                solve();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
